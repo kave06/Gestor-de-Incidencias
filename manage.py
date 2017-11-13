@@ -20,6 +20,10 @@ nav = Nav()
 def base():
     return render_template('base.html')
 
+@app.route('/tarjeta')
+def tarjeta():
+    return render_template('prueba_tarjeta.html')
+
 if __name__ == '__main__':
     #nav.init_app(app)
     app.run()
