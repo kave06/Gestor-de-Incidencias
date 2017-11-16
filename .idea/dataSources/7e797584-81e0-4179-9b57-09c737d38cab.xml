@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="pgpi@157.88.58.134">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="pgpi">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="cliente1"/>
+    <schema id="4" parent="1" name="cliente2"/>
+    <schema id="5" parent="1" name="information_schema"/>
+    <schema id="6" parent="1" name="mysql"/>
+    <schema id="7" parent="1" name="performance_schema"/>
+    <table id="8" parent="2" name="roles"/>
+    <table id="9" parent="2" name="users"/>
+    <column id="10" parent="8" name="role_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="11" parent="8" name="role_name">
+      <Position>2</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <key id="12" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>role_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="13" parent="9" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="14" parent="9" name="user_name">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="15" parent="9" name="user_username">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="16" parent="9" name="user_email">
+      <Position>4</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="17" parent="9" name="user_password">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="18" parent="9" name="user_role">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="19" parent="9" name="user_role">
+      <ColNames>user_role</ColNames>
+    </index>
+    <key id="20" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="21" parent="9" name="users_ibfk_1">
+      <ColNames>user_role</ColNames>
+      <RefSchemaName>pgpi</RefSchemaName>
+      <RefTableName>roles</RefTableName>
+      <RefColNames>role_id</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>
