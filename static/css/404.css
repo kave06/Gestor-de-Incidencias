@@ -1,0 +1,114 @@
+.page-not-found-image img {
+    max-height: 70vh;
+    max-width: 100%;
+}
+.page-not-found .page-not-found-text {
+    padding: 4% 2%;
+    z-index: 1;
+}
+.page-not-found-text h1 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 4% 4% 4% 4%;
+    font-size: 55pt;
+    line-height: 70pt;
+    font-weight: 700;
+    float: left;
+}
+.page-not-found-text h3 {
+    display: flex;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 25pt;
+    line-height: 30pt;
+    font-weight: 300;
+    color: #444;
+    padding: 4%;
+}
+.page-not-found-text p {
+    padding: 0 4% 4% 4%;
+    text-align: center;
+}
+.page-not-found-link a {
+    display: inline-block;
+    padding: 2% 8%;
+    border: 1px solid #333;
+    color: #333;
+    font-size: 12pt;
+    cursor: pointer;
+}
+.page-not-found-link a:hover {
+    background-color: #e0e0e0;
+}
+.image404 {
+    background-image: url("/Gestor-de-Incidencias/img/templates/404FHD.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #e0e0e0;
+    height: 95%;
+    width: auto;
+}
+.box {
+    margin: -4% -2%;
+    width: 100%;
+    height: 100%;
+    border: solid black;
+    border-color: black;
+    float:left;
+    border-width: 5px 3px 3px 5px;
+    border-radius:95% 4% 97% 5%/4% 94% 3% 95%;
+    transform: rotate(2deg);
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    z-index: -1;
+}
+.boton404 {
+    padding-top: 2%;
+    width: 30%;
+    color: white;
+}
+.boton404 a {
+    color: white;
+}
+.boton404 a:hover {
+    text-decoration: none !important;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+
+}
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767px) {
+    /*
+    .page-not-found {
+        padding-top: 60px;
+    }
+    */
+    .page-not-found-text h3 {
+        display: flex;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        font-size: 6vw;
+        line-height: 6vw;
+        font-weight: 300;
+        color: #444;
+        padding: 4%;
+    }
+}
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991px) {
+
+}
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199px) {
+
+}
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1630px) {
+
+}
+.btn-block {
+    margin-left: 35%;
+}

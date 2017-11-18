@@ -1,1 +1,4 @@
-2017-11-16 20:20:27,642 INFO     connect_db               :32   Connect to DB: pgpi
+2017-11-18 17:19:23,911 INFO     connect_db               :32   Connect to DB: pgpi
+2017-11-18 17:19:23,922 INFO     select_user              :33   result_set: ((2, 'jose', 'jose00', 'jose00@yahoo.es', '5678', 2),)
+2017-11-18 17:19:23,923 INFO     login                    :28   None
+2017-11-18 17:19:23,923 INFO     login                    :30   current_pass: 5678, form.pass: 5678
