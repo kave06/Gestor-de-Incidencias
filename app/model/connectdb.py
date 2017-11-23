@@ -16,6 +16,9 @@ DB_USER = 'kave'
 DB_PASS = 'hola'
 DB_NAME = 'pgpi'
 
+# DB_HOST = 'localhost'
+# DB_PORT = 3306
+
 logger = create_log('controller.log')
 
 # Global variables
