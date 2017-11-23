@@ -50,14 +50,16 @@ def login():
                                                         current_user.role))
             # return render_template('base.html', username=session.get('username'),
             form2 = IncidenciaForm()
-            titulo_incidencia = form2.titulo.data
-            descripcion_incidencia = form2.descripcion_incidencia.data
-            id_dispositivo = form2.id_dispositivo.data
-            fecha_incidencia = form2.fecha_incidencia.data
-            fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
-            usuario = current_user.username
-            categoria = form2.categoria.data
-            estado = 'Solicitada'
+            if form.validate_on_submit():
+                titulo_incidencia = form2.titulo.data
+                descripcion_incidencia = form2.descripcion_incidencia.data
+                id_dispositivo = form2.id_dispositivo.data
+                fecha_incidencia = form2.fecha_incidencia.data
+                fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
+                usuario = current_user.username
+                categoria = form2.categoria.data
+                estado = 'Solicitada'
+
 
             return render_template('base.html', username=current_user.username,
                                    role=current_user.role)
