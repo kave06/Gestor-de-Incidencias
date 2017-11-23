@@ -1,3 +1,5 @@
+from datetime import date
+
 from app.model.logger import create_log
 from app.model.connectdb import connect_db
 
@@ -28,7 +30,7 @@ class Incidencia:
         result_set = ''
         query = "SELECT id, user, titulo, descripcion, dispositivo, fecha_indicencia"\ 
                 "FROM incidencias"\
-                "WHERE id='{}'.format(incidencia_id)"
+                "WHERE id='{}'".format(incidencia_id)
 
         logger.info(query)
 
@@ -44,6 +46,28 @@ class Incidencia:
 
         logger.info('result_set: {}'.format(result_set))
         return result_set
+
+
+    def insert_incidencia(incidencia_id: str, titulo: str,
+                          descripcion: str, dispositivo: str,
+                          fecha_incidencia: date, fecha_alta: date,
+                          user: str,categoria: str,estado: str):
+        query = "INSERT INTO incidencias(id, user, titulo, "\
+                "descripcion, dispositivo, fecha_indicencia,"\
+                "fecha_alta, user,categoria,estado)"\ 
+                "VALUES (incidencia_id,titulo, descripcion,dispositivo," \
+                "fecha_incidencia,fecha_alta,user,categoria,estado )"
+
+        logger.info(query)
+
+        cnx = connect_db()
+
+        try:
+            cursor = cnx.cursor()
+            cursor.execute(query)
+            cursor.close()
+        except Exception as err:
+            logger.error(err)
 
 
 
