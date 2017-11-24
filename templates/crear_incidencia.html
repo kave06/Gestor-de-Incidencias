@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row">
     	<div class="col-md-12">
-			<form>
+			<form class="form-incidencia" action="{{ url_for('handle_data') }}" method="post" >
                 <div id="contact-form" class="form-container" data-form-container>
 
                     <div class="row">
@@ -31,96 +31,43 @@
 
                     <div class="input-container">
                         <div class="row">
-                            <span class="req-titulo" >
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el título de la incidencia"> </span>
-                                <input type="text" data-min-length="8" placeholder="Título de incidencia">
-                            </span>
+                                <span class="req-titulo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el título de la incidencia"> </span>
+                                <input name="titulo_incidencia" type="text" data-min-length="8" placeholder="Título de incidencia *">
                         </div>
 
                         <div class="row">
-                            <span class="req-descripcion">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Desarrolle una descripción de la incidencia"> </span>
-                                <!-- <input type="text" data-min-length="60" placeholder="Descripción"> -->
-                                ​<textarea id="txtArea" placeholder="Descripción" rows="10" cols="70"></textarea>
-                            </span>
+                                <span class="req-descripcion input-status" data-toggle="tooltip" data-placement="top" title="Desarrolle una descripción de la incidencia"> </span>
+                                ​<textarea name="descripcion_incidencia" id="txtArea" placeholder="Descripción *" rows="10" cols="70"></textarea>
                         </div>
 
                         <div class="row">
-                            <span class="req-id-dispositivo">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el identificador del dispositivo"> </span>
-                                <input type="text" data-min-length="10" placeholder="Id dispositivo">
-                            </span>
+                                <span class="req-id-dispositivo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el identificador del dispositivo"> </span>
+                                <input name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
                         </div>
 
                         <div class="row">
-                            <span class="req-fecha-incidencia">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Introduzca la fecha de la incidencia"> </span>
-                                <span> Seleccione la fecha de incidencia: </span>
-                                <input type="date" placeholder="Fecha incidencia">
-                            </span>
-                        </div>
-
-                        <div class="row">
-                            <span class="req-fecha-alta">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Introduzca la fecha de alta de la incidencia"> </span>
-                                <span> Seleccione la fecha de alta: </span>
-                                <input type="date" placeholder="Fecha de alta">
-                            </span>
+                            <span class="req-fecha-incidencia"> Seleccione la fecha de incidencia * : </span>
+                            <input name="fecha_incidencia" type=date>
                         </div>
 
                         <div class="row">
                             <span class="req-categoria">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione su categoría"> </span>
-                                <!-- <input type="date" placeholder="Fecha de alta"> -->
-                                <div class="col-md-3 col-md-offset-4 selector pull-right">
-                                    <span class="texto-selector"> Seleccione la categoría: </span>
-                                    <select>
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
-                                    </select>
-                                </div>
-                            </span>
-                        </div>
-
-                        <div class="row">
-                            <span class="req-estado">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione su estado"> </span>
-                                <!-- <input type="date" placeholder="Fecha de alta"> -->
-                                <div class="col-md-3 col-md-offset-4 selector pull-right">
-                                    <span class="texto-selector"> Seleccione el estado: </span>
-                                    <select>
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
-                                    </select>
-                                </div>
-                            </span>
-                        </div>
-
-                        <div class="row">
-                            <span class="req-prioridad">
-                                <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione su prioridad"> </span>
-                                <!-- <input type="date" placeholder="Fecha de alta"> -->
-                                <div class="col-md-3 col-md-offset-4 selector pull-right">
-                                    <span class="texto-selector"> Seleccione la prioridad: </span>
-                                    <select>
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                <!-- <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione la categoría de la incidencia"> </span> -->
+                                <div class="col-md-6 col-md-offset-3 selector">
+                                    <span class="texto-selector"> Seleccione la categoría * : </span>
+                                    <select name="categoria">
+                                      <option>Hardware</option>
+                                      <option>Problemas con las comunicaciones</option>
+                                      <option>Software básico</option>
+                                      <option>software de aplicaciones</option>
                                     </select>
                                 </div>
                             </span>
                         </div>
 
                         <div class="row submit-row">
-                            <button type="button" class="btn btn-block btn-block-incidencia submit-form">CREAR</button>
+                             <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                            <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit">
                         </div>
 
                     </div>

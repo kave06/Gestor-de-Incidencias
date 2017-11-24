@@ -71,6 +71,30 @@ def login():
 def crear_incidencia():
     return render_template('crear_incidencia.html')
 
+@app.route('/handle_data', methods=['POST'])
+def handle_data():
+
+    titulo_incidencia = request.form['titulo_incidencia']
+    descripcion_incidencia = request.form['descripcion_incidencia']
+    id_dispositivo = request.form['id_dispositivo']
+    fecha_incidencia = request.form['fecha_incidencia']
+    fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
+    usuario = 'kave00' #TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
+    categoria = request.form['categoria']
+    estado = 'Solicitada'
+
+    # logger.info(titulo_incidencia)
+    # logger.info(descripcion_incidencia)
+    # logger.info(id_dispositivo)
+    # logger.info(fecha_incidencia)
+    # logger.info(fecha_alta)
+    # logger.info(usuario)
+    # logger.info(categoria)
+    # logger.info(estado)
+
+
+
+    return render_template('base.html')
 
 
 if __name__ == '__main__':

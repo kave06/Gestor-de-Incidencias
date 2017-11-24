@@ -161,7 +161,7 @@
 	padding:20px;
 	border-radius:0px;
 	background:#B3E5FC;
-	color:#00838F;
+	color:black !important;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
