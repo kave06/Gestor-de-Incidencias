@@ -44,10 +44,15 @@ def select_user(user_name: str):
 
 def mapping_object(user_x: str) -> User:
     result_set = select_user(user_x)
-    logger.info(result_set)
+    logger.info(type(result_set))
+    # if result_set is not None:
+    if result_set.__sizeof__() is 0:
+        logger.info(result_set)
 
-    return User(result_set[0][0], result_set[0][1], result_set[0][2],
-                result_set[0][3], result_set[0][4], result_set[0][5])
+        return User(result_set[0][0], result_set[0][1], result_set[0][2],
+                    result_set[0][3], result_set[0][4], result_set[0][5])
+    else:
+        return None
 
 
 def print_user(user_x: User):
@@ -58,3 +63,5 @@ def print_user(user_x: User):
     'password: {}\n'
     'role: {}\n'.format(user_x.id, user_x.name, user_x.username,
                         user_x.email, user_x.password, user_x.role))
+
+
