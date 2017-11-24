@@ -10,13 +10,6 @@
   <!-- styles para crear incidencia -->
   <link href="../static/css/crear_incidencia.css" rel="stylesheet">
 
-    <div class="page-header">
-        <h1>
-            Crear una incidencia
-        </h1>
-    </div>
-
-
 <div class="container">
     <div class="row">
     	<div class="col-md-12">
@@ -45,13 +38,15 @@
                                 <input name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
                         </div>
 
-                        <div class="row">
-                            <span class="req-fecha-incidencia"> Seleccione la fecha de incidencia * : </span>
-                            <input name="fecha_incidencia" type=date>
+                        <div class="col-md-6 req-fecha-incidencia">
+                            <div class="col-md-6 col-md-offset-3 selector">
+                                <span> Seleccione la fecha de incidencia * : </span>
+                                <input type="date" name="fecha_incidencia">
+                            </div>
                         </div>
 
-                        <div class="row">
-                            <span class="req-categoria">
+                        <div class="col-md-6 req-categoria">
+                            <span>
                                 <!-- <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione la categoría de la incidencia"> </span> -->
                                 <div class="col-md-6 col-md-offset-3 selector">
                                     <span class="texto-selector"> Seleccione la categoría * : </span>
@@ -66,8 +61,10 @@
                         </div>
 
                         <div class="row submit-row">
-                             <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
-                            <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit">
+                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
+                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                            <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
+                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
                         </div>
 
                     </div>

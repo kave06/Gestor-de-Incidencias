@@ -306,6 +306,7 @@
 input[type="date"] {
     display: block;
     margin: auto;
+    margin-top: 10px;
 }
 
 .selector {
@@ -336,12 +337,6 @@ input[type="date"] {
     width: 200px;
 }
 
-span.req-fecha-incidencia, span.req-fecha-alta {
-    margin-right: 35px;
-    margin-bottom: 5px;
-    float: right;
-}
-
 textarea {
     width: calc(100% - 50px);
     float: left;
@@ -354,15 +349,19 @@ textarea {
     margin: 10px;
 }
 
-.input-status.req-fecha-incidencia {
-    display: inline-flex;
-    margin-bottom: 10px;
-}
-
-input[type="date"] {
-    margin-left: 10px;
-}
-
 .selector select {
+    margin-top: 10px;
     margin-left: 10px;
+}
+
+.selector {
+    height: 150px;
+    margin-top: 30px;
+}
+
+.row.req-fecha-incidencia {
+    height: 100px;
+    width: auto;
+    margin: auto;
+    display: flex;
 }

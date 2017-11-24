@@ -92,9 +92,15 @@ def handle_data():
     # logger.info(categoria)
     # logger.info(estado)
 
-
-
     return render_template('base.html')
+
+    # current_user = format(session.get('id_user'))
+    # current_role = 'cliente'
+    #
+    # logger.info('current_user: ' + current_user)
+    # logger.info('current_role: ' + current_role)
+    #
+    # return render_template('base.html', username=current_user.username, role=current_user.role)
 
 
 if __name__ == '__main__':
