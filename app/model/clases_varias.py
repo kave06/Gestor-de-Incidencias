@@ -23,3 +23,6 @@ class IncidenciaForm(FlaskForm):
     categoria = SelectField('Categoria' , choices=[('Hardware'), ('Software_básico'),
                                                    ('Problemas con aplicaciones'),
                                                    ('Software de aplicaciones')])
+
+
+
