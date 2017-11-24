@@ -37,6 +37,13 @@ logger = create_log('controller.log')
 #
 #     return render_template('login.html', form=form, id_user=session.get('id_user'))
 
+
+@app.route('/crear-incidencia', methods=['GET', 'POST'])
+def crear_incidencia():
+    return render_template('crear_incidencia.html')
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     form = NameForm()
@@ -68,3 +75,4 @@ def login():
 
 if __name__ == '__main__':
     manager.run()
+
