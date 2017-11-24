@@ -48,15 +48,15 @@ class Incidencia:
         return result_set
 
 
-    def insert_incidencia(incidencia_id: str, titulo: str,
-                          descripcion: str, dispositivo: str,
+    def insert_incidencia(titulo: str,
+                          descripcion: str, dispositivo,
                           fecha_incidencia: date, fecha_alta: date,
-                          user: str,categoria: str,estado: str):
-        query = "INSERT INTO incidencias(id, user, titulo, "\
-                "descripcion, dispositivo, fecha_indicencia,"\
-                "fecha_alta, user,categoria,estado)"\ 
-                "VALUES (incidencia_id,titulo, descripcion,dispositivo," \
-                "fecha_incidencia,fecha_alta,user,categoria,estado )"
+                          username: str,categoria,estado):
+        query = "INSERT INTO incidencias(titulo, "\
+                "descripcion, id_dispositivo, fecha_indicencia,"\
+                "fecha_alta, username,categoria,estado)"\ 
+                "VALUES (titulo, descripcion,dispositivo," \
+                "fecha_incidencia,fecha_alta,username,categoria,estado )"
 
         logger.info(query)
 
