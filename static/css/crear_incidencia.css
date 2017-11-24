@@ -203,7 +203,7 @@
 }
 
 .form-container .btn.submit-form:hover{
-	background:#00cde5;
+	background:#337ab7;
 	color:white;
 }
 
@@ -302,7 +302,6 @@
     margin: 10px;
     height: 50px;
 }
-}
 
 input[type="date"] {
     display: block;
@@ -318,6 +317,7 @@ input[type="date"] {
     display: block;
     margin: auto !important;
     margin-top: 10px !important;
+    border-radius: 5px !important;
 }
 
 .form-title span {
@@ -352,4 +352,17 @@ textarea {
     -o-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
     margin: 10px;
+}
+
+.input-status.req-fecha-incidencia {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+input[type="date"] {
+    margin-left: 10px;
+}
+
+.selector select {
+    margin-left: 10px;
 }
