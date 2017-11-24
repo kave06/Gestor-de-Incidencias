@@ -66,5 +66,12 @@ def login():
         return render_template('login.html', form=form)
     return render_template('login.html', form=form)
 
+
+@app.route('/crear_incidencia', methods=['GET', 'POST'])
+def crear_incidencia():
+    return render_template('crear_incidencia.html')
+
+
+
 if __name__ == '__main__':
     manager.run()
