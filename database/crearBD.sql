@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS incidencias(
   fecha_asignacion        DATETIME,
   fecha_cierre_solicitado DATETIME,
   fecha_cierre            DATETIME,
-  usuario                 VARCHAR(15),
+  username                 VARCHAR(15),
   categoria               INT,
   estado                  INT,
   prioridad               INT,
