@@ -5,9 +5,9 @@ logger = create_log('controller.log')
 
 
 class User:
-    def __init__(self, user_id, user_name, user_username,
+    def __init__(self, user_name, user_username,
                  user_email, user_password, user_role):
-        self.id = user_id
+        # self.id = user_id
         self.name = user_name
         self.username = user_username
         self.email = user_email
@@ -46,7 +46,7 @@ def mapping_object(user_x: str) -> User:
     result_set = select_user(user_x)
     logger.info(type(result_set))
 
-    if result_set.__sizeof__() is 0:
+    if result_set.__len__() is not 0:
         logger.info(result_set)
 
         return User(result_set[0][0], result_set[0][1], result_set[0][2],
@@ -56,12 +56,11 @@ def mapping_object(user_x: str) -> User:
 
 
 def print_user(user_x: User):
-    print('user_id: {}\n'
-    'user_name: {}\n'
+    print('user_name: {}\n'
     'username: {}\n'
     'email: {}\n'
     'password: {}\n'
-    'role: {}\n'.format(user_x.id, user_x.name, user_x.username,
+    'role: {}\n'.format(user_x.name, user_x.username,
                         user_x.email, user_x.password, user_x.role))
 
 
