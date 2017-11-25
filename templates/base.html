@@ -45,7 +45,7 @@ lang='es'
 
                 {% if role == 'cliente' %}
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Crear Incidecia">
-                        <a class="nav-link" href="/crear-incidencia">
+                        <a class="nav-link" href="/crear_incidencia">
                             <i class="fa fa-address-card-o" aria-hidden="true"></i>
                             <span class="nav-link-text">Crear incidencia</span>
                         </a>
@@ -228,24 +228,30 @@ lang='es'
                     </form>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        {{ username }}
-                    </a>
-                </li>
+                {% if username is not none %}
+                    {% if username != "" %}
 
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                        {{ role }}
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{ username }}
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            {{ role }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                    </li>
+
+                    {% endif %}
+                {% endif %}
 
             </ul>
         </div>
