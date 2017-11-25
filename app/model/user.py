@@ -26,7 +26,6 @@ def select_user(user_name: str):
              "roles t2 " \
              "ON t1.user_role = t2.role_id " \
              "WHERE user_username='{}'".format(user_name)
-    logger.info(query)
 
     cnx = connect_db()
 

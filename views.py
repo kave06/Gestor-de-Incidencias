@@ -12,7 +12,6 @@ from app.model.logger import create_log
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
 
-
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
@@ -43,22 +42,22 @@ def login():
     if form.validate_on_submit():
         current_user = mapping_object(form.username.data)
         if current_user is not None:
-            logger.info(print_user(current_user))
+            # logger.info(print_user(current_user))
             logger.info('current_pass: {}, form.pass: {}'
                         .format(current_user.password, form.password.data))
             if current_user.password == form.password.data:
                 logger.info('username: {}, role: {}'.format(session.get('id_user'),
                                                             current_user.role))
-            # return render_template('base.html', username=session.get('username'),
-            # form2 = IncidenciaForm()
-            # titulo_incidencia = form2.titulo.data
-            # descripcion_incidencia = form2.descripcion_incidencia.data
-            # id_dispositivo = form2.id_dispositivo.data
-            # fecha_incidencia = form2.fecha_incidencia.data
-            # fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
-            # usuario = current_user.username
-            # categoria = form2.categoria.data
-            # estado = 'Solicitada'
+                # return render_template('base.html', username=session.get('username'),
+                # form2 = IncidenciaForm()
+                # titulo_incidencia = form2.titulo.data
+                # descripcion_incidencia = form2.descripcion_incidencia.data
+                # id_dispositivo = form2.id_dispositivo.data
+                # fecha_incidencia = form2.fecha_incidencia.data
+                # fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
+                # usuario = current_user.username
+                # categoria = form2.categoria.data
+                # estado = 'Solicitada'
 
                 return render_template('base.html', username=current_user.username,
                                        role=current_user.role)
@@ -69,28 +68,31 @@ def login():
 
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
 def crear_incidencia():
+    logger.info('dentro de crear_incidencia()')
     return render_template('crear_incidencia.html')
+
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
-
+    logger.info('Estoy en handle')
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
     id_dispositivo = request.form['id_dispositivo']
     fecha_incidencia = request.form['fecha_incidencia']
     fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
-    usuario = 'kave00' #TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
+    # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
+    usuario = 'kave00'
     categoria = request.form['categoria']
     estado = 'Solicitada'
 
-    # logger.info(titulo_incidencia)
-    # logger.info(descripcion_incidencia)
-    # logger.info(id_dispositivo)
-    # logger.info(fecha_incidencia)
-    # logger.info(fecha_alta)
-    # logger.info(usuario)
-    # logger.info(categoria)
-    # logger.info(estado)
+    logger.info(titulo_incidencia)
+    logger.info(descripcion_incidencia)
+    logger.info(id_dispositivo)
+    logger.info(fecha_incidencia)
+    logger.info(fecha_alta)
+    logger.info(usuario)
+    logger.info(categoria)
+    logger.info(estado)
 
     return render_template('base.html')
 

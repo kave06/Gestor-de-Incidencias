@@ -42,3 +42,4 @@ Thumbs.db
 workspace.xml
 *.pyc
 *.xml
+*.iml

@@ -28,8 +28,8 @@ class Incidencia:
 
     def select_incidencia(incidencia_id:str):
         result_set = ''
-        query = "SELECT id, user, titulo, descripcion, dispositivo, fecha_indicencia"\ 
-                "FROM incidencias"\
+        query = "SELECT id, user, titulo, descripcion, dispositivo, fecha_indicencia "\ 
+                "FROM incidencias "\
                 "WHERE id='{}'".format(incidencia_id)
 
         logger.info(query)
