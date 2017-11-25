@@ -1,0 +1,32 @@
+{% extends "bootstrap/base_login.html" %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <title>Página no encontrada</title>
+  <!-- Bootstrap core CSS-->
+  <link href="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="../static/startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="../static/startbootstrap-sb-admin-gh-pages/css/sb-admin.css" rel="stylesheet">
+    <!-- styles para 404 -->
+  <link href="../static/css/404.css" rel="stylesheet">
+</head>
+
+{% block page_content %}
+<div class="page-not-found">
+	<div class="row image404">
+		<div class="container">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-md-push-6 page-not-found-text">
+				<div class="box">&nbsp;</div>
+				<h1 id="oops">&iexcl;Ups!</h1>
+				<h3 id="we-cant-find-the-page-you-are-looking-for">No podemos encontrar la p&aacute;gina que est&aacute; buscando</h3>
+				<p>Estamos trabajando para mejorar su experiencia en nuestra p&aacute;gina web.<br />
+				Si encuentra un error, &iexcl;env&iacute;enoslo y nos pondremos enseguida con ello!</p>
+				<div class="btn btn-primary btn-block boton404"><a href="/">Inicio</a></div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

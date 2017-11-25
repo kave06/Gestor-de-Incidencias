@@ -1,0 +1,76 @@
+
+{% extends "base_crear_incidencia.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Crear Incidencia{% endblock %}
+
+{% block page_content %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- styles para crear incidencia -->
+  <link href="../static/css/crear_incidencia.css" rel="stylesheet">
+
+<div class="container">
+    <div class="row">
+    	<div class="col-md-12">
+			<form class="form-incidencia" action="{{ url_for('handle_data') }}" method="post" >
+                <div id="contact-form" class="form-container" data-form-container>
+
+                    <div class="row">
+                        <div class="form-title">
+                            <span>Rellenar nueva incidencia</span>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <div class="row">
+                                <span class="req-titulo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el título de la incidencia"> </span>
+                                <input name="titulo_incidencia" type="text" data-min-length="8" placeholder="Título de incidencia *">
+                        </div>
+
+                        <div class="row">
+                                <span class="req-descripcion input-status" data-toggle="tooltip" data-placement="top" title="Desarrolle una descripción de la incidencia"> </span>
+                                ​<textarea name="descripcion_incidencia" id="txtArea" placeholder="Descripción *" rows="10" cols="70"></textarea>
+                        </div>
+
+                        <div class="row">
+                                <span class="req-id-dispositivo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el identificador del dispositivo"> </span>
+                                <input name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
+                        </div>
+
+                        <div class="col-md-6 req-fecha-incidencia">
+                            <div class="col-md-6 col-md-offset-3 selector">
+                                <span> Seleccione la fecha de incidencia * : </span>
+                                <input type="date" name="fecha_incidencia">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 req-categoria">
+                            <span>
+                                <!-- <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione la categoría de la incidencia"> </span> -->
+                                <div class="col-md-6 col-md-offset-3 selector">
+                                    <span class="texto-selector"> Seleccione la categoría * : </span>
+                                    <select name="categoria">
+                                      <option>Hardware</option>
+                                      <option>Problemas con las comunicaciones</option>
+                                      <option>Software básico</option>
+                                      <option>software de aplicaciones</option>
+                                    </select>
+                                </div>
+                            </span>
+                        </div>
+
+                        <div class="row submit-row">
+                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
+                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                            <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
+                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
+                        </div>
+
+                    </div>
+                </div>
+			</form>
+		</div>
+    </div>
+</div>
+{% endblock %}

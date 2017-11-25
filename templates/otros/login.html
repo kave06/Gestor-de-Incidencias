@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <title>Login</title>
+  <!-- Bootstrap core CSS-->
+  <link href="../../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="../../static/startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="../../static/startbootstrap-sb-admin-gh-pages/css/sb-admin.css" rel="stylesheet">
+    <!-- Estilos de login -->
+  <link href="../../static/css/login.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+
+ <div class="container">
+	<div class="card card-login mx-auto mt-5">
+	  <div class="card-header card-headerLogin ">Entrar en el gestor de incidencias</div>
+	  <div class="card-body">
+		<form name="loginform" action="/app/model/login.py" method="post">-->
+		  <div class="form-group">
+			<label for="exampleInputEmail1">Identificador de usuario</label>
+			<input class="form-control" id="inputEmail1" type="text" aria-describedby="emailHelp" placeholder="Introducir identificador">
+		  </div>
+		  <div class="form-group">
+			<label for="exampleInputPassword1">Contraseña</label>
+			<input class="form-control" id="inputPassword1" type="password" placeholder="Introducir contraseña">
+		  </div>
+		  <div class="form-group">
+			<div class="form-check">
+			  <label class="form-check-label">
+				<input id="recordarPass" class="form-check-input" type="checkbox"> Recordar Contraseña</label>
+			</div>
+		  </div>
+          <button id="submit" class="btn btn-primary btn-block" onclick="xxxxxxxxxxxxx">Entrar</button>
+		</form>
+	  </div>
+	</div>
+	</div>
+ </div>
+
+ <script>
+    var attempt = 3; // Variable para contar el número de intentos
+    function entrar(){
+        var username = document.getElementById("exampleInputEmail1").value;
+        var password = document.getElementById("exampleInputPassword1").value;
+
+
+
+        if ( username == "asd" && password == "123"){
+            alert ("Login correcto");
+            window.location.href = '../base.html'; // Redirección al panel
+        } else {
+            attempt--; // Decrementamos un intento
+            alert("Te quedan "+attempt+" intentos");
+            if ( attempt == 0) { // Deshabilitamos los campos después de 3 intentos
+                document.getElementById("inputEmail").disabled = true;
+                document.getElementById("inputPassword").disabled = true;
+                document.getElementById("submit").disabled = true;
+            }
+        }
+    }
+ </script>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="../../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+
+</html>
