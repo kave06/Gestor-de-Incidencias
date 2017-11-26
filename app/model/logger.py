@@ -1,8 +1,12 @@
-
+import os
 import logging
 
 # create logger
 def create_log(file:str) -> logging:
+    # path = os.path.dirname(os.path.abspath(__file__))
+    # path = '{}/{}'.format(path,file)
+    # path2 = os.getcwd()
+    # print(path2)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(file, mode='w')
