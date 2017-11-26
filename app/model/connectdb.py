@@ -19,7 +19,7 @@ DB_NAME = 'pgpi'
 # DB_HOST = 'localhost'
 # DB_PORT = 3306
 
-logger = create_log('controller.log')
+logger = create_log('gestion.txt')
 
 # Global variables
 

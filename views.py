@@ -1,3 +1,4 @@
+import os
 import time
 from flask import render_template, session, url_for, request
 from flask.app import Flask
@@ -16,8 +17,8 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-
-logger = create_log('controller.log')
+path = os.path.dirname(os.path.abspath(__file__))
+logger = create_log('{}/gestor.log'.format(path))
 
 
 # @app.route('/', methods=['GET', 'POST'])
