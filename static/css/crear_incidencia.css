@@ -160,8 +160,8 @@
 	margin:20px;
 	padding:20px;
 	border-radius:0px;
-	background:#B3E5FC;
-	color:black !important;
+	background:transparent;
+	color: white !important;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
@@ -195,6 +195,7 @@
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
+    cursor: pointer;
 }
 
 .form-container .btn.submit-form:focus{
@@ -307,6 +308,7 @@ input[type="date"] {
     display: block;
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .selector {
@@ -322,11 +324,11 @@ input[type="date"] {
 }
 
 .form-title span {
-    color: black;
+    color: white;
 }
 
 .row span {
-    color: black;
+    color: white;
 }
 
 .req-descripcion input[type="text"] {
@@ -364,4 +366,22 @@ textarea {
     width: auto;
     margin: auto;
     display: flex;
+}
+
+.form-title {
+    margin: auto !important;
+}
+
+.form-group.col-md-6 {
+    display: inline-flex;
+}
+
+#exampleSelect1 {
+    margin-top: 10px;
+    margin-right: 29px;
+}
+
+#submit-incidencia {
+    position: relative !important;
+    bottom: 0 !important;
 }

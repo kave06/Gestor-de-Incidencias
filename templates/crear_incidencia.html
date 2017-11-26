@@ -1,76 +1,154 @@
 
-{% extends "base_crear_incidencia.html" %}
+{% extends "base.html" %}
 
-{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}<title>Crear Incidencia</title>{% endblock %}
 
-{% block title %}Crear Incidencia{% endblock %}
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- styles para crear incidencia -->
+    <link href="../static/css/crear_incidencia.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block page_content %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- styles para crear incidencia -->
-  <link href="../static/css/crear_incidencia.css" rel="stylesheet">
 
-<div class="container">
-    <div class="row">
+
+    {% block content %}
+
+{#        <div class="form-group row">#}
+{#          <label for="example-text-input" class="col-2 col-form-label">Text</label>#}
+{#          <div class="col-6">#}
+{#            <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-search-input" class="col-2 col-form-label">Search</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="search" value="How do I shoot web" id="example-search-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-email-input" class="col-2 col-form-label">Email</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-url-input" class="col-2 col-form-label">URL</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="url" value="https://getbootstrap.com" id="example-url-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-password-input" class="col-2 col-form-label">Password</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="password" value="hunter2" id="example-password-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-number-input" class="col-2 col-form-label">Number</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="number" value="42" id="example-number-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-date-input" class="col-2 col-form-label">Date</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="date" value="2011-08-19" id="example-date-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-month-input" class="col-2 col-form-label">Month</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="month" value="2011-08" id="example-month-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-week-input" class="col-2 col-form-label">Week</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="week" value="2011-W33" id="example-week-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-time-input" class="col-2 col-form-label">Time</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="time" value="13:45:00" id="example-time-input">#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="form-group row">#}
+{#          <label for="example-color-input" class="col-2 col-form-label">Color</label>#}
+{#          <div class="col-10">#}
+{#            <input class="form-control" type="color" value="#563d7c" id="example-color-input">#}
+{#          </div>#}
+{#        </div>#}
+
+
+
+    <div class="container">
     	<div class="col-md-12">
 			<form class="form-incidencia" action="{{ url_for('handle_data') }}" method="post" >
-                <div id="contact-form" class="form-container" data-form-container>
+                <div id="incidencia-form" class="form-container" data-form-container>
 
-                    <div class="row">
-                        <div class="form-title">
-                            <span>Rellenar nueva incidencia</span>
-                        </div>
+                    <div class="form-title">
+                        <span>Rellenar nueva incidencia</span>
                     </div>
 
-                    <div class="input-container">
-                        <div class="row">
-                                <span class="req-titulo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el título de la incidencia"> </span>
-                                <input name="titulo_incidencia" type="text" data-min-length="8" placeholder="Título de incidencia *">
-                        </div>
+                    <div class="row form-group input-container">
+                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Título de incidencia *">
+                    </div>
 
-                        <div class="row">
-                                <span class="req-descripcion input-status" data-toggle="tooltip" data-placement="top" title="Desarrolle una descripción de la incidencia"> </span>
-                                ​<textarea name="descripcion_incidencia" id="txtArea" placeholder="Descripción *" rows="10" cols="70"></textarea>
-                        </div>
+                    <div class="row form-group input-container">
+                        ​<textarea name="descripcion_incidencia" id="txtArea" placeholder="Descripción *" rows="10" cols="70"></textarea>
+                    </div>
 
-                        <div class="row">
-                                <span class="req-id-dispositivo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el identificador del dispositivo"> </span>
-                                <input name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
-                        </div>
+                    <div class="row form-group input-container">
+                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
+                    </div>
 
-                        <div class="col-md-6 req-fecha-incidencia">
-                            <div class="col-md-6 col-md-offset-3 selector">
-                                <span> Seleccione la fecha de incidencia * : </span>
-                                <input type="date" name="fecha_incidencia">
-                            </div>
-                        </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-form-label">Fecha de incidencia *</label>
+                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia">
+                    </div>
 
-                        <div class="col-md-6 req-categoria">
-                            <span>
-                                <!-- <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione la categoría de la incidencia"> </span> -->
-                                <div class="col-md-6 col-md-offset-3 selector">
-                                    <span class="texto-selector"> Seleccione la categoría * : </span>
-                                    <select name="categoria">
-                                      <option>Hardware</option>
-                                      <option>Problemas con las comunicaciones</option>
-                                      <option>Software básico</option>
-                                      <option>software de aplicaciones</option>
-                                    </select>
-                                </div>
-                            </span>
-                        </div>
+                    <div class="form-group col-md-6 pull-right">
+                        <label>Categoría de la incidencia</label>
+                        <select name="categoria" class="form-control" id="exampleSelect1">
+                            <option>Hardware</option>
+                            <option>Problemas con las comunicaciones</option>
+                            <option>Software básico</option>
+                            <option>Software de aplicaciones</option>
+                        </select>
+                    </div>
 
-                        <div class="row submit-row">
-                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
-                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
-                            <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
-                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
-                        </div>
+                    <div class="submit-row">
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                        <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
+                        <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
+                    </div>
 
                     </div>
                 </div>
 			</form>
 		</div>
     </div>
-</div>
+    {% endblock %}
 {% endblock %}
