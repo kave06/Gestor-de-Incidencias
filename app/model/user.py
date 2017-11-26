@@ -1,7 +1,8 @@
 from app.model.logger import create_log
 from app.model.connectdb import connect_db
 
-logger = create_log('controller.log')
+# logger = create_log('controller.log')
+logger = create_log('gestion.txt')
 
 
 class User:
