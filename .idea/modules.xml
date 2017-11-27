@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/gestor_incidencias.iml" filepath="$PROJECT_DIR$/.idea/gestor_incidencias.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Gestor-de-Incidencias.iml" filepath="$PROJECT_DIR$/.idea/Gestor-de-Incidencias.iml" />
     </modules>
   </component>
 </project>
