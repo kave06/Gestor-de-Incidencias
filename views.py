@@ -89,6 +89,10 @@ def crear_incidencia():
     return render_template('crear_incidencia.html', username=session_user,
                            role=session_role)
 
+@app.route('/incidencias', methods=['GET'])
+def mostrar_incidencias():
+    return render_template('incidencias.html', username=session_user,
+                           role=session_role)
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
