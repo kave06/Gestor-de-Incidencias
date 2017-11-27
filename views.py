@@ -8,9 +8,10 @@ from app.model.user import mapping_object, print_user
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
-# from flask.ext.session import Session
+
 
 from app.model.logger import create_log
+from app.model.incidencia import select_incidencia_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -66,6 +67,8 @@ def login():
                 session_user = current_user.username
                 session_role = current_user.role
 
+                incidencias = select_incidencia_user(session_user)
+
                 # return render_template('base.html', username=session.get('username'),
                 # form2 = IncidenciaForm()
                 # titulo_incidencia = form2.titulo.data
@@ -92,8 +95,9 @@ def crear_incidencia():
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
+    incidencias = select_incidencia_user(session_user)
     return render_template('incidencias.html', username=session_user,
-                           role=session_role)
+                           role=session_role,incidencias=incidencias)
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
@@ -126,16 +130,17 @@ def handle_data():
                             categoria_id=categoria, estado_id=estado)
     insert_incidencia(incidencia)
 
-    logger.info(titulo_incidencia)
-    logger.info(descripcion_incidencia)
-    logger.info(id_dispositivo)
-    logger.info(fecha_incidencia)
-    logger.info(fecha_alta)
-    logger.info(usuario)
-    logger.info(categoria)
-    logger.info(estado)
+    # logger.info(titulo_incidencia)
+    # logger.info(descripcion_incidencia)
+    # logger.info(id_dispositivo)
+    # logger.info(fecha_incidencia)
+    # logger.info(fecha_alta)
+    # logger.info(usuario)
+    # logger.info(categoria)
+    # logger.info(estado)
 
-    return render_template('base.html')
+    # return render_template('base.html')
+    return render_template('base.html', username=session_user, role=session_role)
 
     # current_user = format(session.get('id_user'))
     # current_role = 'cliente'

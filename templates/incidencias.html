@@ -34,6 +34,7 @@
                               <thead>
                                 <tr>
                                     <th>Identificador</th>
+                                    <th>Título</th>
                                     <th>Descripción</th>
                                     <th>Dispositivo</th>
                                     <th>Fecha de incidencia</th>
@@ -48,20 +49,33 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                    <td>incXXYYZZ</td>
-                                    <td>PRUEBA: Se me ha desconectado la impresora, no me la encuentra como dispositivo de impresión.</td>
-                                    <td>dispXXZZ</td>
-                                    <td>24/11/2017 14:14:25</td>
-                                    <td>24/11/2017 14:14:25</td>
-                                    <td>24/11/2017 15:15:00</td>
-                                    <td>25/11/2017 09:12:12</td>
-                                    <td>25/11/2017 09:15:16</td>
-                                    <td>kave00</td>
-                                    <td>Software de aplicaciones</td>
-                                    <td>cerrada</td>
-                                    <td>Baja</td>
-                                </tr>
+{#                                {% for message in get_flashed_messages() %}#}
+{#                                    {{ incidencias }}#}
+{#                                    {% for i in incidencias %}#}
+{#                                        <tr>#}
+{#                                            {% for j in incidencia %}#}
+{#                                                <td>{{ incidencias[i][j] }}</td>#}
+                                    {% for incidencia in incidencias %}
+                                    <tr>
+                                    {% for row in incidencia %}
+                                    <td>{{row}}</td>
+                                    {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+
+
+
+        {#                                        <td>PRUEBA: Se me ha desconectado la impresora, no me la encuentra como dispositivo de impresión.</td>#}
+        {#                                        <td>dispXXZZ</td>#}
+        {#                                        <td>24/11/2017 14:14:25</td>#}
+        {#                                        <td>24/11/2017 14:14:25</td>#}
+        {#                                        <td>24/11/2017 15:15:00</td>#}
+        {#                                        <td>25/11/2017 09:12:12</td>#}
+        {#                                        <td>25/11/2017 09:15:16</td>#}
+        {#                                        <td>kave00</td>#}
+        {#                                        <td>Software de aplicaciones</td>#}
+        {#                                        <td>cerrada</td>#}
+        {#                                        <td>Baja</td>#}
                               </tbody>
                         </table>
 

@@ -30,8 +30,8 @@ class Incidencia:
 
 def select_incidencia(incidencia_id):
     result_set = ''
-    query = "SELECT id, titulo, descripcion, dispositivo, fecha_indicencia ,username," \
-            "FROM incidencias" \
+    query = "SELECT id, titulo, descripcion, dispositivo, fecha_indicencia ,username, " \
+            "FROM incidencias " \
             "WHERE id='{}'".format(incidencia_id)
 
     logger.info(query)
@@ -75,7 +75,7 @@ def insert_incidencia(incidencia):
     categoria1=incidencia.categoria
     estado1=incidencia.estado
     prioridad1=incidencia.prioridad
-    query = "INSERT INTO incidencias(titulo," \
+    query = "INSERT INTO incidencias2(titulo," \
             "descripcion, id_dispositivo, fecha_incidencia," \
             "fecha_alta, username,categoria,estado,prioridad) " \
             "VALUES ('{}','{}','{}'," \
@@ -88,28 +88,24 @@ def insert_incidencia(incidencia):
 
     cnx = connect_db()
 
-    incd=(incidencia.titulo,incidencia.descripcion,
-                       incidencia.dispositivo,incidencia.fecha_incidencia,
-                       incidencia.username,
-                       incidencia.categoria,incidencia.estado,
-                       incidencia.prioridad)
+    # incd=(incidencia.titulo,incidencia.descripcion,
+    #                    incidencia.dispositivo,incidencia.fecha_incidencia,
+    #                    incidencia.username,
+    #                    incidencia.categoria,incidencia.estado,
+    #                    incidencia.prioridad)
     #logger.info(incd)
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
-        cursor.close()
+        cnx.commit()
+        # cursor.close()
     except Exception as err:
             logger.error(err)
 
-def insert_malo(titulo: str,
-                      descripcion: str, dispositivo,
-                      fecha_incidencia: date, fecha_alta: date,
-                      username: str, categoria, estado):
-    query = "INSERT INTO incidencias(titulo, " \
-            "descripcion, id_dispositivo, fecha_indicencia," \
-            "fecha_alta, username,categoria,estado)" \
-            "VALUES (titulo, descripcion,dispositivo," \
-            "fecha_incidencia,fecha_alta,username,categoria,estado )"
+def select_incidencia_user(usuario)-> tuple:
+    result_set = []
+    query = "SELECT * FROM incidencias2 " \
+            "WHERE username = '{}'".format(usuario)
 
     logger.info(query)
 
@@ -118,9 +114,50 @@ def insert_malo(titulo: str,
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
+        # result_set = cursor.fetchall()
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
         cursor.close()
     except Exception as err:
-            logger.error(err)
+        logger.error(err)
+
+    # logger.info('result_set: {}'.format(result_set))
+    # logger.info('type: {}'.format(type(result_set)))
+    # logger.info('result_set[0][0]: {}'.format(result_set[0][0]))
+    # logger.info(len(result_set[0]))
+
+    return result_set
+
+
+
+
+# def insert_malo(titulo: str,
+#                       descripcion: str, dispositivo,
+#                       fecha_incidencia: date, fecha_alta: date,
+#                       username: str, categoria, estado):
+#     query = "INSERT INTO incidencias2(titulo, " \
+#             "descripcion, id_dispositivo, fecha_indicencia," \
+#             "fecha_alta, username,categoria,estado)" \
+#             "VALUES (titulo, descripcion,dispositivo," \
+#             "fecha_incidencia,fecha_alta,username,categoria,estado )"
+#
+#     logger.info(query)
+#
+#     cnx = connect_db()
+#
+#     try:
+#         cursor = cnx.cursor()
+#         cursor.execute(query)
+#         cnx.commit()
+#         cursor.close()
+#         cnx.close()
+#     except Exception as err:
+#             logger.error(err)
+
+    # cnx.close()
 
 #(%(titulo1)s, %(descripcion1)s,%(id_dispositivo1)i," \
 #            "%(fecha_incidencia1)s,%(fecha_alta1)s,%(username1)s,%(categoria1)i,%(estado1)i," \

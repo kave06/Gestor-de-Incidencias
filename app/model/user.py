@@ -35,6 +35,7 @@ def select_user(user_name: str):
         cursor.execute(query)
         result_set = cursor.fetchmany(size=1)
         cursor.close()
+        cnx.close()
     except Exception as err:
         logger.error(err)
 
