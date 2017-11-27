@@ -7,6 +7,7 @@ from app.model.user import mapping_object, print_user
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
+# from flask.ext.session import Session
 
 from app.model.logger import create_log
 
@@ -16,8 +17,17 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+# SESSION_TYPE = 'redis'
+# app.config.from_object(__name__)
+# Session(app)
+
+
+
 path = os.path.dirname(os.path.abspath(__file__))
 logger = create_log('{}/gestor.log'.format(path))
+
+session_user = None
+session_role = None
 
 
 # @app.route('/', methods=['GET', 'POST'])
@@ -49,6 +59,12 @@ def login():
             if current_user.password == form.password.data:
                 logger.info('username: {}, role: {}'.format(session.get('id_user'),
                                                             current_user.role))
+
+                global session_user
+                global session_role
+                session_user = current_user.username
+                session_role = current_user.role
+
                 # return render_template('base.html', username=session.get('username'),
                 # form2 = IncidenciaForm()
                 # titulo_incidencia = form2.titulo.data
@@ -60,8 +76,8 @@ def login():
                 # categoria = form2.categoria.data
                 # estado = 'Solicitada'
 
-                return render_template('base.html', username=current_user.username,
-                                       role=current_user.role)
+                return render_template('base.html', username=session_user,
+                                       role=session_role)
 
         return render_template('login.html', form=form)
     return render_template('login.html', form=form)
@@ -70,7 +86,8 @@ def login():
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
 def crear_incidencia():
     logger.info('dentro de crear_incidencia()')
-    return render_template('crear_incidencia.html')
+    return render_template('crear_incidencia.html', username=session_user,
+                           role=session_role)
 
 
 @app.route('/handle_data', methods=['POST'])
@@ -105,6 +122,11 @@ def handle_data():
     #
     # return render_template('base.html', username=current_user.username, role=current_user.role)
 
+
+@app.route('/dashboard')
+def dashboard():
+    logger.info(session_user)
+    return render_template('base.html', username=session_user, role=session_role)
 
 if __name__ == '__main__':
     manager.run()
