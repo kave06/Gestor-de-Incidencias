@@ -1,5 +1,6 @@
 import os
 import time
+from app.model.incidencia import insert_incidencia, Incidencia
 from flask import render_template, session, url_for, request
 from flask.app import Flask
 from app.model.clases_varias import NameForm, IncidenciaForm
@@ -95,13 +96,31 @@ def handle_data():
     logger.info('Estoy en handle')
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
+
     id_dispositivo = request.form['id_dispositivo']
+
     fecha_incidencia = request.form['fecha_incidencia']
+    fecha_incidencia = fecha_incidencia + ' 00:00:00'
     fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
-    usuario = 'kave00'
+    usuario = session_user
     categoria = request.form['categoria']
-    estado = 'Solicitada'
+    categoria = request.form['categoria']
+    estado = 1
+    if categoria == 'Hardware':
+        categoria = 1
+    elif categoria == 'Problemas con las comunicaciones':
+        categoria = 2
+    elif categoria == 'Software básico':
+        categoria = 3
+    elif categoria == 'software de aplicaciones':
+        categoria = 4
+
+    incidencia = Incidencia(incidencia_titulo=titulo_incidencia, incidencia_descripcion=descripcion_incidencia,
+                            id_dispositivo=id_dispositivo, fecha_incidencia1=fecha_incidencia,
+                            incidencia_username=usuario,
+                            categoria_id=categoria, estado_id=estado)
+    insert_incidencia(incidencia)
 
     logger.info(titulo_incidencia)
     logger.info(descripcion_incidencia)
