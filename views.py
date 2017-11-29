@@ -11,7 +11,7 @@ from flask_script import Manager
 
 
 from app.model.logger import create_log
-from app.model.incidencia import select_incidencia_user
+from app.model.incidencia import select_incidencias_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -67,7 +67,7 @@ def login():
                 session_user = current_user.username
                 session_role = current_user.role
 
-                incidencias = select_incidencia_user(session_user)
+                incidencias = select_incidencias_user(session_user)
 
                 # return render_template('base.html', username=session.get('username'),
                 # form2 = IncidenciaForm()
@@ -95,7 +95,7 @@ def crear_incidencia():
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
-    incidencias = select_incidencia_user(session_user)
+    incidencias = select_incidencias_user(session_user)
     return render_template('incidencias.html', username=session_user,
                            role=session_role,incidencias=incidencias)
 
