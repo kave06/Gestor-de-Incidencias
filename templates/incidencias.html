@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- styles para crear incidencia -->
     <link href="../static/css/incidencias.css" rel="stylesheet">
+    <!-- Custom styles from base-->
+    <link href="/static/css/base.css" rel="stylesheet">
 {% endblock %}
 
 
@@ -29,26 +31,24 @@
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
-
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                               <thead>
                                 <tr>
-                                    <th>Identificador</th>
                                     <th>Título</th>
-                                    <th>Descripción</th>
-                                    <th>Dispositivo</th>
                                     <th>Fecha de incidencia</th>
-                                    <th>Fecha de alta</th>
-                                    <th>Fecha de asignacion</th>
-                                    <th>Fecha de solicitud de cierre</th>
-                                    <th>Fecha de cierre</th>
                                     <th>Usuario</th>
-                                    <th>Categoría</th>
                                     <th>Estado</th>
-                                    <th>Prioridad</th>
                                 </tr>
                               </thead>
                               <tbody>
+                                <tr class='clickable-row' data-href='url://'>
+                                    <td>Impresora desconectada</td>
+                                    <td>24/11/2017 14:14:25</td>
+                                    <td>kave00</td>
+                                    <td>cerrada</td>
+                                </tr>
+
+
 {#                                {% for message in get_flashed_messages() %}#}
 {#                                    {{ incidencias }}#}
 {#                                    {% for i in incidencias %}#}
@@ -582,4 +582,11 @@
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 {% endblock scripts %}

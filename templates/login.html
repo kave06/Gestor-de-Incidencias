@@ -5,12 +5,23 @@
 
 {% block title %}GestorIncidencias{% endblock %}
 
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <!-- styles para login -->
+    <link href="{{ url_for('static', filename='/static/css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block page_content %}
 <div class="page-header">
     <h1>
         Bienvenido a la aplicación de incidecias
     </h1>
-{#    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>#}
+
 </div>
 {{ wtf.quick_form(form) }}
 {% endblock %}

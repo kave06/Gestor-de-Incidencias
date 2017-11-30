@@ -13,13 +13,15 @@ lang='es'
     {% block title %}<title>Gestor de Incidencias</title>{% endblock %}
 
     {% block css %}
-    <!-- Bootstrap core CSS-->
-    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Custom fonts for this template-->
-    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <!-- Custom styles for this template-->
-    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
-{% endblock %}
+        <!-- Bootstrap core CSS-->
+        <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Custom fonts for this template-->
+        <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <!-- Custom styles for this template-->
+        <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+        <!-- Custom styles from base-->
+        <link href="/static/css/base.css" rel="stylesheet">
+    {% endblock %}
 
 {% endblock head %}
 
@@ -32,7 +34,7 @@ lang='es'
     {% block navbar %}
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="../static/startbootstrap-sb-admin-gh-pages/index.html">Gestor de Incidencias</a>
+        <a class="navbar-brand" href="../static/startbootstrap-sb-admin-gh-pages/index.html"><b>Gestor de Incidencias</b></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,22 +72,23 @@ lang='es'
                     {% if username != "" %}
 
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a class="usuario">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            {{ username }}
+                            <b>Usuario:</b> {{ username }}
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link">
-                            <i class="fa fa-cog" aria-hidden="true"></i>
-                            {{ role }}
+                        <a class="role">
+
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            <b>Rol:</b> {{ role }}
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                            <b><i class="fa fa-fw fa-sign-out"></i>Cerrar sesión</a></b>
                     </li>
 
                     {% endif %}
