@@ -34,12 +34,12 @@
 
                     <div class="row form-group input-container">
                         <span>Título de la incidencia *</span>
-                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir el título de la incidencia, mínimo 8 caracteres." >
+                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir el título de la incidencia, mínimo 8 caracteres."  required>
                     </div>
 
                     <div class="row form-group input-container">
                         <span>Descripción *</span>
-                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia." ></textarea>
+                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia."  required></textarea>
                         <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
                         <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
                     </div>
@@ -51,12 +51,12 @@
 
                     <div class="form-group col-md-6 pull-left">
                         <label class="col-form-label">Fecha de la incidencia *</label>
-                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia">
+                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia" max='2000-13-13' required>
                     </div>
 
                     <div class="form-group col-md-6 pull-right">
-                        <label>Categoría de la incidencia</label>
-                        <select name="categoria" class="form-control" id="exampleSelect1">
+                        <label>Categoría de la incidencia *</label>
+                        <select name="categoria" class="form-control" id="exampleSelect1" required>
                             <option>Hardware</option>
                             <option>Problemas con las comunicaciones</option>
                             <option>Software básico</option>
@@ -113,5 +113,20 @@
                 $('#charNum').text('Le quedan ' + char + ' caracteres.');
             }
         });
+    </script>
+    <script>
+        /* Para restringir la selección de la fecha al día actual */
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("incidencia-date-input").setAttribute("max", today);
     </script>
 {% endblock scripts %}
