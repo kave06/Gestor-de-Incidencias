@@ -62,12 +62,16 @@ def login():
                 logger.info('username: {}, role: {}'.format(session.get('id_user'),
                                                             current_user.role))
 
+                session['username'] = current_user.username
+                session['role'] = current_user.role
+                logger.info(session.get('username'))
+
                 global session_user
                 global session_role
                 session_user = current_user.username
                 session_role = current_user.role
 
-                incidencias = select_incidencias_user(session_user)
+                incidencias = select_incidencias_user(session.get('username'))
 
                 # return render_template('base.html', username=session.get('username'),
                 # form2 = IncidenciaForm()
@@ -80,8 +84,8 @@ def login():
                 # categoria = form2.categoria.data
                 # estado = 'Solicitada'
 
-                return render_template('base.html', username=session_user,
-                                       role=session_role)
+                return render_template('base.html', username=session.get('username'),
+                                       role=session.get('role'))
 
         return render_template('login.html', form=form)
     return render_template('login.html', form=form)

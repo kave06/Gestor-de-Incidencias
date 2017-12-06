@@ -75,7 +75,7 @@ def insert_incidencia(incidencia):
     categoria1 = incidencia.categoria
     estado1 = incidencia.estado
     prioridad1 = incidencia.prioridad
-    query = "INSERT INTO incidencias2(titulo," \
+    query = "INSERT INTO incidencias(titulo," \
             "descripcion, id_dispositivo, fecha_incidencia," \
             "fecha_alta, username,categoria,estado,prioridad) " \
             "VALUES ('{}','{}','{}'," \
@@ -105,7 +105,7 @@ def insert_incidencia(incidencia):
 
 def select_incidencias_user(usuario) -> tuple:
     result_set = []
-    query = "SELECT * FROM incidencias2 " \
+    query = "SELECT * FROM incidencias " \
             "WHERE username = '{}'".format(usuario)
 
     logger.info(query)
