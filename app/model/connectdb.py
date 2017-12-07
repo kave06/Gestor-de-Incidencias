@@ -12,8 +12,8 @@ from app.model.logger import create_log
 
 DB_HOST = '157.88.58.134'
 DB_PORT = 5584
-DB_USER = 'kave'
-DB_PASS = 'hola'
+DB_USER = 'jose'
+DB_PASS = '1234'
 DB_NAME = 'pgpi'
 
 # DB_HOST = 'localhost'

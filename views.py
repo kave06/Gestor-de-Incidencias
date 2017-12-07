@@ -1,4 +1,5 @@
 import time
+from app.model.incidence import *
 from flask import render_template, session, url_for, request
 from flask.app import Flask
 from app.model.clases_varias import NameForm, IncidenciaForm
@@ -78,18 +79,35 @@ def handle_data():
     descripcion_incidencia = request.form['descripcion_incidencia']
     id_dispositivo = request.form['id_dispositivo']
     fecha_incidencia = request.form['fecha_incidencia']
-    fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
+    fecha_incidencia= fecha_incidencia + ' 00:00:00'
+    #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     usuario = 'kave00' #TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
     categoria = request.form['categoria']
-    estado = 'Solicitada'
+    estado = 1
+    if categoria=='Hardware':
+        categoria=1
+    elif categoria=='Problemas con las comunicaciones':
+        categoria=2
+    elif categoria=='Software básico':
+        categoria=3
+    elif categoria=='software de aplicaciones':
+        categoria=4
 
+
+    incidencia= Incidencia(incidencia_titulo=titulo_incidencia,incidencia_descripcion=descripcion_incidencia,
+                           id_dispositivo=id_dispositivo,fecha_incidencia1=fecha_incidencia,
+                           incidencia_username=usuario,
+                           categoria_id=categoria,estado_id=estado)
+    insert_incidencia(incidencia)
+    #insert_incidencia(titulo_incidencia,descripcion_incidencia,id_dispositivo,fecha_incidencia,
+    #                  fecha_alta,usuario,categoria,estado)
     # logger.info(titulo_incidencia)
     # logger.info(descripcion_incidencia)
     # logger.info(id_dispositivo)
     # logger.info(fecha_incidencia)
     # logger.info(fecha_alta)
     # logger.info(usuario)
-    # logger.info(categoria)
+    #logger.info(categoria)
     # logger.info(estado)
 
     return render_template('base.html')
