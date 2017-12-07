@@ -10,3 +10,12 @@
     padding-left: .5rem !important;
     display: block !important;
 }
+#mainNav.fixed-top .navbar-sidenav {
+    height: calc(100vh);
+}
+b, strong {
+    font-weight: normal;
+}
+.navbar-brand:hover {
+    font-weight: 600;
+}

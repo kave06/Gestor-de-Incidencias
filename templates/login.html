@@ -1,26 +1,61 @@
-
 {% extends "base_login.html" %}
 
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% block title %}GestorIncidencias{% endblock %}
+{% block title %}Acceder al gestor de incidencias{% endblock %}
 
 {% block css %}
     <!-- Bootstrap core CSS-->
     <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Custom fonts for this template-->
-    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <!-- Custom styles for this template-->
-    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
     <!-- styles para login -->
-    <link href="{{ url_for('static', filename='/static/css/login.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/login.css" type="text/css">
 {% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-    <h1>
-        Bienvenido a la aplicación de incidecias
-    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align: center">Bienvenido a la aplicación de incidecias del grupo 3</h1>
+        </div>
+    </div>
 </div>
-{{ wtf.quick_form(form) }}
+
+    <div class="container">
+        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div style="padding-top:30px" class="panel-body" >
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                    <form method="post" action="{{ url_for('handle_login') }}" id="loginform" class="form-horizontal" enctype="multipart/form-data" >
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Introduce tu identificador de usuario" required="" autofocus="" >
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="login-password" type="password" class="form-control" name="password" placeholder="Introduce tu contraseña" required="" autofocus="" >
+                        </div>
+                        {% if error %}
+                            <div class="error" style="text-align: center; color: red;">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Recordarme
+                                </label>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <input type="submit" id="submit-login" value=" ACCEDER " class="btn btn-lg btn-primary btn-block" >
+                                <!-- <button name="Submit" type="submit" id="btn-login" class="btn btn-lg btn-primary btn-block">Acceder </button><br> -->
+                                <!-- <a id="btn-login" href="#" class="btn btn-primary">Acceder </a> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+

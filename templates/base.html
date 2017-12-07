@@ -20,7 +20,7 @@ lang='es'
         <!-- Custom styles for this template-->
         <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
         <!-- Custom styles from base-->
-        <link href="/static/css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/base.css" type="text/css">
     {% endblock %}
 
 {% endblock head %}
@@ -34,7 +34,17 @@ lang='es'
     {% block navbar %}
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="../static/startbootstrap-sb-admin-gh-pages/index.html"><b>Gestor de Incidencias</b></a>
+        <div class="effect-line">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+              <span class="navbar-brand text">Gestor de Incidencias</span>
+              <span class="line -right"></span>
+              <span class="line -top"></span>
+              <span class="line -left"></span>
+              <span class="line -bottom"></span>
+            </a>
+        </div>
+        <!-- <a class="navbar-brand" href="{{ url_for('dashboard') }}"><b>Gestor de Incidencias</b></a> -->
+
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,7 +53,7 @@ lang='es'
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="/dashboard">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">Mi panel</span>
                     </a>
                 </li>
 
@@ -67,14 +77,13 @@ lang='es'
 
             </ul>
 
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto pull-left">
                 {% if username is not none %}
                     {% if username != "" %}
-
                     <li class="nav-item">
                         <a class="usuario">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <b>Usuario:</b> {{ username }}
+                            <b>Usuario: </b> {{ username }}
                         </a>
                     </li>
 
@@ -82,13 +91,14 @@ lang='es'
                         <a class="role">
 
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <b>Rol:</b> {{ role }}
+                            <b>Rol: </b> {{ role }}
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                            <b><i class="fa fa-fw fa-sign-out"></i>Cerrar sesión</a></b>
+                        <a class="nav-link" data-toggle="modal" href="{{ url_for('logout') }}">
+                            <b><i class="fa fa-fw fa-sign-out"></i>Cerrar sesión</b>
+                        </a>
                     </li>
 
                     {% endif %}
@@ -100,56 +110,7 @@ lang='es'
 
     {% block content %}
 
-{#    <div class="content-wrapper">#}
-{#        <div class="container-fluid">#}
-{#            <!-- Breadcrumbs-->#}
-{#            <ol class="breadcrumb">#}
-{#                <li class="breadcrumb-item">#}
-{#                    <a href="#">Dashboard</a>#}
-{#                </li>#}
-{#                <li class="breadcrumb-item active">Navbar</li>#}
-{#            </ol>#}
-{#            <h1>Navbar</h1>#}
-{#            <hr>#}
-{#            <p>The SB Admin navbar can be either fixed or static, and it supports the navbar-light and navbar-dark Bootstrap 4 classes.</p>#}
-{#            <a class="btn btn-primary" href="#" id="toggleNavPosition">Toggle Fixed/Static Navbar</a>#}
-{#            <a class="btn btn-primary" href="#" id="toggleNavColor">Toggle Navbar Color</a>#}
-{#            <!-- Blank div to give the page height to preview the fixed vs. static navbar-->#}
-{#            <div style="height: 1000px;"></div>#}
-{#        </div>#}
-{#        <!-- /.container-fluid-->#}
-{#        <!-- /.content-wrapper-->#}
-{#        <footer class="sticky-footer">#}
-{#            <div class="container">#}
-{#                <div class="text-center">#}
-{#                    <small>Copyright © Your Website 2017</small>#}
-{#                </div>#}
-{#            </div>#}
-{#        </footer>#}
-{#        <!-- Scroll to Top Button-->#}
-{#        <a class="scroll-to-top rounded" href="#page-top">#}
-{#            <i class="fa fa-angle-up"></i>#}
-{#        </a>#}
-{#        <!-- Logout Modal-->#}
-{#        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#            <div class="modal-dialog" role="document">#}
-{#                <div class="modal-content">#}
-{#                    <div class="modal-header">#}
-{#                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>#}
-{#                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">#}
-{#                            <span aria-hidden="true">×</span>#}
-{#                        </button>#}
-{#                    </div>#}
-{#                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>#}
-{#                    <div class="modal-footer">#}
-{#                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>#}
-{#                        <a class="btn btn-primary" href="../static/startbootstrap-sb-admin-gh-pages/login.html">Logout</a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{% endblock content %}
+    {% endblock content %}
 
     {% block footer %}
         <footer class="sticky-footer">
@@ -159,7 +120,7 @@ lang='es'
                 </div>
             </div>
         </footer>
-        {% endblock footer %}
+    {% endblock footer %}
 
     {% block scripts %}
 <!-- Bootstrap core JavaScript-->

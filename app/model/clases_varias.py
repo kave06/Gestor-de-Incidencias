@@ -9,11 +9,12 @@ from wtforms import StringField, SubmitField, DateField,\
 from wtforms.validators import Required, DataRequired
 
 
-class NameForm(FlaskForm):
+class LoginForm(FlaskForm):
     # name = StringField('What is your name?', validators=[Required()])
-    username = StringField('Introduce tu id_user', validators=[DataRequired()])
-    password = PasswordField('Introduce tu contraseña', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    # username = StringField('Introduce tu id_user', validators=[DataRequired()])
+    username = StringField('username', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired()])
+    # submit = SubmitField('Submit')
 
 class IncidenciaForm(FlaskForm):
     titulo = StringField('Titulo de la incidencia', validators=[DataRequired()])
