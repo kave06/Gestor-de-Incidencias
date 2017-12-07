@@ -9,24 +9,24 @@ logger = create_log('gestor.log')
 
 
 class Incidence:
-    def __init__(self,incidence_id,title, description, username,
+    def __init__(self, incidence_id, title, description, username,
                  incidence_date, category_id):
         self.incidence_id = incidence_id
-        self.title=title
+        self.title = title
         self.description = description
         self.username = username
         self.incidence_date = incidence_date
-        #self.fecha_alta = datetime.today()
-        #self.fecha_alta = datetime.now()
-        # .strftime('%Y-%m-%d %H:%M:%S')
-        #logger.info(self.fecha_alta)
+    # self.fecha_alta = datetime.today()
+    # self.fecha_alta = datetime.now()
+    # .strftime('%Y-%m-%d %H:%M:%S')
+    # logger.info(self.fecha_alta)
         self.category_id = category_id
         self.priority_id = 1
         self.technician_hours = 0
         self.resolve = False
 
 
-def select_incidence_id(incidence_id):
+def select_incidence(incidence_id):
     result_set = ''
     query = "SELECT * " \
             "FROM incidences " \
@@ -49,16 +49,16 @@ def select_incidence_id(incidence_id):
 
 
 def mapping_object(incidencia_x: str) -> Incidence:
-    result_set = select_incidence_id(incidencia_x)
+    result_set = select_incidence(incidencia_x)
     logger.info(type(result_set))
 
     if result_set.__len__() is not 0:
         logger.info(result_set)
 
         return Incidence(result_set[0][0], result_set[0][1], result_set[0][2],
-                          result_set[0][3], result_set[0][4], result_set[0][5],
-                          result_set[0][6], result_set[0][7], result_set[0][8]
-                          )
+                         result_set[0][3], result_set[0][4], result_set[0][5],
+                         result_set[0][6], result_set[0][7], result_set[0][8]
+                         )
     else:
         return None
 
@@ -77,8 +77,8 @@ def insert_incidence(incidencia):
             "VALUES ('{}','{}','{}'," \
             " '{}','{}','{}','{}','{}'," \
             "'{}' )".format(incidence_id1, title1, description1,
-			    username1, incidence_date1, category_id1, 
-			priority_id1,technician_hours1, resolve1)
+                            username1, incidence_date1, category_id1,
+                            priority_id1, technician_hours1, resolve1)
 
     logger.info(query)
 
@@ -121,4 +121,39 @@ def select_incidences_user(usuario) -> tuple:
     # logger.info(len(result_set[0]))
 
     return result_set
+
+def select_open_incidences(usuario) -> tuple:
+    result_set = []
+    query =" SELECT * FROM incidences where incidence_id IN (" \
+           "SELECT DISTINCT incidence_id FROM status" \
+           "WHERE incidence_id NOT IN (" \
+           "SELECT DISTINCT incidence_id FROM status " \
+           "WHERE status_id=6 and username='{}'))".format(usuario)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        # result_set = cursor.fetchall()
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    # logger.info('result_set: {}'.format(result_set))
+    # logger.info('type: {}'.format(type(result_set)))
+    # logger.info('result_set[0][0]: {}'.format(result_set[0][0]))
+    # logger.info(len(result_set[0]))
+
+    return result_set
+
+def set_resolve(incidence,resolve):
+    incidence.resolve = resolve
 
