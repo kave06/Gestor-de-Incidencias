@@ -1,7 +1,8 @@
 import os
 import time
-from app.model.incidence import insert_incidence, Incidence
-from flask import render_template, session, url_for, request
+from app.model.incidence import insert_incidence, Incidence, \
+    select_incidences_user, select_incidence_id
+from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
 from app.model.user import mapping_object, print_user
@@ -11,7 +12,6 @@ from flask_script import Manager
 
 
 from app.model.logger import create_log
-from app.model.incidence import select_incidences_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -60,7 +60,7 @@ def handle_login():
     logger.info('Entro en el formulario de login')
     current_user = mapping_object(request.form['username'])
     if current_user is not None:
-        logger.info('current_user: {}', current_user)
+        # logger.info('current_user: {}', current_user)
         if current_user.password == request.form['password']:
             logger.info('username: {}, role: {}'.format(session.get('id_user'),
                                                         current_user.role))
@@ -69,12 +69,14 @@ def handle_login():
             session['role'] = current_user.role
             logger.info(session.get('username'))
 
-            global session_user
-            global session_role
-            session_user = current_user.username
-            session_role = current_user.role
+            # global session_user
+            # global session_role
+            # session_user = current_user.username
+            # session_role = current_user.role
+            # session['username'] = current_user.username
+            # session['role'] = current_user.role
 
-            incidencias = select_incidencias_user(session.get('username'))
+            incidencias = select_incidences_user(session.get('username'))
 
             # return render_template('base.html', username=session.get('username'),
             # form2 = IncidenciaForm()
@@ -96,7 +98,6 @@ def handle_login():
             return render_template('login.html', error=error)
     logger.info('NO 1')
     return render_template('login.html')
->>>>>>> Alberto-Sprint2
 
 
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
@@ -107,7 +108,7 @@ def crear_incidencia():
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
-    incidencias = select_incidencias_user(session.get('username'))
+    incidencias = select_incidences_user(session.get('username'))
     return render_template('incidencias.html', username=session.get('username'),
                            role=session.get('role'),incidencias=incidencias)
 
@@ -116,9 +117,7 @@ def handle_data():
 
     logger.info('Estoy en handle')
     id_incidencia = 'numero de incidencia'
-=======
     logger.info('Estoy en handle de subir incidencia')
->>>>>>> Alberto-Sprint2
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
 
