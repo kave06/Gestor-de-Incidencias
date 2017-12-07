@@ -28,8 +28,8 @@ moment = Moment(app)
 path = os.path.dirname(os.path.abspath(__file__))
 logger = create_log('{}/gestor.log'.format(path))
 
-session_user = None
-session_role = None
+# session_user = None
+# session_role = None
 
 
 # @app.route('/', methods=['GET', 'POST'])
@@ -66,10 +66,10 @@ def login():
                 session['role'] = current_user.role
                 logger.info(session.get('username'))
 
-                global session_user
-                global session_role
-                session_user = current_user.username
-                session_role = current_user.role
+                # global session_user
+                # global session_role
+                # session_user = current_user.username
+                # session_role = current_user.role
 
                 incidencias = select_incidencias_user(session.get('username'))
 
@@ -134,26 +134,8 @@ def handle_data():
                             categoria_id=categoria, estado_id=estado)
     insert_incidencia(incidencia)
 
-    # logger.info(titulo_incidencia)
-    # logger.info(descripcion_incidencia)
-    # logger.info(id_dispositivo)
-    # logger.info(fecha_incidencia)
-    # logger.info(fecha_alta)
-    # logger.info(usuario)
-    # logger.info(categoria)
-    # logger.info(estado)
 
-    # return render_template('base.html')
     return render_template('base.html', username=session_user, role=session_role)
-
-    # current_user = format(session.get('id_user'))
-    # current_role = 'cliente'
-    #
-    # logger.info('current_user: ' + current_user)
-    # logger.info('current_role: ' + current_role)
-    #
-    # return render_template('base.html', username=current_user.username, role=current_user.role)
-
 
 @app.route('/dashboard')
 def dashboard():

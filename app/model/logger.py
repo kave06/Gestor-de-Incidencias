@@ -16,7 +16,9 @@ def create_log(file:str) -> logging:
     logger.findCaller()
     # formatter = logging.Formatter('%(asctime)s %(funcName)s:%(lineno)s %(levelname)-8s '
     #                              '%(message)s')
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(funcName)-25s:%(lineno)-3s  '
+    # formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(funcName)-25s:%(lineno)-3s  '
+    #                               '%(message)s')
+    formatter = logging.Formatter('%(asctime)s  %(levelname)-8s %(filename)-14s %(funcName)-25s:%(lineno)-3s  '
                                   '%(message)s')
     ch.setFormatter(formatter)
     fh.setFormatter(formatter)
