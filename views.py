@@ -1,6 +1,6 @@
 import os
 import time
-from app.model.incidencia import insert_incidencia, Incidencia
+from app.model.incidence import insert_incidence, Incidence
 from flask import render_template, session, url_for, request
 from flask.app import Flask
 from app.model.clases_varias import NameForm, IncidenciaForm
@@ -11,7 +11,7 @@ from flask_script import Manager
 
 
 from app.model.logger import create_log
-from app.model.incidencia import select_incidencias_user
+from app.model.incidence import select_incidences_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -71,7 +71,7 @@ def login():
                 # session_user = current_user.username
                 # session_role = current_user.role
 
-                incidencias = select_incidencias_user(session.get('username'))
+                incidencias = select_incidences_user(session.get('username'))
 
                 # return render_template('base.html', username=session.get('username'),
                 # form2 = IncidenciaForm()
@@ -106,6 +106,7 @@ def mostrar_incidencias():
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
     logger.info('Estoy en handle')
+    id_incidencia = 'numero de incidencia'
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
 
@@ -128,11 +129,10 @@ def handle_data():
     elif categoria == 'software de aplicaciones':
         categoria = 4
 
-    incidencia = Incidencia(incidencia_titulo=titulo_incidencia, incidencia_descripcion=descripcion_incidencia,
-                            id_dispositivo=id_dispositivo, fecha_incidencia1=fecha_incidencia,
-                            incidencia_username=usuario,
-                            categoria_id=categoria, estado_id=estado)
-    insert_incidencia(incidencia)
+
+    incidencia = Incidence(id_incidencia, titulo_incidencia, descripcion_incidencia,
+                           fecha_incidencia, session.get('username'), categoria )
+    insert_incidence(incidencia)
 
 
     return render_template('base.html', username=session.get('username'), role=session.get('role'))
