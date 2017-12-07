@@ -94,14 +94,14 @@ def login():
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
 def crear_incidencia():
     logger.info('dentro de crear_incidencia()')
-    return render_template('crear_incidencia.html', username=session_user,
-                           role=session_role)
+    return render_template('crear_incidencia.html', username=session.get('username'),
+                           role=session.get('role'))
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
-    incidencias = select_incidencias_user(session_user)
-    return render_template('incidencias.html', username=session_user,
-                           role=session_role,incidencias=incidencias)
+    incidencias = select_incidencias_user(session.get('username'))
+    return render_template('incidencias.html', username=session.get('username'),
+                           role=session.get('role'),incidencias=incidencias)
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
