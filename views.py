@@ -115,7 +115,7 @@ def handle_data():
     fecha_incidencia = fecha_incidencia + ' 00:00:00'
     fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
-    usuario = session_user
+    usuario = session.get('username')
     categoria = request.form['categoria']
     categoria = request.form['categoria']
     estado = 1
@@ -135,12 +135,12 @@ def handle_data():
     insert_incidencia(incidencia)
 
 
-    return render_template('base.html', username=session_user, role=session_role)
+    return render_template('base.html', username=session.get('username'), role=session.get('role'))
 
 @app.route('/dashboard')
 def dashboard():
-    logger.info(session_user)
-    return render_template('base.html', username=session_user, role=session_role)
+    logger.info(session.get('username'))
+    return render_template('base.html', username=session.get('username'), role=session.get('role'))
 
 if __name__ == '__main__':
     manager.run()
