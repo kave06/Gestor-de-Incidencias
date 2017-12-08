@@ -1,7 +1,8 @@
 import os
 import time
 from app.model.incidence import insert_incidence, Incidence, \
-    select_incidences_user, select_incidence_id
+    select_incidences_user, get_next_id
+from app.model.device import assign_devices
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
@@ -116,33 +117,36 @@ def mostrar_incidencias():
 def handle_data():
 
     logger.info('Estoy en handle')
-    id_incidencia = 'numero de incidencia'
     logger.info('Estoy en handle de subir incidencia')
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
 
-    id_dispositivo = request.form['id_dispositivo']
+    devices_ids = request.form['id_dispositivo']
 
     fecha_incidencia = request.form['fecha_incidencia']
     fecha_incidencia = fecha_incidencia + ' 00:00:00'
-    fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
+    #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
     usuario = session.get('username')
     categoria = request.form['categoria']
-    estado = 1
+
+    # hay que obtener el siguiente id, contar filas y sumas uno
+    id_incidencia = get_next_id()
+
     if categoria == 'Hardware':
         categoria = 1
     elif categoria == 'Problemas con las comunicaciones':
         categoria = 2
     elif categoria == 'Software básico':
         categoria = 3
-    elif categoria == 'software de aplicaciones':
+    elif categoria == 'Software de aplicaciones':
         categoria = 4
 
 
     incidencia = Incidence(id_incidencia, titulo_incidencia, descripcion_incidencia,
-                           fecha_incidencia, session.get('username'), categoria )
+                           usuario, fecha_incidencia,  categoria )
     insert_incidence(incidencia)
+    assign_devices(incidence_id=id_incidencia,devices_ids=devices_ids)
 
 
     return render_template('base.html', username=session.get('username'), role=session.get('role'))

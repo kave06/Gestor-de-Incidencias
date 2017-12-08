@@ -157,3 +157,31 @@ def select_open_incidences(usuario) -> tuple:
 def set_resolve(incidence,resolve):
     incidence.resolve = resolve
 
+def get_next_id():
+    #result_set = []
+
+    query = "Select count(*) from incidences "
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        result_set = cursor.fetchall()
+        cursor.close()
+
+        incidence_id = "INC_"+datetime.year
+        if result_set < 10:
+            incidence_id = incidence_id + "000"+result_set
+        elif result_set <100:
+            incidence_id = incidence_id + "00"+ result_set
+        elif result_set <1000:
+            incidence_id = incidence_id + "0"+ result_set
+        else:
+            incidence_id = incidence_id + result_set
+    except Exception as err:
+        logger.error(err)
+
+    return incidence_id
