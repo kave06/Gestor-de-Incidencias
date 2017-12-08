@@ -1,3 +1,31 @@
 .card-headerLogin {
     text-align: center;
+    text-align: left;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    margin: 20px auto auto auto;
+        margin-top: 20px;
+    display: block;
+    margin-top: 20px;
+}
+.btn-primary {
+    margin-top: 20px;
+}
+.form-group {
+    margin: 20px auto auto auto;
+    max-width: 500px;
+    position: relative;
+    display: block;
+    margin: auto !important;
+}
+body {
+    background-color: #343a40 !important;
+    color: #9A9DA0;
+}
+.error {
+    text-align: center;
+    color: red;
 }

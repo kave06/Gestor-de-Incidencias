@@ -155,18 +155,27 @@
 	padding:0px 5px;
 }
 
+ .form-container {
+        margin:20px;
+        padding: 0 20px 20px 10px;
+        border-radius:0px;
+        background:transparent;
+        color: white !important;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        margin: auto;
+ }
 
-.form-container {
-	margin:20px;
-	padding:20px;
-	border-radius:0px;
-	background:#B3E5FC;
-	color:black !important;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
-	transition: all .3s ease-in-out;
+
+
+@media (min-width: 992px) {
+    .form-container {
+        margin-left: 200px;
+    }
 }
+
 
 .form-container .form-title{
 	font-size:25px;
@@ -195,16 +204,14 @@
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
-}
-
-.form-container .btn.submit-form:focus{
-	outline:0px;
-	color:white;
+    cursor: pointer;
+    font-weight: 400;
 }
 
 .form-container .btn.submit-form:hover{
 	background:#337ab7;
 	color:white;
+    font-weight: 600;
 }
 
 .form-container .tooltip.top .tooltip-arrow {
@@ -258,12 +265,6 @@
 	opacity:1 !important;
 }
 
-.form-container textarea:focus,.form-container textarea:hover{
-	background:#fff;
-	outline:none;
-	border:0px;
-}
-
 .form-container .req-input textarea {
 	max-width:calc(100% - 50px);
     width: 100%;
@@ -272,41 +273,13 @@
     color: #777;
     padding: 10px 9px 0px 9px;
 	float:left;
-
-}
-.form-container input[type=text]:focus, .form-container input[type=password]:focus, .form-container input[type=date]:focus, .form-container input[type=email]:focus, .form-container input[type=tel]:focus, .form-container select{
-    background:#fff;
-	color:#777;
-	border-left:0px;
-	outline:none;
-}
-
-.form-container input[type=text]:hover,.form-container input[type=password]:hover,.form-container input[type=date]:focus,.form-container input[type=email]:hover,.form-container input[type=tel]:hover, . form-container select{
-	background:#fff;
-}
-
-.form-container input[type=text], .form-container input[type=password], .form-container input[type=date]:focus, .form-container input[type=email],input[type=tel], form-container select{
-	width:calc(100% - 50px);
-	float:left;
-	border-radius:0px;
-	border:0px solid #ddd;
-	padding:0px 9px;
-	height:40px;
-	line-height:40px;
-	color:#777;
-	background:#fff;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
-	transition: all .3s ease-in-out;
-    margin: 10px;
-    height: 50px;
 }
 
 input[type="date"] {
     display: block;
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .selector {
@@ -322,11 +295,11 @@ input[type="date"] {
 }
 
 .form-title span {
-    color: black;
+    color: white;
 }
 
 .row span {
-    color: black;
+    color: white;
 }
 
 .req-descripcion input[type="text"] {
@@ -338,7 +311,6 @@ input[type="date"] {
 }
 
 textarea {
-    width: calc(100% - 50px);
     float: left;
     border: 0px solid #ddd;
     padding: 9px 9px;
@@ -346,7 +318,8 @@ textarea {
     -moz-transition: all .3s ease-in-out;
     -o-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
-    margin: 10px;
+    margin: 0 10px;
+    max-height: 185px;
 }
 
 .selector select {
@@ -364,4 +337,33 @@ textarea {
     width: auto;
     margin: auto;
     display: flex;
+}
+
+.form-title {
+    margin: auto !important;
+}
+
+.form-group.col-md-6 {
+    display: inline-flex;
+}
+
+#exampleSelect1 {
+    margin-top: 10px;
+    margin-right: 29px;
+}
+
+#submit-incidencia {
+    position: relative !important;
+    bottom: 0 !important;
+}
+.icon-characters {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    text-align: left;
+    margin: 0 5px 0 30px;
+}
+.form-group {
+    margin-bottom: 5px !important;
 }

@@ -1,0 +1,21 @@
+#exampleAccordion {
+    border-right: medium solid #e9ecef;
+    border-top: medium solid #e9ecef;
+}
+.usuario, .role {
+    cursor: initial !important;
+    color: rgba(255,255,255,.5) !important;
+    padding: .5rem 1rem !important;
+    padding-right: .5rem !important;
+    padding-left: .5rem !important;
+    display: block !important;
+}
+#mainNav.fixed-top .navbar-sidenav {
+    height: calc(100vh);
+}
+b, strong {
+    font-weight: normal;
+}
+.navbar-brand:hover {
+    font-weight: 600;
+}

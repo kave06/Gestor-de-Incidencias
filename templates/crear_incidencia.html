@@ -1,76 +1,134 @@
 
-{% extends "base_crear_incidencia.html" %}
+{% extends "base.html" %}
 
-{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}<title>Crear Incidencia</title>{% endblock %}
 
-{% block title %}Crear Incidencia{% endblock %}
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- styles para crear incidencia -->
+    <link href="../static/css/crear_incidencia.css" rel="stylesheet">
+    <!-- Custom styles from base-->
+    <link href="/static/css/base.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block page_content %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- styles para crear incidencia -->
-  <link href="../static/css/crear_incidencia.css" rel="stylesheet">
 
-<div class="container">
-    <div class="row">
+
+    {% block content %}
+
+    <div class="container">
     	<div class="col-md-12">
 			<form class="form-incidencia" action="{{ url_for('handle_data') }}" method="post" >
-                <div id="contact-form" class="form-container" data-form-container>
+                <div id="incidencia-form" class="form-container" data-form-container>
 
-                    <div class="row">
-                        <div class="form-title">
-                            <span>Rellenar nueva incidencia</span>
-                        </div>
+                    <div class="form-title">
+                        <span>Rellenar nueva incidencia</span>
                     </div>
 
-                    <div class="input-container">
-                        <div class="row">
-                                <span class="req-titulo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el título de la incidencia"> </span>
-                                <input name="titulo_incidencia" type="text" data-min-length="8" placeholder="Título de incidencia *">
-                        </div>
+                    <div class="row form-group input-container">
+                        <span>Título de la incidencia *</span>
+                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir el título de la incidencia, mínimo 8 caracteres."  required>
+                    </div>
 
-                        <div class="row">
-                                <span class="req-descripcion input-status" data-toggle="tooltip" data-placement="top" title="Desarrolle una descripción de la incidencia"> </span>
-                                ​<textarea name="descripcion_incidencia" id="txtArea" placeholder="Descripción *" rows="10" cols="70"></textarea>
-                        </div>
+                    <div class="row form-group input-container">
+                        <span>Descripción *</span>
+                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia."  required></textarea>
+                        <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
+                        <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
+                    </div>
 
-                        <div class="row">
-                                <span class="req-id-dispositivo input-status" data-toggle="tooltip" data-placement="top" title="Introduzca el identificador del dispositivo"> </span>
-                                <input name="id_dispositivo" type="text" data-min-length="10" placeholder="Id dispositivo">
-                        </div>
+                    <div class="row form-group input-container">
+                        <span>Identificador del dispositivo</span>
+                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo de la incidencia, mínimo 10 caracteres." >
+                    </div>
 
-                        <div class="col-md-6 req-fecha-incidencia">
-                            <div class="col-md-6 col-md-offset-3 selector">
-                                <span> Seleccione la fecha de incidencia * : </span>
-                                <input type="date" name="fecha_incidencia">
-                            </div>
-                        </div>
+                    <div class="form-group col-md-6 pull-left">
+                        <label class="col-form-label">Fecha de la incidencia *</label>
+                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia" max='2000-13-13' required>
+                    </div>
 
-                        <div class="col-md-6 req-categoria">
-                            <span>
-                                <!-- <span class="input-status" data-toggle="tooltip" data-placement="top" title="Seleccione la categoría de la incidencia"> </span> -->
-                                <div class="col-md-6 col-md-offset-3 selector">
-                                    <span class="texto-selector"> Seleccione la categoría * : </span>
-                                    <select name="categoria">
-                                      <option>Hardware</option>
-                                      <option>Problemas con las comunicaciones</option>
-                                      <option>Software básico</option>
-                                      <option>software de aplicaciones</option>
-                                    </select>
-                                </div>
-                            </span>
-                        </div>
+                    <div class="form-group col-md-6 pull-right">
+                        <label>Categoría de la incidencia *</label>
+                        <select name="categoria" class="form-control" id="exampleSelect1" required>
+                            <option>Hardware</option>
+                            <option>Problemas con las comunicaciones</option>
+                            <option>Software básico</option>
+                            <option>Software de aplicaciones</option>
+                        </select>
+                    </div>
 
-                        <div class="row submit-row">
-                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
-                            <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
-                            <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
-                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
-                        </div>
+                    <!--
+                    <div class="form-group col-md-12 pull-left texto-campos-obligatorios">
+                        <span>Los campos marcados con * son obligatorios</span>
+                    </div>
+                    -->
+
+                    <div class="submit-row">
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                        <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
+                        <input class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" value=" CREAR " type="submit">
+                    </div>
 
                     </div>
                 </div>
 			</form>
 		</div>
     </div>
-</div>
+
+    {% endblock %}
+
 {% endblock %}
+
+{% block scripts %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="http://code.jquery.com/jquery-1.5.js"></script>
+    <script>
+        $('#txtArea').keyup(function () {
+            var max = 500;
+            var len = $(this).val().length;
+            if (len > max+1) {
+                var char = len - max;
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobran ' + char + ' caracteres.');
+            } else if (len == max+1) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobra 1 caracter.');
+            } else if (len == max) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres.');
+            } else if (len == max-1) {
+                $('#charNum').text('Le queda 1 caracter.');
+            } else {
+                var char = max - len;
+                $('#charNum').text('Le quedan ' + char + ' caracteres.');
+            }
+        });
+    </script>
+    <script>
+        /* Para restringir la selección de la fecha al día actual */
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("incidencia-date-input").setAttribute("max", today);
+    </script>
+{% endblock scripts %}
