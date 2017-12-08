@@ -58,17 +58,17 @@ def login():
 def handle_login():
     error = None
     # form = LoginForm()
-    logger.info('Entro en el formulario de login')
+    # logger.info('Entro en el formulario de login')
     current_user = mapping_object(request.form['username'])
     if current_user is not None:
         # logger.info('current_user: {}', current_user)
         if current_user.password == request.form['password']:
-            logger.info('username: {}, role: {}'.format(session.get('id_user'),
-                                                        current_user.role))
+            # logger.info('username: {}, role: {}'.format(session.get('id_user'),
+            #                                             current_user.role))
 
-            session['username'] = current_user.username
-            session['role'] = current_user.role
-            logger.info(session.get('username'))
+            session['username'] = current_user.username_id
+            session['role'] = current_user.role_id
+            # logger.info(session.get('username'))
 
             # global session_user
             # global session_role
@@ -103,7 +103,7 @@ def handle_login():
 
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
 def crear_incidencia():
-    logger.info('dentro de crear_incidencia()')
+    # logger.info('dentro de crear_incidencia()')
     return render_template('crear_incidencia.html', username=session.get('username'),
                            role=session.get('role'))
 
@@ -116,8 +116,8 @@ def mostrar_incidencias():
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
 
-    logger.info('Estoy en handle')
-    logger.info('Estoy en handle de subir incidencia')
+    # logger.info('Estoy en handle')
+    # logger.info('Estoy en handle de subir incidencia')
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
 
@@ -146,14 +146,14 @@ def handle_data():
     incidencia = Incidence(id_incidencia, titulo_incidencia, descripcion_incidencia,
                            usuario, fecha_incidencia,  categoria )
     insert_incidence(incidencia)
-    assign_devices(incidence_id=id_incidencia,devices_ids=devices_ids)
+    # assign_devices(incidence_id=id_incidencia,devices_ids=devices_ids)
 
 
     return render_template('base.html', username=session.get('username'), role=session.get('role'))
 
 @app.route('/dashboard')
 def dashboard():
-    logger.info(session.get('username'))
+    # logger.info(session.get('username'))
     return render_template('base.html', username=session.get('username'), role=session.get('role'))
 
 @app.route("/logout")

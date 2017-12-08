@@ -64,21 +64,21 @@ def mapping_object(incidencia_x: str) -> Incidence:
 
 
 def insert_incidence(incidencia):
-    incidence_id1 = incidencia.incidence_id
-    title1 = incidencia.title
-    description1 = incidencia.description
-    username1 = incidencia.username
-    incidence_date1 = incidencia.incidence_date
-    category_id1 = incidencia.category_id
-    priority_id1 = incidencia.priority_id
-    technician_hours1 = incidencia.technician_hours
-    resolve1 = incidencia.resolve
-    query = "INSERT INTO incidences" \
+    incidence_id = incidencia.incidence_id
+    title = incidencia.title
+    description = incidencia.description
+    username = incidencia.username
+    incidence_date = incidencia.incidence_date
+    category_id = incidencia.category_id
+    priority_id = incidencia.priority_id
+    technician_hours = incidencia.technician_hours
+    resolve = incidencia.resolve
+    query = "INSERT INTO incidences " \
             "VALUES ('{}','{}','{}'," \
             " '{}','{}','{}','{}','{}'," \
-            "'{}' )".format(incidence_id1, title1, description1,
-                            username1, incidence_date1, category_id1,
-                            priority_id1, technician_hours1, resolve1)
+            "'{}' )".format(incidence_id, title, description,
+                            username, incidence_date, category_id,
+                            priority_id, technician_hours, resolve)
 
     logger.info(query)
 
@@ -162,26 +162,37 @@ def get_next_id():
 
     query = "Select count(*) from incidences "
 
-    logger.info(query)
+    # logger.info(query)
 
     cnx = connect_db()
 
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
-        result_set = cursor.fetchall()
+        result_set = cursor.fetchmany(1)
         cursor.close()
+        last_row = result_set[0][0] +1
+        # logger.info(type(last_row))
+        logger.info('las_row: {}'.format(last_row))
 
-        incidence_id = "INC_"+datetime.year
-        if result_set < 10:
-            incidence_id = incidence_id + "000"+result_set
-        elif result_set <100:
-            incidence_id = incidence_id + "00"+ result_set
-        elif result_set <1000:
-            incidence_id = incidence_id + "0"+ result_set
+
+        incidence_id = ''
+        incidence_id += 'INC'
+        incidence_id += str(date.today().year)
+        logger.info(type(incidence_id))
+        logger.info(incidence_id)
+
+        if last_row < 10:
+            incidence_id = incidence_id + "000"+ str(last_row)
+        elif last_row <100:
+            incidence_id = incidence_id + "00"+ str(last_row)
+        elif last_row <1000:
+            incidence_id = incidence_id + "0"+ str(last_row)
         else:
-            incidence_id = incidence_id + result_set
+            incidence_id = incidence_id + last_row
     except Exception as err:
         logger.error(err)
+
+    logger.info(incidence_id)
 
     return incidence_id

@@ -19,13 +19,13 @@ def select_user(username: str):
     result_set = ''
 
     # query3 = "SELECT * FROM users WHERE user_username= '{}'".format(user_name)
-    query = "SELECT t1.username, t1.name, " \
+    query = "SELECT t1.username_id, t1.name, " \
              "t1.email, t1.password, t2.role_name " \
              "FROM users AS t1 " \
              "JOIN " \
              "roles t2 " \
              "ON t1.role_id = t2.role_id " \
-             "WHERE username='{}'".format(username)
+             "WHERE username_id='{}'".format(username)
     logger.info(query)
 
     cnx = connect_db()
@@ -44,7 +44,7 @@ def select_user(username: str):
 
 def mapping_object(username_x: str) -> User:
     result_set = select_user(username_x)
-    logger.info(type(result_set))
+    # logger.info(type(result_set))
 
     if result_set.__len__() is not 0:
         logger.info(result_set)
