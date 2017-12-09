@@ -1,0 +1,157 @@
+.content-wrapper {
+    background-color: #343a40 !important;
+}
+.parallax-pal .title-font {
+    text-align: center;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+#myModal1 .modal-content{
+    -webkit-box-shadow: 5px 5px 5px rgb(159, 159, 159),
+    -moz-box-shadow: 5px 5px 5px rgb(159, 159, 159);
+    box-shadow: 5px 5px 5px rgb(159, 159, 159);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+#myModal1 b, strong {
+    font-weight: bolder !important;
+}
+#myModal1 ul {
+    list-style: square;
+}
+#myModal1 li {
+    font-size: 10px;
+}
+#myModal1 li span {
+    font-size: 1rem;
+}
+#myModal1 .close {
+    color: #000;
+    text-shadow: 0 1px 0 white;
+}
+#myModal1 .btn-danger {
+    width: 147.3px;
+}
+#myModal1 .btn-danger:hover {
+    font-weight: 600;
+}
+.modal-title {
+    margin-left: 2rem !important;
+    font-weight: 600;
+}
+.parallax-pal > h2.title-font.xlarge.pal {
+    color: #9a9da0;
+}
+.parallax-pal > h3.pal {
+    color: #9a9da0;
+    font-size: 28pt;
+}
+.parallax-pal > p.pal {
+    color: white;
+}
+.title-font.xlarge, .title-font .xlarge {
+    font-size: 36pt;
+}
+.title-font.pal-line, .title-font.pal {
+    line-height: 1.5;
+}
+.title-font.pal-pad, .title-font.pal {
+    padding-bottom: 20px;
+}
+.title-font.pal-case, .title-font.pal {
+    text-transform: uppercase;
+}
+.title-font.xbold, .title-font .xbold {
+    font-weight: 700;
+}
+.title-font.light, .title-font .light {
+    font-weight: 200;
+}
+/*
+.col-xs-12.col-sm-4.navigation-item:hover {
+    background-color: lightgrey;
+    border-radius: 15px;
+}
+*/
+.parallax {
+    //margin-left: 250px;
+	background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 100vw auto;
+    text-align: center;
+    background-size: 100vw auto;
+    background-position: 125px 60px;
+}
+@media screen and (max-width: 991px) {
+    .parallax {
+        background-position: 0px 60px;
+        background-size: cover !important;
+    }
+}
+.parallax-overlay-1 {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.parallax-overlay-1 .container {
+    padding: 100px 20px;
+}
+.status-circle {
+    background-color: #fff;
+    border: 10px solid #ededed;
+    height: 230px;
+    width: 230px;
+    margin: 50px auto 25px auto;
+    position: relative;
+    cursor: auto;
+    -webkit-border-radius: 230px;
+    -moz-border-radius: 230px;
+    -ms-border-radius: 230px;
+    -o-border-radius: 230px;
+    border-radius: 230px;
+    -webkit-transition: border .5s;
+    -moz-transition: border .5s;
+    -ms-transition: border .5s;
+    -o-transition: border .5s;
+    transition: border .5s;
+	border: 10px solid #29343D;
+}
+.status-circle p + p {
+    color: #808080;
+    margin-top: -12px;
+    font-size: 16px;
+    font-weight: 400;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-width: 68%;
+    margin-left: 16%;
+}
+.status-circle .circle-container {
+    position: absolute;
+    top: 12%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.status-circle span.fa {
+    display: block;
+    color: #9A9DA0;
+    font-size: 60px;
+    -webkit-transition: color .5s;
+    -moz-transition: color .5s;
+    -ms-transition: color .5s;
+    -o-transition: color .5s;
+    transition: color .5s;
+}
+.status-circle .status-number {
+    color: #2c3e50;
+    margin-top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+.col-xs-12.col-sm-6.col-md-3 a {
+    cursor: pointer;
+}

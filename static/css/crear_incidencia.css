@@ -1,3 +1,6 @@
+.form-incidencia {
+    padding-top: 8vh;
+}
 .form-container div, .form-container  span{
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
@@ -197,15 +200,15 @@
 .form-container .btn.submit-form{
 	margin-top:15px;
 	padding:12px;
-	background:#286090;
-	color:white;
+	background:#9A9DA0;
+	color:black;
 	border-radius:0px;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
 	-o-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .form-container .btn.submit-form:hover{
@@ -366,4 +369,57 @@ textarea {
 }
 .form-group {
     margin-bottom: 5px !important;
+}
+
+#incidencia-form {
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+.col-form-label {
+    padding-top: calc(.375rem + 3px);
+    padding-bottom: calc(.375rem + 1px);
+    margin-bottom: 0;
+    line-height: 0.9;
+}
+.parallax-pal .title-font {
+    text-align: center;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+.parallax-pal > h2.title-font.xlarge.pal {
+    color: white;
+}
+.parallax-pal > h3.pal {
+    color: white;
+    font-size: 28pt;
+}
+.parallax-pal > p.pal {
+    color: white;
+}
+.title-font.xlarge, .title-font .xlarge {
+    font-size: 36pt;
+}
+.title-font.pal-line, .title-font.pal {
+    line-height: 1.5;
+}
+.title-font.pal-pad, .title-font.pal {
+    padding-bottom: 20px;
+}
+.title-font.pal-case, .title-font.pal {
+    text-transform: uppercase;
+}
+.title-font.xbold, .title-font .xbold {
+    font-weight: 700;
+}
+.title-font.light, .title-font .light {
+    font-weight: 200;
+}
+#calendarSubmit {
+    position: relative;
+    z-index: 1;
+    left: -30px;
+    top: 15px;
+    color: #7B7B7B;
+    cursor: pointer;
+    width: 0;
 }

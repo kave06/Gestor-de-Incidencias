@@ -30,35 +30,41 @@
 			<form class="form-incidencia" action="{{ url_for('handle_data') }}" method="post" >
                 <div id="incidencia-form" class="form-container" data-form-container>
 
-                    <div class="form-title">
-                        <span>Rellenar nueva incidencia</span>
+                    <div class="col-md-12 parallax-pal">
+                        <h3 class="title-font xlarge pal">
+                            <span class="light">Abrir nueva</span>
+                            <span class="xbold"> incidencia</span>
+                        </h3>
+                    </div><!-- End .col-md-12 -->
+
+                    <div class="row form-group input-container">
+                        <span>Título de la incidencia</span>
+                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir un título para la incidencia"  required>
                     </div>
 
                     <div class="row form-group input-container">
-                        <span>Título de la incidencia *</span>
-                        <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir el título de la incidencia, mínimo 8 caracteres."  required>
-                    </div>
-
-                    <div class="row form-group input-container">
-                        <span>Descripción *</span>
-                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia."  required></textarea>
+                        <span>Descripción</span>
+                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" maxlength="500" minlength="25" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia"  required></textarea>
                         <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
                         <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
                     </div>
 
                     <div class="row form-group input-container">
                         <span>Identificador del dispositivo</span>
-                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo de la incidencia, mínimo 10 caracteres." >
+                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo." >
                     </div>
 
                     <div class="form-group col-md-6 pull-left">
-                        <label class="col-form-label">Fecha de la incidencia *</label>
+                        <label class="col-form-label">Fecha de la incidencia</label>
                         <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia" max='2000-13-13' required>
+                        <i id="calendarSubmit" class="fa fa-calendar-o"></i>
                     </div>
 
                     <div class="form-group col-md-6 pull-right">
-                        <label>Categoría de la incidencia *</label>
+                        <label class="col-form-label">Categoría de la incidencia</label>
                         <select name="categoria" class="form-control" id="exampleSelect1" required>
+{#                            <option value="" selected disabled>Please select an option...</option>#}
+                            <option selected disabled hidden style='display: none' value=''>Seleccione una opción...</option>
                             <option>Hardware</option>
                             <option>Problemas con las comunicaciones</option>
                             <option>Software básico</option>

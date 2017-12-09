@@ -154,7 +154,7 @@ def handle_data():
 @app.route('/dashboard')
 def dashboard():
     # logger.info(session.get('username'))
-    return render_template('base.html', username=session.get('username'), role=session.get('role'))
+    return render_template('dashboard.html', username=session.get('username'), role=session.get('role'))
 
 @app.route("/logout")
 def logout():

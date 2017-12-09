@@ -1,3 +1,9 @@
+.content-wrapper {
+    background-color: #343a40 !important;
+}
+h4 {
+    margin-top: .5rem !important;
+}
 .row {
     margin-right: 0 !important;
     margin-left: 0 !important;
@@ -20,7 +26,7 @@ table td:nth-child(2), table td:nth-child(3), table th:nth-child(2), table th:nt
     text-align: center;
 }
 .table-striped tbody tr:nth-of-type(2n+1) {
-    background-color: rgba(0, 255, 129, 0.1);
+    background-color:#F7F7F7;
 }
 .table-hover tbody tr:hover {
     background-color: rgba(0, 138, 255, 0.1);
@@ -37,10 +43,11 @@ div.dataTables_wrapper div.dataTables_length select {
     text-align: center !important;
 }
 .page-item.active .page-link {
-    color: #DDDDDD !important;
-    background-color: #009dff !important;
-    border-color: #009dff !important;
+    color: black !important;
+    background-color: #F7F7F7 !important;
+    border-color: #F7F7F7 !important;
     border-radius: 5px !important;
+    font-weight: 600 !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:active, .paginate_button:hover {
     outline: none !important;
@@ -61,8 +68,26 @@ div.dataTables_wrapper div.dataTables_length select {
     font-size: 1rem;
 }
 #myModal1 .modal-content {
-    background-color: rgb(168, 221, 178);
+    background-color: #343a40;
+    color: white;
+}
+#myModal1 .close {
+    color: white;
+    text-shadow: 0 1px 0 #000;
+}
+#myModal1 .btn-danger {
+    width: 147.3px;
+}
+#myModal1 .btn-danger:hover {
+    font-weight: 600;
 }
 #cierreModal .modal-content {
-    background-color: #8fd4ff;
+    background-color: #F7F7F7;
+}
+#cierreModal .modal-title {
+    color: #343a40;
+}
+.modal-title {
+    margin-left: 3rem !important;
+    font-weight: 600;
 }
