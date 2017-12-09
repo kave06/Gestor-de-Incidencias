@@ -1,0 +1,68 @@
+.row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.col-md-12 {
+    -ms-flex: 0 0 99%;
+    flex: 0 0 99%;
+    max-width: 99%;
+}
+.form-inline {
+    display: block !important;
+}
+.row-modal {
+    cursor: pointer;
+}
+/*.table-bordered {*/
+    /*border: 1px solid #343a40;*/
+/*}*/
+table td:nth-child(2), table td:nth-child(3), table th:nth-child(2), table th:nth-child(3) {
+    text-align: center;
+}
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: rgba(0, 255, 129, 0.1);
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 138, 255, 0.1);
+}
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: none !important;
+}
+table.dataTable tfoot th, table.dataTable tfoot td {
+    border-top: 1px solid #e9ecef !important;
+}
+div.dataTables_wrapper div.dataTables_length select {
+    margin: 0 10px !important;
+    width: 98px !important;
+    text-align: center !important;
+}
+.page-item.active .page-link {
+    color: #DDDDDD !important;
+    background-color: #009dff !important;
+    border-color: #009dff !important;
+    border-radius: 5px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:active, .paginate_button:hover {
+    outline: none !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+#myModal1 b, strong {
+    font-weight: bolder !important;
+}
+#myModal1 ul {
+    list-style: square;
+}
+#myModal1 li {
+    font-size: 10px;
+}
+#myModal1 li span {
+    font-size: 1rem;
+}
+#myModal1 .modal-content {
+    background-color: rgb(168, 221, 178);
+}
+#cierreModal .modal-content {
+    background-color: #8fd4ff;
+}

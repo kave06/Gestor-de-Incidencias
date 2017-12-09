@@ -111,7 +111,7 @@ def crear_incidencia():
 def mostrar_incidencias():
     incidencias = select_incidences_user(session.get('username'))
     return render_template('incidencias.html', username=session.get('username'),
-                           role=session.get('role'),incidencias=incidencias)
+                           role=session.get('role'), incidencias=incidencias)
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
