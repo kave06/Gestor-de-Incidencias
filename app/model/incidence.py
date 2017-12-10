@@ -122,13 +122,14 @@ def select_incidences_user(usuario) -> tuple:
 
     return result_set
 
+
 def select_open_incidences(usuario) -> tuple:
     result_set = []
-    query =" SELECT * FROM incidences where incidence_id IN (" \
-           "SELECT DISTINCT incidence_id FROM status" \
-           "WHERE incidence_id NOT IN (" \
-           "SELECT DISTINCT incidence_id FROM status " \
-           "WHERE status_id=6 and username='{}'))".format(usuario)
+    query = "SELECT * FROM incidences where incidence_id IN ( " \
+	        "SELECT DISTINCT incidence_id FROM status " \
+	        "WHERE incidence_id NOT IN ( " \
+		    "SELECT DISTINCT incidence_id FROM status " \
+		    "WHERE status_id=6 and username='{}'))".format(usuario)
 
     logger.info(query)
 
@@ -154,8 +155,10 @@ def select_open_incidences(usuario) -> tuple:
 
     return result_set
 
+
 def set_resolve(incidence,resolve):
     incidence.resolve = resolve
+
 
 def get_next_id():
     #result_set = []
@@ -196,3 +199,34 @@ def get_next_id():
     logger.info(incidence_id)
 
     return incidence_id
+
+
+def select_last_incidence_user(usuario) -> tuple:
+    result_set = []
+    query = "SELECT * FROM incidences " \
+            "WHERE username = '{}' " \
+            "ORDER BY incidence_id DESC LIMIT 1".format(usuario)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        # result_set = cursor.fetchall()
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    # logger.info('result_set: {}'.format(result_set))
+    # logger.info('type: {}'.format(type(result_set)))
+    # logger.info('result_set[0][0]: {}'.format(result_set[0][0]))
+    # logger.info(len(result_set[0]))
+
+    return result_set

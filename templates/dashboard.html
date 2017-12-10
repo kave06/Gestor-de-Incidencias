@@ -22,10 +22,7 @@
 
 {% block page_content %}
 
-
     {% block content %}
-
-
 
         <div class="content-wrapper">
             <!-- Tarjeta de incidencia (heredado de Modal) -->
@@ -39,34 +36,35 @@
                 <div id="myModal1" class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-address-card-o" aria-hidden="true"></i> Impresora desconectada</h4>
+                          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-address-card-o" aria-hidden="true"></i> {{ incidencia[0][1] }} </h4>
                       </div>
-                      <div class="modal-body">
+                      <div id="incidencia-detalles" class="modal-body">
                           <div class="row">
                               <div class="col-md-6">
                                   <ul>
-                                      <li><span><b>Identificador de la incidencia:</b> </span></li>
-                                      <li><span><b>Creada por el usuario:</b> </span></li>
-                                      <li><span><b>Descripción:</b> </span></li>
+                                      <div id="idInc" class="modal-body"><span><b>Identificador de la incidencia:</b> {{ incidencia[0][0] }} </span></div>
+                                      <div id="userInc" class="modal-body"><span><b>Creada por el usuario:</b> {{ incidencia[0][3] }} </span></div>
+                                      <div id="descInc" class="modal-body"><span><b>Descripción:</b> {{ incidencia[0][2] }} </span></div>
                                   </ul>
                               </div>
                               <div class="col-md-6">
                                   <ul>
-                                      <li><span><b>Fecha:</b> </span></li>
-                                      <li><span><b>Categoría:</b> </span></li>
-                                      <li><span><b>Prioridad:</b> </span></li>
-                                      <li><span><b>Horas dedicadas por el técnico a su resolución:</b> </span></li>
-                                      <li><span><b>Estado:</b> </span></li>
+                                      <div id="fechaInc" class="modal-body"><span><b>Fecha:</b> {{ incidencia[0][4] }} </span></div>
+                                      <div id="catInc" class="modal-body"><span><b>Categoría:</b> {{ incidencia[0][5] }} </span></div>
+                                      <div id="priorInc" class="modal-body"><span><b>Prioridad:</b> {{ incidencia[0][6] }} </span></div>
+                                      <div id="horasInc" class="modal-body"><span><b>Horas dedicadas por el técnico a su resolución:</b> {{ incidencia[0][7] }} </span></div>
+                                      <div id="estadoInc" class="modal-body"><span><b>Estado:</b> {{ incidencia[0][8] }} </span></div>
                                   </ul>
                               </div>
                           </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
+                        <button type="button" id="modalButtonCierre" class="btn btn-danger" data-toggle="modal" data-titulo="{{ incidencia[0][1] }}" data-id="{{ incidencia[0][0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                       </div>
                     </div>
                   </div> <!-- /.modal-dialog -->
+
             </div> <!-- /.container-fluid -->
 
         <!-- Parallax -->
@@ -143,7 +141,7 @@
         </section> <!--  Parallax End -->
         </div> <!-- /.content-wrapper -->
 
-        <!-- Modal conformar cierre -->
+        <!-- Modal confirmar cierre -->
         <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -152,7 +150,7 @@
                         <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="alert alert-info">Incidencia INC_xxxx_yyyy: Impresora desconectada</div>
+                        <div class="alert alert-info modal-body" id="idInc"></div>
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
@@ -174,4 +172,21 @@
     <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="../static/startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
+    <script>
+        $(function(){
+            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
+                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                //make your ajax call populate items or what even you need
+                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
+                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
+            });
+            $("#modalButtonCierre").on('click', function(){
+                //or do your operations here instead of on show of modal to populate values to modal.
+                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
+
+            });
+        });
+    </script>
 {% endblock scripts %}

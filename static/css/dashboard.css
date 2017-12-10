@@ -6,14 +6,6 @@
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
 }
-#myModal1 .modal-content{
-    -webkit-box-shadow: 5px 5px 5px rgb(159, 159, 159),
-    -moz-box-shadow: 5px 5px 5px rgb(159, 159, 159);
-    box-shadow: 5px 5px 5px rgb(159, 159, 159);
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding-box;
-    background-clip: padding-box;
-}
 #myModal1 b, strong {
     font-weight: bolder !important;
 }
@@ -26,9 +18,13 @@
 #myModal1 li span {
     font-size: 1rem;
 }
+#myModal1 .modal-content {
+    background-color: white;
+    color: #343a40;
+}
 #myModal1 .close {
-    color: #000;
-    text-shadow: 0 1px 0 white;
+    color: white;
+    text-shadow: 0 1px 0 #000;
 }
 #myModal1 .btn-danger {
     width: 147.3px;
@@ -36,9 +32,22 @@
 #myModal1 .btn-danger:hover {
     font-weight: 600;
 }
+#cierreModal .modal-content {
+    background-color: #F7F7F7;
+}
+#cierreModal .modal-title {
+    color: #343a40;
+}
 .modal-title {
-    margin-left: 2rem !important;
+    margin-left: 3rem !important;
     font-weight: 600;
+}
+#myModal1 ul {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+#myModal1 .modal-body {
+    padding: 0;
 }
 .parallax-pal > h2.title-font.xlarge.pal {
     color: #9a9da0;
