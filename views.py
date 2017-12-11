@@ -1,8 +1,9 @@
 import os
-import time
+import datetime
 from app.model.incidence import insert_incidence, Incidence, \
-    select_incidences_user, get_next_id
+    select_incidences_user, select_last_incidence_user, select_open_incidences, get_next_id
 from app.model.device import assign_devices
+from app.model.status import insert_status,Status
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
@@ -50,9 +51,11 @@ logger = create_log('{}/gestor.log'.format(path))
 #
 #     return render_template('login.html', form=form, id_user=session.get('id_user'))
 
+
 @app.route('/')
 def login():
     return render_template('login.html')
+
 
 @app.route('/handle_login', methods=['POST'])
 def handle_login():
@@ -107,11 +110,20 @@ def crear_incidencia():
     return render_template('crear_incidencia.html', username=session.get('username'),
                            role=session.get('role'))
 
+
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
     incidencias = select_incidences_user(session.get('username'))
     return render_template('incidencias.html', username=session.get('username'),
-                           role=session.get('role'),incidencias=incidencias)
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/incidencias_abiertas', methods=['GET'])
+def mostrar_incidencias_abiertas():
+    incidencias = select_open_incidences(session.get('username'))
+    return render_template('incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
@@ -124,7 +136,12 @@ def handle_data():
     devices_ids = request.form['id_dispositivo']
 
     fecha_incidencia = request.form['fecha_incidencia']
-    fecha_incidencia = fecha_incidencia + ' 00:00:00'
+    logger.info(fecha_incidencia)
+    if fecha_incidencia == "":
+        fecha_incidencia=datetime.datetime.now()
+    else:
+        fecha_incidencia = fecha_incidencia + datetime.datetime.now().hour + ':00:00'
+
     #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
     usuario = session.get('username')
@@ -146,21 +163,29 @@ def handle_data():
     incidencia = Incidence(id_incidencia, titulo_incidencia, descripcion_incidencia,
                            usuario, fecha_incidencia,  categoria )
     insert_incidence(incidencia)
-    # assign_devices(incidence_id=id_incidencia,devices_ids=devices_ids)
+    status= Status(id_incidencia,usuario,1)
+    insert_status(status)
+    logger.info(devices_ids)
+    assign_devices(id_incidencia,devices_ids)
 
 
     return render_template('base.html', username=session.get('username'), role=session.get('role'))
+
 
 @app.route('/dashboard')
 def dashboard():
     # logger.info(session.get('username'))
-    return render_template('base.html', username=session.get('username'), role=session.get('role'))
+    incidencia = select_last_incidence_user(session.get('username'))
+    return render_template('dashboard.html', username=session.get('username'),
+                           role=session.get('role'), incidencia=incidencia)
+
 
 @app.route("/logout")
 def logout():
     # logout_user()
     return render_template('login.html')
     # return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     manager.run()
