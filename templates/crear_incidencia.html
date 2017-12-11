@@ -38,30 +38,30 @@
                     </div><!-- End .col-md-12 -->
 
                     <div class="row form-group input-container">
-                        <span>Título de la incidencia</span>
+                        <span>Título de la incidencia*</span>
                         <input class="form-control" name="titulo_incidencia" type="text" data-min-length="8" placeholder="Escribir un título para la incidencia"  required>
                     </div>
 
                     <div class="row form-group input-container">
-                        <span>Descripción</span>
-                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" maxlength="500" minlength="25" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia"  required></textarea>
+                        <span>Descripción*</span>
+                        ​<textarea class="form-control" name="descripcion_incidencia" id="txtArea" maxlength="500" minlength="15" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia"  required></textarea>
                         <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
                         <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
                     </div>
 
                     <div class="row form-group input-container">
                         <span>Identificador del dispositivo</span>
-                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo." >
+                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >
                     </div>
 
                     <div class="form-group col-md-6 pull-left">
                         <label class="col-form-label">Fecha de la incidencia</label>
-                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia" max='2000-13-13' required>
+                        <input class="form-control" type="date" id="incidencia-date-input" name="fecha_incidencia" max='2000-13-13' >
                         <i id="calendarSubmit" class="fa fa-calendar-o"></i>
                     </div>
 
                     <div class="form-group col-md-6 pull-right">
-                        <label class="col-form-label">Categoría de la incidencia</label>
+                        <label class="col-form-label">Categoría de la incidencia*</label>
                         <select name="categoria" class="form-control" id="exampleSelect1" required>
 {#                            <option value="" selected disabled>Please select an option...</option>#}
                             <option selected disabled hidden style='display: none' value=''>Seleccione una opción...</option>

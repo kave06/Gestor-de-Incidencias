@@ -17,8 +17,9 @@ def assign_devices(incidence_id,devices_ids):
 
     query = ""
     for device_id in devices_ids:
-        query = query +"INSERT INTO assigned_devices VALUES( " \
-            "incidence_id,device_id)"+";"
+        if device_id != ",":
+            query = query +"INSERT INTO assigned_devices VALUES( " \
+            "'{}',{})".format(incidence_id,device_id)+";"
 
     logger.info(query)
 

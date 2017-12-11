@@ -180,8 +180,8 @@ def get_next_id():
 
 
         incidence_id = ''
-        incidence_id += 'INC'
-        incidence_id += str(date.today().year)
+        incidence_id += 'INC_'
+        incidence_id += str(date.today().year)+"_"
         logger.info(type(incidence_id))
         logger.info(incidence_id)
 
