@@ -2,7 +2,7 @@ import os
 import datetime
 from app.model.incidence import insert_incidence, Incidence, \
     select_incidences_user, select_last_incidence_user, select_open_incidences, get_next_id
-from app.model.device import assign_devices
+from app.model.device import assign_devices,get_devices
 from app.model.status import insert_status,Status
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
@@ -121,6 +121,8 @@ def mostrar_incidencias():
 @app.route('/incidencias_abiertas', methods=['GET'])
 def mostrar_incidencias_abiertas():
     incidencias = select_open_incidences(session.get('username'))
+
+    #devices=get_devices()
     return render_template('incidencias_abiertas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
