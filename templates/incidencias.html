@@ -52,7 +52,7 @@
                               </tfoot>
                               <tbody>
                                 {% for incidencia in incidencias %}
-                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-target="#myModal1">
+                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-categoria="{{ incidencia[9] }}"data-target="#myModal1">
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     <td data-th="Estado">{{ incidencia[5] }}</td>
