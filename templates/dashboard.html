@@ -23,7 +23,7 @@
 {% block page_content %}
 
     {% block content %}
-
+        {% if role == 'cliente' %}
         <div class="content-wrapper">
             <!-- Tarjeta de incidencia (heredado de Modal) -->
             <div class="container-fluid">
@@ -140,7 +140,7 @@
             </div><!-- End .parallax-overlay-1 -->
         </section> <!--  Parallax End -->
         </div> <!-- /.content-wrapper -->
-
+{% endif %}
         <!-- Modal confirmar cierre -->
         <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog">
