@@ -258,11 +258,11 @@ def select_open_assigned_incidences(tecnico) -> tuple:
             "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
-            "WHERE t1.username='{}' AND " \
+            "WHERE " \
             "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN (  " \
             "SELECT incidence_id FROM assigned_technicians " \
-            "WHERE technician_id='{}' )".format(tecnico,tecnico)
-
+            "WHERE technician_id='{}' )".format(tecnico)
+    #"WHERE t1.username='{}' AND " \
     logger.info(query)
 
     cnx = connect_db()
@@ -317,3 +317,42 @@ def select_assigned_incidences(tecnico) -> tuple:
 
     return result_set
 
+def select_closed_incidences() -> tuple:
+    result_set = []
+    query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
+            " t1.incidence_date, t5.status_name, t3.priority_name," \
+            "t1.technician_hours, t1.resolve,t2.category_name " \
+            "FROM incidences AS t1 " \
+            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+            "WHERE " \
+            " t1.incidence_id IN( " \
+            "SELECT DISTINCT incidence_id FROM status " \
+            "WHERE incidence_id IN ( " \
+            "SELECT DISTINCT incidence_id FROM status " \
+            "WHERE status_id=6))"
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        # result_set = cursor.fetchall()
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    # logger.info('result_set: {}'.format(result_set))
+    # logger.info('type: {}'.format(type(result_set)))
+    # logger.info('result_set[0][0]: {}'.format(result_set[0][0]))
+    # logger.info(len(result_set[0]))
+
+    return result_set
