@@ -1,7 +1,7 @@
 import os
 import datetime
 from app.model.incidence import insert_incidence, Incidence, \
-    select_incidences_user, select_last_incidence_user, select_open_incidences, get_next_id
+    select_incidences_user, select_last_incidence_user, select_open_assigned_incidences, select_closed_incidences, select_open_incidences, get_next_id
 from app.model.device import assign_devices,get_devices
 from app.model.status import insert_status,Status
 from flask import render_template, session, url_for, request, redirect
@@ -124,6 +124,18 @@ def mostrar_incidencias_abiertas():
 
     #devices=get_devices()
     return render_template('incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+@app.route('/incidencias_asignadas', methods=['GET'])
+def mostrar_incidencias_asignadas():
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+@app.route('/incidencias_cerradas', methods=['GET'])
+def mostrar_incidencias_cerradas():
+    incidencias = select_closed_incidences()
+    return render_template('incidencias_cerradas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
 
