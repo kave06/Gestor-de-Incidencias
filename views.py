@@ -1,7 +1,6 @@
 import os
 import datetime
-from app.model.incidence import insert_incidence, Incidence, \
-    select_incidences_user, select_last_incidence_user, select_open_assigned_incidences, select_closed_incidences, select_open_incidences, get_next_id
+from app.model.incidence import *
 from app.model.device import assign_devices,get_devices
 from app.model.status import insert_status,Status
 from flask import render_template, session, url_for, request, redirect
@@ -66,8 +65,6 @@ def handle_login():
     if current_user is not None:
         # logger.info('current_user: {}', current_user)
         if current_user.password == request.form['password']:
-            # logger.info('username: {}, role: {}'.format(session.get('id_user'),
-            #                                             current_user.role))
 
             session['username'] = current_user.username_id
             session['role'] = current_user.role_id
@@ -188,10 +185,15 @@ def handle_data():
 
 @app.route('/dashboard')
 def dashboard():
-    # logger.info(session.get('username'))
-    incidencia = select_last_incidence_user(session.get('username'))
+    logger.info(session.get('username'),session.get('role'))
+    if session.get('role') == 'cliente':
+        incidencias = select_last_incidence_user(session.get('username'))
+    elif session.get('role') == 'tecnico':
+        incidencias= select_assigned_incidences(session.get('username'))
+    else:
+        incidencias=[]
     return render_template('dashboard.html', username=session.get('username'),
-                           role=session.get('role'), incidencia=incidencia)
+                           role=session.get('role'), incidencia=incidencias)
 
 
 @app.route("/logout")
