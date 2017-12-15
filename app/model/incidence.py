@@ -293,10 +293,10 @@ def select_assigned_incidences(tecnico) -> tuple:
             "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
-            "WHERE t1.username='{}' AND " \
+            "WHERE  " \
             "(t4.end_date='00/00/00 00:00:00' OR t4.status_id=6) AND t1.incidence_id IN (  " \
             "SELECT incidence_id FROM assigned_technicians " \
-            "WHERE technician_id='{}' )".format(tecnico,tecnico)
+            "WHERE technician_id='{}' )".format(tecnico)
 
     logger.info(query)
 
