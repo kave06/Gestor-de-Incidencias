@@ -97,6 +97,7 @@ def select_incidences_user(usuario) -> tuple:
     result_set = []
     query = "SELECT * FROM incidences " \
             "WHERE username = '{}'".format(usuario)
+    query = "SELECT"
 
     logger.info(query)
 
