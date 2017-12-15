@@ -1,8 +1,9 @@
 import os
-import time
+import datetime
 from app.model.incidence import insert_incidence, Incidence, \
     select_incidences_user, select_last_incidence_user, select_open_incidences, get_next_id
-from app.model.device import assign_devices
+from app.model.device import assign_devices,get_devices
+from app.model.status import insert_status,Status
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
@@ -120,6 +121,8 @@ def mostrar_incidencias():
 @app.route('/incidencias_abiertas', methods=['GET'])
 def mostrar_incidencias_abiertas():
     incidencias = select_open_incidences(session.get('username'))
+
+    #devices=get_devices()
     return render_template('incidencias_abiertas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
@@ -135,7 +138,12 @@ def handle_data():
     devices_ids = request.form['id_dispositivo']
 
     fecha_incidencia = request.form['fecha_incidencia']
-    fecha_incidencia = fecha_incidencia + ' 00:00:00'
+    logger.info(fecha_incidencia)
+    if fecha_incidencia == "":
+        fecha_incidencia=datetime.datetime.now()
+    else:
+        fecha_incidencia = fecha_incidencia + datetime.datetime.now().hour + ':00:00'
+
     #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
     usuario = session.get('username')
@@ -157,7 +165,10 @@ def handle_data():
     incidencia = Incidence(id_incidencia, titulo_incidencia, descripcion_incidencia,
                            usuario, fecha_incidencia,  categoria )
     insert_incidence(incidencia)
-    # assign_devices(incidence_id=id_incidencia,devices_ids=devices_ids)
+    status= Status(id_incidencia,usuario,1)
+    insert_status(status)
+    logger.info(devices_ids)
+    assign_devices(id_incidencia,devices_ids)
 
 
     return render_template('base.html', username=session.get('username'), role=session.get('role'))
