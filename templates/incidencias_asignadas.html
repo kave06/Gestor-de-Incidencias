@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 
-{% block title %}<title>Todas Mis Incidencias</title>{% endblock %}
+{% block title %}<title>Mis Incidencias Asignadas</title>{% endblock %}
 
 {% block css %}
     <!-- Bootstrap core CSS-->
@@ -31,7 +31,7 @@
               <!-- Example DataTables Card-->
               <div class="card mb-3">
                   <div class="card-header">
-                      <h4><i class="fa fa-table"></i> Todas las incidencias de {{ username }}</h4>
+                      <h4><i class="fa fa-table"></i> Todas las incidencias abiertas asignadas a {{ username }}</h4>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -52,7 +52,7 @@
                               </tfoot>
                               <tbody>
                                 {% for incidencia in incidencias %}
-                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-categoria="{{ incidencia[9] }}"data-target="#myModal1">
+                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-target="#myModal1">
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     <td data-th="Estado">{{ incidencia[5] }}</td>
@@ -87,6 +87,7 @@
                                           </div>
                                       </div>
                                       <div class="modal-footer">
+                                          {#  <button type="button" class="btn btn-default" data-title="Introducir comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addComentario" ><span class="fa fa-comments-o" aria-hidden="true"></span> Introducir comentarios</button>#}
                                         <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                                       </div>
@@ -113,6 +114,32 @@
                     <div class="modal-body">
                         <div class="alert alert-info modal-body" id="idInc"></div>
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
+                    </div>
+                </div>  <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div>
+
+        <!-- Modal añadir comentario -->
+        <div class="modal fade" id="addComentario" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Añadir comentario en...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info modal-body" id="idInc"></div>
+                        <div class="row form-group input-container">
+                            <span>Comentario</span>
+                        ​   <textarea class="form-control" name="descripcion_incidencia" id="txtArea" maxlength="500" minlength="15" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir una descrpción para la incidencia"  required></textarea>
+                            <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
+                            <div id="charNum"> <span>Máximo 255 caracteres.</span> </div>
+                        </div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea introducir el comentario en esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
                         <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
@@ -222,7 +249,7 @@
                 $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
                 $(this).find('#priorInc').html($("<li><span><b>Prioridad:</b> "+getPrioridadFromRow+"</span></li>"))
                 $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
-                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+getEstadoFromRow+"</span></li>"))
+                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+((getEstadoFromRow==0) ? "No resuelta" : "Resuelta")+"</span></li>"))
             });
             $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
