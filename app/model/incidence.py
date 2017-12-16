@@ -106,7 +106,7 @@ def select_incidences_user(usuario) -> tuple:
             "WHERE t1.username='{}' AND " \
             "(t4.end_date='00/00/00 00:00:00' OR t4.status_id=6)".format(usuario)
 
-    logger.info(query)
+    # logger.info(query)
 
     cnx = connect_db()
 
@@ -223,7 +223,7 @@ def select_last_incidence_user(usuario) -> tuple:
             "WHERE username = '{}' " \
             "ORDER BY incidence_id DESC LIMIT 1".format(usuario)
 
-    logger.info(query)
+    # logger.info(query)
 
     cnx = connect_db()
 

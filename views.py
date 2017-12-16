@@ -1,5 +1,6 @@
 import os
-import datetime
+# import datetime
+from datetime import datetime
 from app.model.incidence import *
 from app.model.device import assign_devices,get_devices
 from app.model.status import insert_status,Status
@@ -68,14 +69,9 @@ def handle_login():
 
             session['username'] = current_user.username_id
             session['role'] = current_user.role_id
-            # logger.info(session.get('username'))
+            logger.info(session.get('username'))
+            logger.info(session.get('role'))
 
-            # global session_user
-            # global session_role
-            # session_user = current_user.username
-            # session_role = current_user.role
-            # session['username'] = current_user.username
-            # session['role'] = current_user.role
 
             incidencias = select_incidences_user(session.get('username'))
 
@@ -149,9 +145,11 @@ def handle_data():
     fecha_incidencia = request.form['fecha_incidencia']
     logger.info(fecha_incidencia)
     if fecha_incidencia == "":
-        fecha_incidencia=datetime.datetime.now()
+        fecha_incidencia = datetime.now()
+        logger.info(fecha_incidencia)
     else:
-        fecha_incidencia = fecha_incidencia + datetime.datetime.now().hour + ':00:00'
+        fecha_incidencia = fecha_incidencia + str(datetime.now().hour) + ':00:00'
+        logger.info(fecha_incidencia)
 
     #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
@@ -185,7 +183,7 @@ def handle_data():
 
 @app.route('/dashboard')
 def dashboard():
-    logger.info(session.get('username'),session.get('role'))
+    # logger.info(session.get('username'),session.get('role'))
     if session.get('role') == 'cliente':
         incidencias = select_last_incidence_user(session.get('username'))
     elif session.get('role') == 'tecnico':
