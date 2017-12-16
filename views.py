@@ -69,8 +69,8 @@ def handle_login():
 
             session['username'] = current_user.username_id
             session['role'] = current_user.role_id
-            logger.info(session.get('username'))
-            logger.info(session.get('role'))
+            # logger.info(session.get('username'))
+            # logger.info(session.get('role'))
 
 
             incidencias = select_incidences_user(session.get('username'))
@@ -143,13 +143,13 @@ def handle_data():
     devices_ids = request.form['id_dispositivo']
 
     fecha_incidencia = request.form['fecha_incidencia']
-    logger.info(fecha_incidencia)
+    # logger.info(fecha_incidencia)
     if fecha_incidencia == "":
         fecha_incidencia = datetime.now()
-        logger.info(fecha_incidencia)
+        # logger.info(fecha_incidencia)
     else:
         fecha_incidencia = fecha_incidencia + str(datetime.now().hour) + ':00:00'
-        logger.info(fecha_incidencia)
+        # logger.info(fecha_incidencia)
 
     #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username

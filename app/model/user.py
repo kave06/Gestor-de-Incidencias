@@ -38,7 +38,7 @@ def select_user(username: str):
     except Exception as err:
         logger.error(err)
 
-    logger.info('result_set: {}'.format(result_set))
+    # logger.info('result_set: {}'.format(result_set))
     return result_set
 
 
@@ -47,7 +47,7 @@ def mapping_object(username_x: str) -> User:
     # logger.info(type(result_set))
 
     if result_set.__len__() is not 0:
-        logger.info(result_set)
+        # logger.info(result_set)
 
         return User(result_set[0][0], result_set[0][1], result_set[0][2],
                     result_set[0][3], result_set[0][4])

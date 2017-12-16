@@ -1,10 +1,14 @@
 from app.model.logger import create_log
 from app.model.connectdb import connect_db
 from datetime import date, time, datetime
+import os
+from app.model.connectdb import execute_query
 
 # logger = create_log('controller.log')
 
-logger = create_log('gestor.log')
+# logger = create_log('gestor.log')
+path = os.path.dirname(os.path.abspath(__file__))
+logger = create_log('{}/gestor.log'.format(path))
 
 
 class Status:
@@ -82,3 +86,30 @@ def get_type_of_status(status):
 
     logger.info('result_set: {}'.format(result_set))
     return result_set
+
+def notify_close(status:Status, role):
+
+    query = "SELECT username " \
+            "FROM status " \
+            "WHERE incidence_id='{}' AND status_id=4".format(status.incidence_id)
+
+    result_set = execute_query(query)
+    receiver = result_set[0][0]
+    logger.info(receiver)
+
+    if role == 'tecnico':
+        id_incidence = status.incidence_id
+        sender = status.username
+        receiver = 'supervisor'
+    elif role == 'cliente':
+        id_incidence = status.incidence_id
+        sender = status.username
+        receiver = 'tecnico'
+    logger.info('Mando notificación a {} y soy {}'.format(receiver,sender))
+
+
+if __name__ == '__main__':
+    status = Status('INC_2017_0005','cliente00', 5 )
+    update_status(status, 5)
+    notify_close(status,'cliente')
+
