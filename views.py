@@ -149,9 +149,9 @@ def handle_data():
     fecha_incidencia = request.form['fecha_incidencia']
     logger.info(fecha_incidencia)
     if fecha_incidencia == "":
-        fecha_incidencia=datetime.datetime.now()
+        fecha_incidencia=datetime.now()
     else:
-        fecha_incidencia = fecha_incidencia + datetime.datetime.now().hour + ':00:00'
+        fecha_incidencia = fecha_incidencia + datetime.now().hour + ':00:00'
 
     #fecha_alta = time.strftime('%Y-%m-%d %H:%M:%S')
     # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username

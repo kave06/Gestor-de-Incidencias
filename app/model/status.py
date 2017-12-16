@@ -1,6 +1,7 @@
 from app.model.logger import create_log
 from app.model.connectdb import connect_db
 from datetime import date, time, datetime
+from app.model.connectdb import execute_query
 
 # logger = create_log('controller.log')
 
@@ -36,7 +37,7 @@ def insert_status(status):
 #  y el nuevo id del tipo de estado nuevo
 # y si quieres cerrar, pues haces un update con (status,5) q es notificar cierre
 # y el administrador hara un update_status(status,6) y lo cerrara
-def update_status(status, new_type_of_status):
+def update_status(status, new_type_of_status, role):
     if new_type_of_status == 6:
         end_date = datetime.now()
     else:
@@ -82,3 +83,24 @@ def get_type_of_status(status):
 
     logger.info('result_set: {}'.format(result_set))
     return result_set
+
+def notify_close(status:Status, role):
+
+    query = "SELECT username " \
+            "FROM status " \
+            "WHERE incidence_id={} AND status_id=4".format(status.incidence_id)
+
+    result_set = execute_query(query)
+    receiver = result_set[0][0]
+
+    if role == 'tecnico':
+        id_incidence = status.incidence_id
+        sender = status.username
+        receiver = 'supervisor'
+    elif role == 'cliente':
+        id_incidence = status.incidence_id
+        sender = status.username
+        receiver = 'supervisor'
+
+
+# status = Status()
