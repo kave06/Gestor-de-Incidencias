@@ -103,4 +103,4 @@ def notify_close(status:Status, role):
         receiver = 'supervisor'
 
 
-# status = Status()
+status = Status()
