@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Todas las incidencias</title>{% endblock %}
+
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Custom styles from base-->
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+    <!-- Custom styles for Font Awesome Animations -->
+    <link rel="stylesheet" href="/static/css/font-awesome-animation.min.css" type="text/css">
+    <!-- styles para mostrar incidencias -->
+    <link rel="stylesheet" href="../static/css/incidencias.css" rel="stylesheet" type="text/css">
+    <!-- styles para DataTables -->
+    <link rel="stylesheet" href="../static/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../static/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block page_content %}
+
+    {% block content %}
+        <div class="content-wrapper">
+            <div class="container-fluid">
+              <!-- Example DataTables Card-->
+              <div class="card mb-3">
+                  <div class="card-header">
+                      <h4><i class="fa fa-table"></i> Todas las incidencias</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table id="incidenciasTodasDataTable" class="table table-bordered table-hover table-striped" width="100%" cellspacing="0">
+                              <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha de incidencia</th>
+                                    <th>Estado</th>
+                                </tr>
+                              </thead>
+                              <tfoot>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha de incidencia</th>
+                                    <th>Estado</th>
+                                </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for incidencia in incidencias %}
+                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-target="#myModal1">
+                                    <td data-th="Título">{{ incidencia[1] }}</td>
+                                    <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
+                                    <td data-th="Estado">{{ incidencia[5] }}</td>
+                                </tr>
+                                <!-- Modal incidencia -->
+                                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                  <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                        {#                  <h4 class="modal-title" id="incTitulo"><i class="fa fa-address-card-o" aria-hidden="true"></i></h4>#}
+                                          <div id="incTitulo" class="modal-body"></div>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                                      </div>
+                                      <div id="incidencia-detalles" class="modal-body">
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <ul>
+                                                      <div id="idInc" class="modal-body"></div>
+                                                      <div id="userInc" class="modal-body"></div>
+                                                      <div id="descInc" class="modal-body"></div>
+                                                  </ul>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <ul>
+                                                      <div id="fechaInc" class="modal-body"></div>
+                                                      <div id="catInc" class="modal-body"></div>
+                                                      <div id="priorInc" class="modal-body"></div>
+                                                      <div id="horasInc" class="modal-body"></div>
+                                                      <div id="estadoInc" class="modal-body"></div>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
+                        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                    </div>
+                </div>
+              </div>
+            </div> <!-- /.container-fluid-->
+        </div> <!-- /.content-wrapper-->
+
+        <!-- Modal confirmar cierre -->
+        <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info modal-body" id="idInc"></div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
+                    </div>
+                </div>  <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div>
+
+
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for DataTables-->
+    <script src="../static/js/jquery.dataTables.min.js"></script>
+    <script src="../static/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+    <script>
+        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+            "date-euro-pre": function ( a ) {
+                var x;
+
+                if ( $.trim(a) !== '' ) {
+                    var frDatea = $.trim(a).split(' ');
+                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00,00,00];
+                    var frDatea2 = frDatea[0].split('/');
+                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
+                }
+                else {
+                    x = Infinity;
+                }
+
+                return x;
+            },
+
+            "date-euro-asc": function ( a, b ) {
+                return a - b;
+            },
+
+            "date-euro-desc": function ( a, b ) {
+                return b - a;
+            }
+        } );
+    </script>
+     <script>
+        $(document).ready(function() {
+          $('#incidenciasTodasDataTable').DataTable();
+        });
+        $('#incidenciasTodasDataTable').DataTable( {
+            "order": [[ 1, "desc" ]],
+            "autoWidth": true,
+            responsive: true,
+            "paging": true,
+            "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "TODOS"]],
+            {#"columnDefs": [#}
+            {#    { "type": "date-euro", targets: 1 }#}
+            {#],#}
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "decimal": ",",
+                "thousands": "."
+            }
+        } );
+     </script>
+    <script>
+        setTimeout(function() {   //calls click event after a certain time
+            $('div.col-xs-12').toggleClass('col-md-12');
+        }, 500);
+        /*
+        $(document).load(function () {
+            $( "div.col-xs-12" ).toggleClass( "col-md-12" );
+        });
+        */
+    </script>
+    <script>
+        $(function(){
+            $( "#myModal1" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                var getTituloFromRow = $(this).data('incidenciatitulo');
+                var getIdFromRow = $(this).data('incidenciaid');
+                var getUserFromRow = $(this).data('incidenciauser');
+                var getDescripcionFromRow = $(this).data('incidenciadesc');
+                var getFechaFromRow = $(this).data('incidenciafecha');
+                var getCategoriaFromRow = $(this).data('incidenciacategoria');
+                var getPrioridadFromRow = $(this).data('incidenciaprioridad');
+                var getHorasFromRow = $(this).data('incidenciahoras');
+                var getEstadoFromRow = $(this).data('incidenciaestado');
+                //make your ajax call populate items or what even you need
+                $(this).find('#incTitulo').html($('<h4 class=\'modal-title\'><i class=\'fa fa-address-card-o\' aria-hidden=\'true\'></i><a id="titulo"> '+getTituloFromRow+'</a></h4>'))
+                $(this).find('#idInc').html($("<li><span><b>Identificador de la incidencia:</b><a id='ident'> "+getIdFromRow+"</a></span></li>"))
+                $(this).find('#userInc').html($("<li><span><b>Creada por el usuario:</b>  "+getUserFromRow+"</span></li>"))
+                $(this).find('#descInc').html($("<li><span><b>Descripción:</b> "+getDescripcionFromRow+"</span></li>"))
+                $(this).find('#fechaInc').html($("<li><span><b>Fecha:</b> "+getFechaFromRow+"</span></li>"))
+                $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
+                $(this).find('#priorInc').html($("<li><span><b>Prioridad:</b> "+getPrioridadFromRow+"</span></li>"))
+                $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
+                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+getEstadoFromRow+"</span></li>"))
+            });
+            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
+                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
+                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
+                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                //make your ajax call populate items or what even you need
+                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
+                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
+            });
+            $(".table-striped").find('tr[data-target]').on('click', function(){
+                //or do your operations here instead of on show of modal to populate values to modal.
+                $('#myModal1').data('incidenciatitulo',$(this).data('titulo'));
+                $('#myModal1').data('incidenciaid',$(this).data('id'));
+                $('#myModal1').data('incidenciauser',$(this).data('usuario'));
+                $('#myModal1').data('incidenciadesc',$(this).data('descripcion'));
+                $('#myModal1').data('incidenciafecha',$(this).data('fecha'));
+                $('#myModal1').data('incidenciacategoria',$(this).data('estado'));
+                $('#myModal1').data('incidenciaprioridad',$(this).data('prioridad'));
+                $('#myModal1').data('incidenciahoras',$(this).data('horas'));
+                $('#myModal1').data('incidenciaestado',$(this).data('resuelto'));
+                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
+
+            });
+        });
+    </script>
+
+{% endblock scripts %}

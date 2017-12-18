@@ -359,3 +359,105 @@ def select_closed_incidences() -> tuple:
     # logger.info(len(result_set[0]))
 
     return result_set
+
+
+def select_unassigned_incidences() -> tuple:
+    result_set = []
+    query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
+            " t1.incidence_date, t5.status_name, t3.priority_name," \
+            "t1.technician_hours, t1.resolve,t2.category_name,t1.priority " \
+            "FROM incidences AS t1 " \
+            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+	        "WHERE t1.incidence_id NOT IN ( " \
+		    "SELECT DISTINCT incidence_id FROM status " \
+		    "WHERE status_id BETWEEN 2 and 6)" \
+            "order by t1.priority desc"
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
+    return result_set
+
+
+def select_all_open_incidences() -> tuple:
+    result_set = []
+    query = "SELECT  t1.incidence_id, t1.title, t1.description, t1.username," \
+            " t1.incidence_date, t5.status_name, t3.priority_name," \
+            "t1.technician_hours, t1.resolve,t2.category_name,t1.priority " \
+            "FROM incidences AS t1 " \
+            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+	        "WHERE t1.incidence_id NOT IN ( " \
+		    "SELECT DISTINCT incidence_id FROM status " \
+		    "WHERE status_id=6)" \
+            "AND t4.end_date='00-00-00 00:00:00'" \
+            "order by t1.priority desc"
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
+    return result_set
+
+
+
+def select_all_incidences() -> tuple:
+    result_set = []
+    query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
+            " t1.incidence_date, t5.status_name, t3.priority_name," \
+            "t1.technician_hours, t1.resolve,t2.category_name,t4.status_id " \
+            "FROM incidences AS t1 " \
+            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+            "WHERE t4.end_date ='00-00-00 00:00:00' OR t4.status_id=6 " \
+	        "order by t4.status_id"
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
+    return result_set

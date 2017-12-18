@@ -93,6 +93,28 @@ def mostrar_incidencias_asignadas():
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
+
+@app.route('/incidencias_sin_asignar', methods=['GET'])
+def mostrar_incidencias_sin_asignar():
+    incidencias = select_unassigned_incidences()
+    return render_template('incidencias_sin_asignar.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/incidencias_todas_abiertas', methods=['GET'])
+def mostrar_todas_incidencias_abiertas():
+    incidencias = select_all_open_incidences()
+    return render_template('todas_incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/incidencias_todas', methods=['GET'])
+def mostrar_todas_incidencias():
+    incidencias = select_all_incidences()
+    return render_template('todas_incidencias.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
 @app.route('/incidencias_cerradas', methods=['GET'])
 def mostrar_incidencias_cerradas():
     incidencias = select_closed_incidences()
