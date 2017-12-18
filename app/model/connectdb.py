@@ -48,3 +48,19 @@ def connect_db() -> pymysql.connect:
     return cnx
 
 
+def execute_query(query):
+    logger.info('en execute')
+    result_set = ''
+    logger.info(query)
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        result_set = cursor.fetchmany(size=1)
+        cursor.close()
+        logger.info('result_set: {}'.format(result_set))
+    except Exception as err:
+        logger.error(err)
+
+    return result_set

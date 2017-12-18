@@ -11,5 +11,8 @@
       <user-name>kave</user-name>
       <introspection-schemas>*:pgpi</introspection-schemas>
     </data-source>
+    <data-source name="notification.db" uuid="6d897bb0-e4d8-4cc8-ae4c-55c5d8416cce">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
   </component>
 </project>
