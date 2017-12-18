@@ -52,7 +52,7 @@ def handle_login():
 
 
             #TODO esta incidencia no se usa
-            incidencias = select_incidences_user(session.get('username'))
+            #incidencias = select_incidences_user(session.get('username'))
 
             return redirect(url_for('dashboard'))
 
