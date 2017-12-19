@@ -260,7 +260,8 @@ def select_open_assigned_incidences(tecnico) -> tuple:
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
             "WHERE " \
-            "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN (  " \
+            "t4.end_date='00/00/00 00:00:00' " \
+             "AND t1.incidence_id IN (  " \
             "SELECT incidence_id FROM assigned_technicians " \
             "WHERE technician_id='{}') " \
             "order by t1.priority desc".format(tecnico)

@@ -3,11 +3,11 @@ import os
 from datetime import datetime
 from app.model.incidence import *
 from app.model.device import assign_devices,get_devices
-from app.model.status import insert_status,Status
+from app.model.status import insert_status,Status,update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
-from app.model.user import mapping_object, print_user
+from app.model.user import mapping_object, print_user, get_supervisor
 from app.model.comment import Comment, insert_comment
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -90,6 +90,7 @@ def mostrar_incidencias_abiertas():
 
 @app.route('/incidencias_asignadas', methods=['GET'])
 def mostrar_incidencias_asignadas():
+    #assigned u open_assigned
     incidencias = select_open_assigned_incidences(session.get('username'))
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
@@ -174,7 +175,7 @@ def dashboard():
     if session.get('role') == 'cliente':
         incidencias = select_last_incidence_user(session.get('username'))
     elif session.get('role') == 'tecnico':
-        incidencias= select_assigned_incidences(session.get('username'))
+        incidencias= select_open_assigned_incidences(session.get('username'))
     else:
         incidencias=[]
     return render_template('dashboard.html', username=session.get('username'),
@@ -220,6 +221,21 @@ def handle_comment():
     incidencias = select_open_assigned_incidences(session.get('username'))
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                             role=session.get('role'), incidencias=incidencias)
+
+@app.route('/handle_cierre_tecnico', methods=['POST'])
+def handle_cierre_tecnico():
+    logger.info("Cierre tecnico tratado")
+    username_stat=get_supervisor()
+    logger.info(username_stat)
+    idtec = request.form['idtec']
+    status=Status(idtec,username_stat,4)
+    username = session.get('username')
+    update_status(status,5,username)
+    role = session.get('role')
+    notify_close(status,role)
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username = session.get('username'),
+                          role=session.get('role'), incidencias=incidencias)
 
 
 @app.route("/logout")

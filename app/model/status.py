@@ -4,6 +4,7 @@ from datetime import date, time, datetime
 import os
 from app.model.connectdb import execute_query
 from app.model.db_notify import *
+from app.model.user import get_supervisor
 
 # logger = create_log('controller.log')
 
@@ -41,19 +42,20 @@ def insert_status(status):
 #  y el nuevo id del tipo de estado nuevo
 # y si quieres cerrar, pues haces un update con (status,5) q es notificar cierre
 # y el administrador hara un update_status(status,6) y lo cerrara
-def update_status(status, new_type_of_status):
+def update_status(status, new_type_of_status, username):
     if new_type_of_status == 6:
         end_date = datetime.now()
     else:
-        end_date = None
+        end_date = 'NULL'
+        #end_date = None
 
     query = "UPDATE status SET end_date ='{}' \
           WHERE incidence_id='{}' and username='{}' and status_id='{}'" \
         .format(datetime.now(), status.incidence_id,
                 status.username, status.status_id)
-
-    query = query + ";" + "INSERT INTO status VALUES ('{}','{}','{}','{}')" \
-        .format(status.incidence_id, status.username, new_type_of_status, end_date)
+    #repasar el concepto de username en status PONER EL USERNAME
+    query = query + ";" + "INSERT INTO status VALUES ('{}','{}','{}',{})" \
+                .format(status.incidence_id, username, new_type_of_status, end_date)
 
     logger.info(query)
 
@@ -71,7 +73,7 @@ def update_status(status, new_type_of_status):
 def get_type_of_status(status):
     result_set = ''
     query = "SELECT status_name FROM type_of_status" \
-            "WHERE status_id = status"
+            "WHERE status_id ={}".format(status)
 
     logger.info(query)
 
@@ -97,11 +99,15 @@ def notify_close(status:Status, role):
     result_set = execute_query(query)
     receiver = result_set[0][0]
     logger.info(receiver)
-
+#modificado role por username
     if role == 'tecnico':
         id_incidence = status.incidence_id
-        sender = status.username
-        receiver = 'supervisor'
+        query = "SELECT technician_id " \
+                "FROM assigned_technicians " \
+                "WHERE incidence_id='{}'".format(status.incidence_id)
+        result_set = execute_query(query)
+        sender = result_set[0][0]
+        receiver = status.username
     elif role == 'cliente':
         id_incidence = status.incidence_id
         query = "SELECT username " \
@@ -117,6 +123,7 @@ def notify_close(status:Status, role):
     else:
         logger.info('No tengo role')
     logger.info('Soy {} y mando notificación a {}'.format(sender, receiver))
+    create_notification(id_incidence, sender, receiver)
     logger.info(type(receiver))
     logger.info(receiver)
 

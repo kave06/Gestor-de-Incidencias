@@ -117,7 +117,13 @@
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <form class="form-incidencia" action="{{ url_for('handle_cierre_tecnico') }}" method="post" > <!--form-->
+                            <input type="hidden" name="idtec" value="">
+                            <div class="submit-row"> <!--form-->
+                        {# <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button> #}
+                                <input class="btn btn-block btn-block-incidencia submit-form" id="submit-cierre-tecnico" name="submit-cierre-tecnico" value=" Sí " type="submit">
+                            </div>
+                        </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->
@@ -297,6 +303,7 @@
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
                 //make your ajax call populate items or what even you need
+                $('#cierreModal input[name="idtec"]').val(getIdFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
