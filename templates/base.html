@@ -126,9 +126,6 @@ lang='es'
                       </a>
                     </li>
                 {% endif %}
-
-            </ul>
-
                 {% if role == 'supervisor' %}
                   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
                       <a class="nav-link" href="/incidencias_sin_asignar">
@@ -139,6 +136,7 @@ lang='es'
                       </a>
                     </li>
                 {% endif %}
+
                 {% if role == 'supervisor' %}
                   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
                       <a class="nav-link" href="/incidencias_todas_abiertas">
@@ -159,6 +157,9 @@ lang='es'
                       </a>
                     </li>
                 {% endif %}
+            </ul>
+
+
 
             <ul class="navbar-nav ml-auto pull-left">
                 {% if username is not none %}

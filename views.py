@@ -8,6 +8,7 @@ from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
 from app.model.user import mapping_object, print_user
+from app.model.comment import Comment, insert_comment
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
@@ -178,6 +179,47 @@ def dashboard():
         incidencias=[]
     return render_template('dashboard.html', username=session.get('username'),
                            role=session.get('role'), incidencia=incidencias)
+
+@app.route('/handle_horas', methods=['POST'])
+def handle_horas():
+    horas_inc = request.form['horas_inc']
+    idinc = request.form['idhor']
+    update_technician_hours(idinc,horas_inc)
+    logger.info("Horas tratadas")
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                          role=session.get('role'), incidencias=incidencias)
+
+@app.route('/handle_comment', methods=['POST'])
+def handle_comment():
+    logger.info('Estoy en handle comment')
+    comentario_incidencia = request.form['comentario_incidencia']
+    logger.info(comentario_incidencia)
+    idinc = request.form['idcom']
+    logger.info(idinc)
+    estadocom = request.form['estadocom']
+    logger.info(estadocom)
+    usuario = session.get('username')
+
+    if estadocom == 'Solicitada':
+        estadocom = 1
+    elif estadocom == 'Aceptada':
+        estadocom = 2
+    elif estadocom == 'Rechazada':
+        estadocom = 3
+    elif estadocom == 'Asignada':
+        estadocom = 4
+    elif estadocom == 'Notificada_resolucion':
+        estadocom = 5
+    elif estadocom == 'Cerrada':
+        estadocom = 6
+
+    comentario = Comment(idinc,usuario,estadocom,comentario_incidencia)
+
+    insert_comment(comentario)
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                            role=session.get('role'), incidencias=incidencias)
 
 
 @app.route("/logout")
