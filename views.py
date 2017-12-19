@@ -111,6 +111,8 @@ def mostrar_todas_incidencias_abiertas():
 @app.route('/incidencias_todas', methods=['GET'])
 def mostrar_todas_incidencias():
     incidencias = select_all_incidences()
+    url = request.url.__str__()
+    logger.info(url)
     return render_template('todas_incidencias.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
@@ -118,6 +120,14 @@ def mostrar_todas_incidencias():
 @app.route('/incidencias_cerradas', methods=['GET'])
 def mostrar_incidencias_cerradas():
     incidencias = select_closed_incidences()
+    return render_template('incidencias_cerradas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/cerrar_incidencia', methods=['GET'])
+def cerrar_incidencia():
+    incidencias = select_closed_incidences()
+    url=request.url.__str__()
     return render_template('incidencias_cerradas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
