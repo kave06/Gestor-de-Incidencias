@@ -237,6 +237,24 @@ def handle_cierre_tecnico():
     return render_template('incidencias_asignadas.html', username = session.get('username'),
                           role=session.get('role'), incidencias=incidencias)
 
+@app.route('/handle_cierre_cliente', methods=['POST'])
+def handle_cierre_cliente():
+    logger.info("Cierre cliente tratado")
+    username_stat=get_supervisor()
+    logger.info(username_stat)
+    idcli = request.form['idcli']
+    status=Status(idcli,username_stat,4)
+    username = session.get('username')
+    update_status(status,5,username)
+    # cuestion del cambio a estado 5, lo hace cliente?
+    role = session.get('role')
+    notify_close(status,role)
+    incidencias = select_open_incidences(session.get('username'))
+
+    #devices=get_devices()
+    return render_template('incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
 
 @app.route("/logout")
 def logout():
