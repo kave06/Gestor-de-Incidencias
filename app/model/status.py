@@ -22,8 +22,8 @@ class Status:
 
 
 def insert_status(status):
-    query="INSERT INTO status VALUES ('{}','{}','{}','{}')" \
-        .format(status.incidence_id, status.username, status.status_id,"")
+    query="INSERT INTO status VALUES ('{}','{}','{}','0000-00-00 00:00:00')" \
+        .format(status.incidence_id, status.username, status.status_id)
 
     logger.info(query)
 
@@ -46,7 +46,7 @@ def update_status(status, new_type_of_status, username):
     if new_type_of_status == 6:
         end_date = datetime.now()
     else:
-        end_date = 'NULL'
+        end_date = '0000-00-00 00:00:00'
         #end_date = None
 
     query = "UPDATE status SET end_date ='{}' \
@@ -54,7 +54,7 @@ def update_status(status, new_type_of_status, username):
         .format(datetime.now(), status.incidence_id,
                 status.username, status.status_id)
     #repasar el concepto de username en status PONER EL USERNAME
-    query = query + ";" + "INSERT INTO status VALUES ('{}','{}','{}',{})" \
+    query = query + ";" + "INSERT INTO status VALUES ('{}','{}','{}','{}')" \
                 .format(status.incidence_id, username, new_type_of_status, end_date)
 
     logger.info(query)

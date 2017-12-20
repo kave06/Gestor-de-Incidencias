@@ -23,7 +23,7 @@ class Incidence:
         self.category_id = category_id
         self.priority_id = 1
         self.technician_hours = 0
-        self.resolve = False
+        self.resolve = 0
 
 
 def select_incidence(incidence_id):
