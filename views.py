@@ -170,7 +170,7 @@ def handle_data():
 @app.route('/dashboard')
 def dashboard():
     # lista de notificaciones del usuario
-    session['notification'] = get_notification(session.get('username'))
+    #session['notification'] = get_notification(session.get('username'))
     # logger.info(session.get('username'),session.get('role'))
     if session.get('role') == 'cliente':
         incidencias = select_last_incidence_user(session.get('username'))
@@ -254,6 +254,14 @@ def handle_cierre_cliente():
     #devices=get_devices()
     return render_template('incidencias_abiertas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
+
+@app.route('/notificaciones_tecnico', methods=['GET'])
+def notificaciones_tecnico():
+    logger.info("Consulta notificaciones tecnico")
+    username = session.get('username')
+    notificaciones = get_notification(username)
+    return render_template('notificaciones_tecnico.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones)
 
 
 @app.route("/logout")
