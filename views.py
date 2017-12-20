@@ -97,7 +97,7 @@ def resumen_incidencias_cliente():
     count=0
     list=[1,2,3]
     for a in stats2:
-        var=stats2[0][count]
+        #var=stats2[0][count]
         count+=1
         #list.append(var)
     origin_date=datetime.date(stats2[0][1])
