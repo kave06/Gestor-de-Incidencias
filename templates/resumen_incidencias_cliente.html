@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 
-{% block title %}<title>Incidencias sin asignar</title>{% endblock %}
+{% block title %}<title>Todas las Incidencias Cerradas</title>{% endblock %}
 
 {% block css %}
     <!-- Bootstrap core CSS-->
@@ -31,80 +31,17 @@
               <!-- Example DataTables Card-->
               <div class="card mb-3">
                   <div class="card-header">
-                      <h4><i class="fa fa-table"></i> Todas las incidencias sin asignar</h4>
+                      <h4><i class="fa fa-table"></i>Resumen de las incidencias del cliente: {{ username }}</h4>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
-                          <table id="incidenciasTodasDataTable" class="table table-bordered table-hover table-striped" width="100%" cellspacing="0">
-                              <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Fecha de incidencia</th>
-                                    <th>Estado</th>
-                                    <th>Prioridad</th>
-                                </tr>
-                              </thead>
-                              <tfoot>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Fecha de incidencia</th>
-                                    <th>Estado</th>
-                                    <th>Prioridad</th>
-                                </tr>
-                              </tfoot>
-                              <tbody>
-                                {% for incidencia in incidencias %}
-                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
-                                    data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"
-                                    data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"
-                                    data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"
-                                    data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}"
-                                    data-categoria="{{ incidencia[9] }}" data-target="#myModal1">
-                                    <td data-th="Título">{{ incidencia[1] }}</td>
-                                    <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
-                                    <td data-th="Estado">{{ incidencia[5] }}</td>
-                                    <td data-th="Prioridad">{{ incidencia[6] }}</td>
-                                </tr>
-                                <!-- Modal incidencia -->
-                                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                  <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                        {#                  <h4 class="modal-title" id="incTitulo"><i class="fa fa-address-card-o" aria-hidden="true"></i></h4>#}
-                                          <div id="incTitulo" class="modal-body"></div>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-                                      </div>
-                                      <div id="incidencia-detalles" class="modal-body">
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <ul>
-                                                      <div id="idInc" class="modal-body"></div>
-                                                      <div id="userInc" class="modal-body"></div>
-                                                      <div id="descInc" class="modal-body"></div>
-                                                  </ul>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <ul>
-                                                      <div id="fechaInc" class="modal-body"></div>
-                                                      <div id="catInc" class="modal-body"></div>
-                                                      <div id="priorInc" class="modal-body"></div>
-                                                      <div id="horasInc" class="modal-body"></div>
-                                                      <div id="estadoInc" class="modal-body"></div>
-                                                      <div id="resueltoInc" class="modal-body"></div>
-                                                  </ul>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
-                        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                {% endfor %}
-                              </tbody>
-                          </table>
+                      <body>
+                      <div>Incidencias totales: {{ stats1[0][0] }} </div>
+                      <div>Incidencias cerradas: {{ count }} </div>
+                      <div>Fecha de inicio de la incidencia: {{ stats2[0][1] }}</div>
+                      <div>Fecha de cierre de la incidencia: {{ stats2[0][2] }}</div>
+                      <div>Tiempo medio de resolucion: {{ tiempo }}</div>
+                      </body>
                     </div>
                 </div>
               </div>
@@ -124,7 +61,7 @@
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-success"><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->

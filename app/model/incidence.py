@@ -331,10 +331,10 @@ def select_closed_incidences() -> tuple:
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
             "WHERE " \
             " t1.incidence_id IN( " \
-            "SELECT DISTINCT incidence_id FROM status " \
-            "WHERE incidence_id IN ( " \
-            "SELECT DISTINCT incidence_id FROM status " \
-            "WHERE status_id=6))"
+            "SELECT incidence_id FROM status " \
+            "WHERE status_id=6)"
+            #"WHERE incidence_id IN ( " \
+            #"SELECT DISTINCT incidence_id FROM status " \
 
     logger.info(query)
 
@@ -344,7 +344,7 @@ def select_closed_incidences() -> tuple:
         cursor = cnx.cursor()
         cursor.execute(query)
         # result_set = cursor.fetchall()
-        cursor.close()
+        #cursor.close()
 
         for value in cursor:
             result_set.append(value)
@@ -460,4 +460,58 @@ def select_all_incidences() -> tuple:
         logger.error(err)
 
 
+    return result_set
+
+
+def client_stats1(cliente) -> tuple:
+    result_set = []
+
+    query = "SELECT count(*) from incidences " \
+            "WHERE username='{}'".format(cliente)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+
+        #for value in cursor:
+        #    result_set.append(value)
+        result_set.append(cursor.fetchone())
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
+
+    logger.info(result_set)
+    return result_set
+
+
+def client_stats2(cliente) -> tuple:
+    result_set = []
+
+    query2="SELECT t1.incidence_id,t1.incidence_date,t2.end_date from incidences as t1 " \
+          "JOIN (status as t2)" \
+           "ON (t1.incidence_id=t2.incidence_id)" \
+          "WHERE t1.username='{}' AND t2.status_id=6".format(cliente)
+
+    logger.info(query2)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query2)
+
+        #for value in cursor:
+        #    result_set.append(value)
+        result_set.append(cursor.fetchone())
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    logger.info(result_set)
     return result_set

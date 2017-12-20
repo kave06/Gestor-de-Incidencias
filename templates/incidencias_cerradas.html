@@ -31,7 +31,7 @@
               <!-- Example DataTables Card-->
               <div class="card mb-3">
                   <div class="card-header">
-                      <h4><i class="fa fa-table"></i> Todas las incidencias cerradas de la organización</h4>
+                      <h4><i class="fa fa-table"></i>Todas las incidencias cerradas de la organización</h4>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -52,7 +52,12 @@
                               </tfoot>
                               <tbody>
                                 {% for incidencia in incidencias %}
-                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"  data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"  data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"  data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}" data-target="#myModal1">
+                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
+                                    data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"
+                                    data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"
+                                    data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"
+                                    data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}"
+                                    data-categoria="{{ incidencia[9] }}" data-target="#myModal1">
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     {# <td data-th="Estado">{{ incidencia[5] }}</td>#}
@@ -219,16 +224,22 @@
                 var getPrioridadFromRow = $(this).data('incidenciaprioridad');
                 var getHorasFromRow = $(this).data('incidenciahoras');
                 var getEstadoFromRow = $(this).data('incidenciaestado');
+                var getResueltoFromRow = $(this).data('incidenciaresuelto');
+                if(getResueltoFromRow)
+                    getResueltoFromRow="Si";
+                else
+                    getResueltoFromRow="No";
                 //make your ajax call populate items or what even you need
                 $(this).find('#incTitulo').html($('<h4 class=\'modal-title\'><i class=\'fa fa-address-card-o\' aria-hidden=\'true\'></i><a id="titulo"> '+getTituloFromRow+'</a></h4>'))
                 $(this).find('#idInc').html($("<li><span><b>Identificador de la incidencia:</b><a id='ident'> "+getIdFromRow+"</a></span></li>"))
                 $(this).find('#userInc').html($("<li><span><b>Creada por el usuario:</b>  "+getUserFromRow+"</span></li>"))
                 $(this).find('#descInc').html($("<li><span><b>Descripción:</b> "+getDescripcionFromRow+"</span></li>"))
-                $(this).find('#fechaInc').html($("<li><span><b>Fecha:</b> "+getFechaFromRow+"</span></li>"))
-                $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
+                $(this).find('#fechaInc').html($("<li><span><b>Fecha de la incidencia:</b> "+getFechaFromRow+"</span></li>"))
+                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+getEstadoFromRow+"</span></li>"))
                 $(this).find('#priorInc').html($("<li><span><b>Prioridad:</b> "+getPrioridadFromRow+"</span></li>"))
                 $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
-                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+((getEstadoFromRow==0) ? "No resuelta" : "Resuelta")+"</span></li>"))
+                $(this).find('#resueltoInc').html($("<li><span><b>Resuelta:</b> "+getResueltoFromRow+"</span></li>"))
+                $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
             });
             $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
@@ -246,10 +257,11 @@
                 $('#myModal1').data('incidenciauser',$(this).data('usuario'));
                 $('#myModal1').data('incidenciadesc',$(this).data('descripcion'));
                 $('#myModal1').data('incidenciafecha',$(this).data('fecha'));
-                $('#myModal1').data('incidenciacategoria',$(this).data('estado'));
+                $('#myModal1').data('incidenciaestado',$(this).data('estado'));
                 $('#myModal1').data('incidenciaprioridad',$(this).data('prioridad'));
                 $('#myModal1').data('incidenciahoras',$(this).data('horas'));
-                $('#myModal1').data('incidenciaestado',$(this).data('resuelto'));
+                $('#myModal1').data('incidenciaresuelto',$(this).data('resuelto'));
+                $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
                 $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
                 $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
 

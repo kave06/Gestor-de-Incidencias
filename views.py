@@ -87,10 +87,42 @@ def mostrar_incidencias_abiertas():
     return render_template('incidencias_abiertas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
+
+@app.route('/resumen_incidencias_cliente', methods=['GET'])
+def resumen_incidencias_cliente():
+    incidencias = select_closed_incidences()
+    stats1=client_stats1(session.get('username'))
+    stats2=client_stats2(session.get('username'))
+    # se recogen las incidencias cerradas con fechas
+    count=0
+    list=[1,2,3]
+    for a in stats2:
+        var=stats2[0][count]
+        count+=1
+        #list.append(var)
+    origin_date=datetime.date(stats2[0][1])
+    end_date=datetime.date(stats2[0][2])
+    tiempo=end_date-origin_date
+    #list.append(origin_date.strftime("%d-%m-%y"))
+    #list[1] = end_date.strftime("%d-%m-%y")
+    #list[2] = tiempo.strftime("%d-%m-%y")
+
+    return render_template('resumen_incidencias_cliente.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias,
+                           stats1=stats1,stats2=stats2,count=count,tiempo=tiempo)
+
+
 @app.route('/incidencias_asignadas', methods=['GET'])
 def mostrar_incidencias_asignadas():
     incidencias = select_open_assigned_incidences(session.get('username'))
     return render_template('incidencias_asignadas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/incidencias_cerradas', methods=['GET'])
+def mostrar_incidencias_cerradas():
+    incidencias = select_closed_incidences()
+    return render_template('incidencias_cerradas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
 
@@ -114,13 +146,6 @@ def mostrar_todas_incidencias():
     url = request.url.__str__()
     logger.info(url)
     return render_template('todas_incidencias.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
-
-
-@app.route('/incidencias_cerradas', methods=['GET'])
-def mostrar_incidencias_cerradas():
-    incidencias = select_closed_incidences()
-    return render_template('incidencias_cerradas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
 
@@ -186,6 +211,8 @@ def dashboard():
         incidencias= select_assigned_incidences(session.get('username'))
     else:
         incidencias=[]
+    # hasta que no tengamos algo que mostrar en la principal.. pues nada
+    incidencias=[]  # he puesto en dashboard.html if='clienteX'
     return render_template('dashboard.html', username=session.get('username'),
                            role=session.get('role'), incidencia=incidencias)
 
