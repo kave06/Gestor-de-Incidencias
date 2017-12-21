@@ -3,11 +3,12 @@ import os
 from datetime import datetime
 from app.model.incidence import *
 from app.model.device import assign_devices,get_devices
-from app.model.status import insert_status,Status
+from app.model.status import insert_status,Status,update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
-from app.model.user import mapping_object, print_user
+from app.model.user import mapping_object, print_user, get_supervisor
+from app.model.comment import Comment, insert_comment
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
@@ -203,18 +204,100 @@ def handle_data():
 @app.route('/dashboard')
 def dashboard():
     # lista de notificaciones del usuario
-    session['notification'] = get_notification(session.get('username'))
+    #session['notification'] = get_notification(session.get('username'))
     # logger.info(session.get('username'),session.get('role'))
     if session.get('role') == 'cliente':
         incidencias = select_last_incidence_user(session.get('username'))
     elif session.get('role') == 'tecnico':
-        incidencias= select_assigned_incidences(session.get('username'))
+        incidencias= select_open_assigned_incidences(session.get('username'))
     else:
         incidencias=[]
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
     incidencias=[]  # he puesto en dashboard.html if='clienteX'
     return render_template('dashboard.html', username=session.get('username'),
                            role=session.get('role'), incidencia=incidencias)
+
+@app.route('/handle_horas', methods=['POST'])
+def handle_horas():
+    horas_inc = request.form['horas_inc']
+    idinc = request.form['idhor']
+    update_technician_hours(idinc,horas_inc)
+    logger.info("Horas tratadas")
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                          role=session.get('role'), incidencias=incidencias)
+
+@app.route('/handle_comment', methods=['POST'])
+def handle_comment():
+    logger.info('Estoy en handle comment')
+    comentario_incidencia = request.form['comentario_incidencia']
+    logger.info(comentario_incidencia)
+    idinc = request.form['idcom']
+    logger.info(idinc)
+    estadocom = request.form['estadocom']
+    logger.info(estadocom)
+    usuario = session.get('username')
+
+    if estadocom == 'Solicitada':
+        estadocom = 1
+    elif estadocom == 'Aceptada':
+        estadocom = 2
+    elif estadocom == 'Rechazada':
+        estadocom = 3
+    elif estadocom == 'Asignada':
+        estadocom = 4
+    elif estadocom == 'Notificada_resolucion':
+        estadocom = 5
+    elif estadocom == 'Cerrada':
+        estadocom = 6
+
+    comentario = Comment(idinc,usuario,estadocom,comentario_incidencia)
+
+    insert_comment(comentario)
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                            role=session.get('role'), incidencias=incidencias)
+
+@app.route('/handle_cierre_tecnico', methods=['POST'])
+def handle_cierre_tecnico():
+    logger.info("Cierre tecnico tratado")
+    username_stat=get_supervisor()
+    logger.info(username_stat)
+    idtec = request.form['idtec']
+    status=Status(idtec,username_stat,4)
+    username = session.get('username')
+    update_status(status,5,username)
+    role = session.get('role')
+    notify_close(status,role)
+    incidencias = select_open_assigned_incidences(session.get('username'))
+    return render_template('incidencias_asignadas.html', username = session.get('username'),
+                          role=session.get('role'), incidencias=incidencias)
+
+@app.route('/handle_cierre_cliente', methods=['POST'])
+def handle_cierre_cliente():
+    logger.info("Cierre cliente tratado")
+    username_stat=get_supervisor()
+    logger.info(username_stat)
+    idcli = request.form['idcli']
+    status=Status(idcli,username_stat,4)
+    username = session.get('username')
+    update_status(status,5,username)
+    # cuestion del cambio a estado 5, lo hace cliente?
+    role = session.get('role')
+    notify_close(status,role)
+    incidencias = select_open_incidences(session.get('username'))
+
+    #devices=get_devices()
+    return render_template('incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+@app.route('/notificaciones_tecnico', methods=['GET'])
+def notificaciones_tecnico():
+    logger.info("Consulta notificaciones tecnico")
+    username = session.get('username')
+    notificaciones = get_notification(username)
+    return render_template('notificaciones_tecnico.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones)
 
 
 @app.route("/logout")

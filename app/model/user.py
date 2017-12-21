@@ -1,5 +1,5 @@
 from app.model.logger import create_log
-from app.model.connectdb import connect_db
+from app.model.connectdb import connect_db, execute_query
 
 logger = create_log('controller.log')
 
@@ -62,5 +62,18 @@ def print_user(user_x: User):
     'password: {}\n'
     'role: {}\n'.format( user_x.username_id, user_x.name,
                         user_x.email, user_x.password, user_x.role_id))
+
+
+def get_supervisor():
+
+    query = "SELECT username_id " \
+             "FROM users  " \
+             "WHERE role_id=3"
+    # logger.info(query)
+
+    result_set = execute_query(query)
+
+    # logger.info('result_set: {}'.format(result_set))
+    return result_set[0][0]
 
 

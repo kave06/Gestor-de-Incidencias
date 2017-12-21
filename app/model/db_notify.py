@@ -22,8 +22,8 @@ def create_notification(incidence_id, sender, receiver):
         Notification.create(incidence_id=incidence_id, sender=sender, receiver=receiver)
 
 def get_notification(receiver:str):
-    return list(Notification.select().where(Notification.receiver==receiver))
-
+    return Notification.select().where(Notification.receiver==receiver)
+     #     return list(Notification.select().where(Notification.receiver==receiver))
 def delete_notification(incidence_id, sender):
     Notification.delete().where(Notification.incidence_id==incidence_id and
                                          Notification.sender==sender)

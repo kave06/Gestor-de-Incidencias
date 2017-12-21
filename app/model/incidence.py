@@ -23,7 +23,8 @@ class Incidence:
         self.category_id = category_id
         self.priority_id = 1
         self.technician_hours = 0
-        self.resolve = False
+        self.resolve = 0
+        # resolve a 0 en vez de False
 
 
 def select_incidence(incidence_id):
@@ -461,6 +462,25 @@ def select_all_incidences() -> tuple:
 
 
     return result_set
+
+
+def update_technician_hours(incidence_id,hours):
+
+    query = "UPDATE incidences SET " \
+            "technician_hours=technician_hours+{} " \
+            "WHERE incidence_id='{}'".format(hours,incidence_id)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
 
 
 def client_stats1(cliente) -> tuple:
