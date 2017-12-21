@@ -94,7 +94,7 @@
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-default" data-title="Añadir horas dedicadas" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addHoras" ><span class="fa fa-clock-o" aria-hidden="true"></span> Añadir horas dedicadas</button>
                                           <button type="button" class="btn btn-default" data-title="Introducir comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addComentario" ><span class="fa fa-comments-o" aria-hidden="true"></span> Introducir comentarios</button>
-                                        <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
+                                        <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                                       </div>
                                     </div>
@@ -307,6 +307,12 @@
                 $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
                 $(this).find('#resueltoInc').html($("<li><span><b>Resuelta:</b> "+getResueltoFromRow+"</span></li>"))
                 $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
+                if (getEstadoFromRow=='Notificada_resolucion'){
+                    $('#boton-cierre').hide();
+                }
+                else {
+                    $('#boton-cierre').show();
+                }
             });
             $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
