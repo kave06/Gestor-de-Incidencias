@@ -44,15 +44,6 @@
                                     <th>Resuelto</th>
                                 </tr>
                               </thead>
-                              <tfoot>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Fecha de incidencia</th>
-                                    <th>Estado</th>
-                                    <th>Prioridad</th>
-                                    <th>Resuelto</th>
-                                </tr>
-                              </tfoot>
                               <tbody>
                                 {% for incidencia in incidencias %}
                                 <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"

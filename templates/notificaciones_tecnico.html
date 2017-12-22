@@ -43,13 +43,6 @@
                                     <th>Tipo</th>
                                 </tr>
                               </thead>
-                              <tfoot>
-                                <tr>
-                                    <th>Incidencia</th>
-                                    <th>Remitente</th>
-                                    <th>Tipo</th>
-                                </tr>
-                              </tfoot>
                               <tbody>
                                 {% for notificacion in notificaciones %}
                                 <tr data-toggle="modal"  data-id="{{ notificacion.incidence_id }}" data-sender="{{ notificacion.sender }}"  data-receiver="{{ notificacion.receiver }}" data-target="#myModal1">
