@@ -1,7 +1,7 @@
 from datetime import date, time, datetime
 
 from app.model.logger import create_log
-from app.model.connectdb import connect_db
+from app.model.database import connect_db
 
 # logger = create_log('controller.log')
 
@@ -250,40 +250,44 @@ def select_last_incidence_user(usuario) -> tuple:
     return result_set
 
 
-def select_open_assigned_incidences(tecnico) -> tuple:
-    result_set = []
+# def select_open_assigned_incidences(tecnico) -> tuple:
+#     result_set = []
+#
+#     query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
+#             " t1.incidence_date, t5.status_name, t3.priority_name," \
+#             "t1.technician_hours, t1.resolve,t2.category_name,t1.priority " \
+#             "FROM incidences AS t1 " \
+#             "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+#             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+#             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+#             "WHERE " \
+#             "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN (  " \
+#             "SELECT incidence_id FROM assigned_technicians " \
+#             "WHERE technician_id='{}') " \
+#             "order by t1.priority desc".format(tecnico)
+#     #"WHERE t1.username='{}' AND " \
+#     logger.info(query)
+#
+#     cnx = connect_db()
+#
+#     try:
+#         cursor = cnx.cursor()
+#         cursor.execute(query)
+#         cursor.close()
+#
+#         for value in cursor:
+#             result_set.append(value)
+#
+#         cursor.close()
+#     except Exception as err:
+#         logger.error(err)
+#
+#
+#     return result_set
 
-    query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
-            " t1.incidence_date, t5.status_name, t3.priority_name," \
-            "t1.technician_hours, t1.resolve,t2.category_name,t1.priority " \
-            "FROM incidences AS t1 " \
-            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
-            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
-            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
-            "WHERE " \
-            "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN (  " \
-            "SELECT incidence_id FROM assigned_technicians " \
-            "WHERE technician_id='{}') " \
-            "order by t1.priority desc".format(tecnico)
-    #"WHERE t1.username='{}' AND " \
-    logger.info(query)
-
-    cnx = connect_db()
-
-    try:
-        cursor = cnx.cursor()
-        cursor.execute(query)
-        cursor.close()
-
-        for value in cursor:
-            result_set.append(value)
-
-        cursor.close()
-    except Exception as err:
-        logger.error(err)
 
 
-    return result_set
+
 
 
 def select_assigned_incidences(tecnico) -> tuple:

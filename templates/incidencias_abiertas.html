@@ -114,7 +114,7 @@
                     </div>
                     <div class="modal-footer ">
                         <form class="form-incidencia" action="{{ url_for('handle_cierre_cliente') }}" method="post" > <!--form-->
-                            <input type="hidden" name="idcli" value="">
+                            <input type="hidden" name="id_incidence" value="">
                             <div class="submit-row"> <!--form-->
                         {# <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button> #}
                                 <input class="btn btn-block btn-block-incidencia submit-form" id="submit-cierre-cliente" name="submit-cierre-cliente" value=" Sí " type="submit">
@@ -246,7 +246,7 @@
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
                 //make your ajax call populate items or what even you need
-                $('#cierreModal input[name="idcli"]').val(getIdFromRowEliminar)
+                $('#cierreModal input[name="id_incidence"]').val(getIdFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });

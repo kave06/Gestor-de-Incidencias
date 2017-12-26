@@ -1,8 +1,8 @@
 from app.model.logger import create_log
-from app.model.connectdb import connect_db
+from app.model.database import connect_db
 from datetime import date, time, datetime
 import os
-from app.model.connectdb import execute_query
+from app.model.database import execute_query
 from app.model.db_notify import *
 from app.model.user import get_supervisor
 

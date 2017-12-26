@@ -1,5 +1,5 @@
 from app.model.logger import create_log
-from app.model.connectdb import connect_db, execute_query
+from app.model.database import connect_db, execute_query
 
 logger = create_log('controller.log')
 

@@ -1,5 +1,5 @@
 from app.model.logger import create_log
-from app.model.connectdb import connect_db
+from app.model.database import connect_db
 from datetime import date, time, datetime
 
 # logger = create_log('controller.log')

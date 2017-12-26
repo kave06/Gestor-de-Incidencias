@@ -13,6 +13,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
 from app.model.db_notify import *
+from app.model.database import *
 
 
 from app.model.logger import create_log
@@ -48,8 +49,8 @@ def handle_login():
 
             session['username'] = current_user.username_id
             session['role'] = current_user.role_id
-            # logger.info(session.get('username'))
-            # logger.info(session.get('role'))
+            logger.info(session.get('username'))
+            logger.info(session.get('role'))
 
 
             #TODO esta incidencia no se usa
@@ -115,7 +116,13 @@ def resumen_incidencias_cliente():
 
 @app.route('/incidencias_asignadas', methods=['GET'])
 def mostrar_incidencias_asignadas():
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    logger.info(session.get('role'))
+
+    if session.get('role') == 'tecnico':
+        incidencias = select_open_assigned_incidences_tech(session.get('username'))
+    else:
+        incidencias = select_open_assigned_incidences(session.get('username'))
+
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
 
@@ -203,13 +210,13 @@ def handle_data():
 
 @app.route('/dashboard')
 def dashboard():
+    #TODO estas incidencias si no ese usan habría qur quitar las consultas
+    #TODO xq se supone que cuando das al botón se hacen las consultas necesarias.
     # lista de notificaciones del usuario
-    #session['notification'] = get_notification(session.get('username'))
-    # logger.info(session.get('username'),session.get('role'))
     if session.get('role') == 'cliente':
         incidencias = select_last_incidence_user(session.get('username'))
     elif session.get('role') == 'tecnico':
-        incidencias= select_open_assigned_incidences(session.get('username'))
+        incidencias= select_open_assigned_incidences_tech(session.get('username'))
     else:
         incidencias=[]
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
@@ -273,23 +280,22 @@ def handle_cierre_tecnico():
     return render_template('incidencias_asignadas.html', username = session.get('username'),
                           role=session.get('role'), incidencias=incidencias)
 
+
 @app.route('/handle_cierre_cliente', methods=['POST'])
 def handle_cierre_cliente():
-    logger.info("Cierre cliente tratado")
-    username_stat=get_supervisor()
-    logger.info(username_stat)
-    idcli = request.form['idcli']
-    status=Status(idcli,username_stat,4)
-    username = session.get('username')
-    #update_status(status,5,username)
-    # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
-    role = session.get('role')
-    notify_close(status,role)
-    incidencias = select_open_incidences(session.get('username'))
 
-    #devices=get_devices()
+    logger.info("Cierre cliente tratado")
+    id_incidence = request.form['id_incidence']
+    sender = session.get('username')
+    receiver = get_technician(id_incidence)
+
+    create_notification(id_incidence, sender, receiver)
+
+    incidencias = select_open_incidences(session.get('username'))
     return render_template('incidencias_abiertas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
+
+
 
 @app.route('/handle_cierre_cliente_todas', methods=['POST'])
 def handle_cierre_cliente_todas():
