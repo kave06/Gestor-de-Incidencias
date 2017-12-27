@@ -214,8 +214,14 @@ def dashboard():
         incidencias=[]
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
     incidencias=[]  # he puesto en dashboard.html if='clienteX'
+
+    logger.info("Consulta notificaciones tecnico")
+    username = session.get('username')
+    notificaciones = get_notification(username)
+    logger.info(notificaciones)
+
     return render_template('dashboard.html', username=session.get('username'),
-                           role=session.get('role'), incidencia=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, incidencia=incidencias)
 
 @app.route('/handle_horas', methods=['POST'])
 def handle_horas():
