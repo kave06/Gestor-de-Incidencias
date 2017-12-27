@@ -331,11 +331,11 @@ def notificaciones_tecnico():
                            role=session.get('role'), notificaciones=notificaciones)
 
 
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    # logout_user()
-    return render_template('login.html')
-    # return redirect(url_for('login'))
+    logger.info('haciendo logout')
+    return redirect(url_for('login'))
+    # return render_template('login.html')
 
 
 if __name__ == '__main__':

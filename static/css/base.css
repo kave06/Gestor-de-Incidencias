@@ -116,7 +116,8 @@ a.before:before,a.after:after{
 }
 .dropdown-menu {
     left: -6rem;
-    max-width: 22rem;
+    min-width: 19rem;
+    max-width: 19rem;
 }
 .dropdown-item {
     color: #212529;
@@ -137,4 +138,10 @@ a.before:before,a.after:after{
 }
 .dropdown-bottom:hover {
     color: black !important;
+}
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link::after {
+    width: 0;
+}
+.mr-lg-2, .mx-lg-2 {
+    margin-right: unset !important;
 }
