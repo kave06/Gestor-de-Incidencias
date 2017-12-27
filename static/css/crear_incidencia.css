@@ -321,7 +321,6 @@ textarea {
     -moz-transition: all .3s ease-in-out;
     -o-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
-    margin: 0 10px;
     max-height: 185px;
 }
 
@@ -352,7 +351,7 @@ textarea {
 
 #exampleSelect1 {
     margin-top: 10px;
-    margin-right: 29px;
+    margin-right: 2px;
 }
 
 #submit-incidencia {
@@ -365,15 +364,15 @@ textarea {
     line-height: 1.5;
     color: white;
     text-align: left;
-    margin: 0 5px 0 30px;
+    margin: 4px 5px 0 30px;
 }
 .form-group {
     margin-bottom: 5px !important;
 }
 
 #incidencia-form {
-    font-size: 1.4rem;
-    line-height: 1.2;
+    font-size: 1rem;
+    line-height: 2;
 }
 .col-form-label {
     padding-top: calc(.375rem + 3px);
@@ -391,7 +390,7 @@ textarea {
 }
 .parallax-pal > h3.pal {
     color: white;
-    font-size: 28pt;
+    font-size: 20pt;
 }
 .parallax-pal > p.pal {
     color: white;
@@ -414,12 +413,6 @@ textarea {
 .title-font.light, .title-font .light {
     font-weight: 200;
 }
-#calendarSubmit {
-    position: relative;
-    z-index: 1;
-    left: -30px;
-    top: 15px;
-    color: #7B7B7B;
-    cursor: pointer;
-    width: 0;
+.texto-campos-obligatorios {
+    margin-top: -30px;
 }

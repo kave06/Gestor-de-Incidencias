@@ -26,7 +26,6 @@ table.dataTable.no-footer {
     border-bottom: 1px solid #e9ecef !important;
 }
 
-
 a,a:visited,a:hover,a:active{
   -webkit-backface-visibility:hidden;
           backface-visibility:hidden;

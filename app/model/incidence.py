@@ -263,7 +263,8 @@ def select_open_assigned_incidences(tecnico) -> tuple:
             "WHERE " \
             "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN (  " \
             "SELECT incidence_id FROM assigned_technicians " \
-            "WHERE technician_id='{}') " \
+            "WHERE technician_id='{}' " \
+            "AND t5.status_name = 'Asignada') " \
             "order by t1.priority desc".format(tecnico)
     #"WHERE t1.username='{}' AND " \
     logger.info(query)
@@ -534,4 +535,29 @@ def client_stats2(cliente) -> tuple:
         logger.error(err)
 
     logger.info(result_set)
+    return result_set
+
+
+def select_solicited_incidences(supervisor) -> tuple:
+    result_set = []
+
+    # TODO hacer esta query
+    query = "HACER ESTA QUERY".format(supervisor)
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
     return result_set

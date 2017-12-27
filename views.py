@@ -207,21 +207,26 @@ def dashboard():
     #session['notification'] = get_notification(session.get('username'))
     # logger.info(session.get('username'),session.get('role'))
     if session.get('role') == 'cliente':
-        incidencias = select_last_incidence_user(session.get('username'))
+        incidencias = select_open_assigned_incidences(session.get('username'))
+        logger.info("Dashboard del cliente")
     elif session.get('role') == 'tecnico':
         incidencias= select_open_assigned_incidences(session.get('username'))
+        logger.info("Dashboard del tecnico")
+    elif session.get('role') == 'supervisor':
+        incidencias= select_solicited_incidences(session.get('username'))
+        logger.info("Dashboard del supervisor")
     else:
         incidencias=[]
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
     incidencias=[]  # he puesto en dashboard.html if='clienteX'
 
-    logger.info("Consulta notificaciones tecnico")
+    logger.info("Consulta notificaciones")
     username = session.get('username')
     notificaciones = get_notification(username)
     logger.info(notificaciones)
 
     return render_template('dashboard.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones, incidencia=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, incidencias=incidencias)
 
 @app.route('/handle_horas', methods=['POST'])
 def handle_horas():
@@ -320,6 +325,8 @@ def notificaciones_tecnico():
     logger.info("Consulta notificaciones tecnico")
     username = session.get('username')
     notificaciones = get_notification(username)
+    logger.info(notificaciones)
+    logger.info(type(notificaciones))
     return render_template('notificaciones_tecnico.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones)
 

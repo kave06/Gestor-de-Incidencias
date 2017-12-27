@@ -116,9 +116,9 @@ lang='es'
                     </li>
                 {% endif %}
 
-                {% if role == 'tecnico' %}
+                {% if ((role == 'tecnico') or (role == 'supervisor')) %}
                   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
-                      <a class="nav-link" href="/incidencias_cerradas">
+                      <a class="nav-link" href="/incidencias_cerradas_tecnico">
 {#                        <i class="fa fa-fw fa-envelope-o"></i>#}
 {#                          <i class="fa fa-window-close" aria-hidden="true"></i>#}
                           <i class="fa fa-folder-o" aria-hidden="true" aria-hidden="true"></i>
@@ -222,16 +222,8 @@ lang='es'
                                 {% for notificacion in notificaciones %}
 {#                                        TODO Controlar si no hay notificaciones!!#}
 
-                                    {% if notificacion is none %}
-                                        <div class="dropdown-divider"></div>
-                                        <div class="dropdown-item">
-                                            <span>
-                                                <strong>No tienes notificaciones</strong>
-                                            </span>
-                                            <div class="dropdown-message small">No tienes notificaciones.</div>
-                                        </div>
-                                    {% else %}
-                                        <div class="dropdown-divider"></div>
+                                    {% if notificacion %}
+                                         <div class="dropdown-divider"></div>
                                         <div class="dropdown-item">
                                             <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>
                                             <span class="small float-right text-muted"> 2017-11-23 13:10:00</span>
@@ -261,6 +253,14 @@ lang='es'
     {#                                        </span>#}
     {#                                        <div class="dropdown-message small">El usuario cliente00 ha solicitado el cierre de esta incidencia.</div>#}
     {#                                    </div>#}
+                                    {% else %}
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-item">
+                                            <span>
+                                                <strong>No tienes notificaciones</strong>
+                                            </span>
+                                            <div class="dropdown-message small">No tienes notificaciones.</div>
+                                        </div>
                                     {%endif %}
                                 {% endfor %}
                                 <div class="dropdown-divider"></div>
