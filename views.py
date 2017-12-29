@@ -49,8 +49,8 @@ def handle_login():
 
             session['username'] = current_user.username_id
             session['role'] = current_user.role_id
-            logger.info(session.get('username'))
-            logger.info(session.get('role'))
+            # logger.info(session.get('username'))
+            # logger.info(session.get('role'))
 
 
             #TODO esta incidencia no se usa
@@ -221,8 +221,14 @@ def dashboard():
         incidencias=[]
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
     incidencias=[]  # he puesto en dashboard.html if='clienteX'
+
+    logger.info("Consulta notificaciones")
+    username = session.get('username')
+    notificaciones = get_notification(username)
+    logger.info(notificaciones)
+
     return render_template('dashboard.html', username=session.get('username'),
-                           role=session.get('role'), incidencia=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, incidencias=incidencias)
 
 @app.route('/handle_horas', methods=['POST'])
 def handle_horas():
@@ -320,15 +326,17 @@ def notificaciones_tecnico():
     logger.info("Consulta notificaciones tecnico")
     username = session.get('username')
     notificaciones = get_notification(username)
+    logger.info(notificaciones)
+    logger.info(type(notificaciones))
     return render_template('notificaciones_tecnico.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones)
 
 
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    # logout_user()
-    return render_template('login.html')
-    # return redirect(url_for('login'))
+    logger.info('haciendo logout')
+    return redirect(url_for('login'))
+    # return render_template('login.html')
 
 
 if __name__ == '__main__':

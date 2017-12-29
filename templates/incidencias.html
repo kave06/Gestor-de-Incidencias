@@ -76,7 +76,9 @@
                                               <div class="col-md-6">
                                                   <ul>
                                                       <div id="idInc" class="modal-body"></div>
-                                                      <div id="userInc" class="modal-body"></div>
+                                                      {% if role != 'cliente' %}
+                                                          <div id="userInc" class="modal-body"></div>
+                                                      {% endif %}
                                                       <div id="descInc" class="modal-body"></div>
                                                   </ul>
                                               </div>
@@ -85,7 +87,9 @@
                                                       <div id="fechaInc" class="modal-body"></div>
                                                       <div id="catInc" class="modal-body"></div>
                                                       <div id="priorInc" class="modal-body"></div>
-                                                      <div id="horasInc" class="modal-body"></div>
+                                                      {% if role != 'cliente' %}
+                                                          <div id="horasInc" class="modal-body"></div>
+                                                      {% endif %}
                                                       <div id="estadoInc" class="modal-body"></div>
                                                       <div id="resueltoInc" class="modal-body"></div>
                                                   </ul>

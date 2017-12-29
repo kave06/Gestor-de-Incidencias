@@ -8,6 +8,7 @@ class Notification(Model):
     sender = CharField()
     receiver = CharField()
 
+
     class Meta:
         database = db
 

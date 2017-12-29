@@ -16,7 +16,7 @@
 }
 .form-group {
     margin: 20px auto auto auto;
-    max-width: 300px;
+    max-width: 500px;
     position: relative;
     display: block;
     margin: auto !important;
@@ -28,4 +28,8 @@ body {
 .error {
     text-align: center;
     color: red;
+}
+#loginform {
+    max-width: 250px;
+    margin: auto;
 }

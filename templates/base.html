@@ -116,9 +116,9 @@ lang='es'
                     </li>
                 {% endif %}
 
-                {% if role == 'tecnico' %}
+                {% if ((role == 'tecnico') or (role == 'supervisor')) %}
                   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
-                      <a class="nav-link" href="/incidencias_cerradas">
+                      <a class="nav-link" href="/incidencias_cerradas_tecnico">
 {#                        <i class="fa fa-fw fa-envelope-o"></i>#}
 {#                          <i class="fa fa-window-close" aria-hidden="true"></i>#}
                           <i class="fa fa-folder-o" aria-hidden="true" aria-hidden="true"></i>
@@ -192,17 +192,86 @@ lang='es'
                     <li class="nav-item">
                         <a class="usuario">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <b>Usuario: </b> {{ username }}
+                            <b>{{ username }}</b>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="role">
+{#                    <li class="nav-item">#}
+{#                        <a class="role">#}
+{##}
+{#                            <i class="fa fa-briefcase" aria-hidden="true"></i>#}
+{#                            <b>Rol: </b> {{ role }}#}
+{#                        </a>#}
+{#                    </li>#}
 
-                            <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            <b>Rol: </b> {{ role }}
-                        </a>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-lg-2 faa-parent animated-hover" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-fw fa-bell faa-ring"></i>
+                                <b>Notificaciones</b>
+{#                                <span class="d-lg-none">Alerts#}
+{#                                    <span class="badge badge-pill badge-warning">6 New</span>#}
+{#                                </span>#}
+{#                                <span class="indicator text-warning d-none d-lg-block">#}
+{#                                    <i class="fa fa-fw fa-circle"></i>#}
+{#                                </span>#}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">Mis notificaciones:</h6>
+                                <!-- Aqui dentro, en cada dropdown-item va una notificación-->
+
+                                {% for notificacion in notificaciones %}
+{#                                        TODO Controlar si no hay notificaciones!!#}
+
+                                    {% if notificacion %}
+
+                                    {% else %}
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-item">
+                                            <span>
+                                                <strong>No tienes notificaciones</strong>
+                                            </span>
+                                            <div class="dropdown-message small">No tienes notificaciones.</div>
+                                        </div>
+
+
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-item">
+                                            <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>
+                                            <span class="small float-right text-muted"> 2017-11-23 13:10:00</span>
+                                            <br>
+                                            <span>
+                                                <strong>Incidencia: {{ notificacion.incidence_id }}</strong>
+                                            </span>
+                                            <div class="dropdown-message small">El usuario {{ notificacion.sender }} ha solicitado el cierre de esta incidencia.</div>
+                                        </div>
+    {#                                    <div class="dropdown-divider"></div>#}
+    {#                                    <div class="dropdown-item">#}
+    {#                                        <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
+    {#                                        <span class="small float-right text-muted">2017-11-30 12:00:00</span>#}
+    {#                                        <br>#}
+    {#                                        <span>#}
+    {#                                            <strong>Incidencia: INC_2017_0002</strong>#}
+    {#                                        </span>#}
+    {#                                        <div class="dropdown-message small">El usuario cliente01 ha solicitado el cierre de esta incidencia.</div>#}
+    {#                                    </div>#}
+    {#                                    <div class="dropdown-divider"></div>#}
+    {#                                    <div class="dropdown-item">#}
+    {#                                        <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
+    {#                                        <span class="small float-right text-muted">2017-12-01 12:00:00</span>#}
+    {#                                        <br>#}
+    {#                                        <span>#}
+    {#                                            <strong>Incidencia: INC_2017_0003</strong>#}
+    {#                                        </span>#}
+    {#                                        <div class="dropdown-message small">El usuario cliente00 ha solicitado el cierre de esta incidencia.</div>#}
+    {#                                    </div>#}
+                                    {%endif %}
+                                {% endfor %}
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-bottom">
+                                    <a class="dropdown-item small" href="http://www.google.es"> <i class="fa fa-trash"></i>  Eliminar todas mis notificaiones</a>
+                                </div>
+                            </div>
+                        </li>
 
                     <li class="nav-item">
                         <a class="nav-link faa-parent animated-hover" data-toggle="modal" href="{{ url_for('logout') }}">
