@@ -133,10 +133,10 @@ def resumen_incidencias_cliente():
 def mostrar_incidencias_asignadas():
     logger.info(session.get('role'))
 
-    if session.get('role') == 'tecnico':
-        incidencias = select_open_assigned_incidences_tech(session.get('username'))
-    else:
-        incidencias = select_open_assigned_incidences(session.get('username'))
+    # if session.get('role') == 'tecnico':
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
+    # else:
+    #     incidencias = select_open_assigned_incidences(session.get('username'))
 
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
