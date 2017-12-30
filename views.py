@@ -1,12 +1,12 @@
-import os
-# import datetime
-from datetime import datetime
+# import os
+# # import datetime
+# from datetime import datetime
 from app.model.incidence import *
 from app.model.device import assign_devices,get_devices
 from app.model.status import insert_status,Status,update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
-from app.model.clases_varias import LoginForm, IncidenciaForm
+# from app.model.clases_varias import LoginForm, IncidenciaForm
 from app.model.user import mapping_object, print_user, get_supervisor
 from app.model.comment import Comment, insert_comment
 from flask_bootstrap import Bootstrap
@@ -14,24 +14,80 @@ from flask_moment import Moment
 from flask_script import Manager
 from app.model.db_notify import *
 from app.model.database import *
-
-
+from playhouse.flask_utils import FlaskDB #, get_object_or_404, object_list
+from playhouse.sqlite_ext import *
+# from flask_peewee.db import Database
 from app.model.logger import create_log
 
+notificacion = get_notification('tecnico00')
+print(type(notificacion))
+print(len(notificacion))
+
+
+
+APP_DIR = os.path.dirname(os.path.realpath(__file__))
+DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'app/model/notification.db')
+# DATABASE = {
+#     'name': 'notification.db',
+#     'engine': 'peewee.SqliteDatabase',
+# }
+
+# DATABASE = 'notification.db'
+DEBUG = True
+# SECRET_KEY ='loqueyotediga'
+
 app = Flask(__name__)
+
+app.config.from_object(__name__)
+
 app.config['SECRET_KEY'] = 'hard to guess string'
 
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+
+logger.info(APP_DIR)
+
+# DATABASE = get_db()
+# DATABASE = 'notification.db'
+# database = SqliteDatabase(DATABASE, threadlocals=True)
+# database = get_db()
+# print(type(database))
 # SESSION_TYPE = 'redis'
 # app.config.from_object(__name__)
 # Session(app)
 
+# DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'notification.db')
+# DATABASE = ('notification.db')
 
 
-path = os.path.dirname(os.path.abspath(__file__))
-logger = create_log('{}/gestor.log'.format(path))
+
+# DATABASE = {
+#     'name': 'notification.db',
+#     'engine': 'peewee.SqliteDatabase',
+# }
+# DEBUG = True
+# SECRET_KEY ='loqueyotediga'
+# database = Database(app)
+
+flask_db = FlaskDB(app)
+database = flask_db.database
+database = ge
+# database = flask_db.database
+
+
+
+
+
+
+notificacion = get_notification('tecnico01')
+print(type(notificacion))
+print(len((notificacion)))
+for rows in notificacion:
+    print(rows.incidence_id, rows.sender, rows.receiver)
+
+# path = os.path.dirname(os.path.abspath(__file__))
+logger = create_log('{}/gestor.log'.format(APP_DIR))
 
 
 @app.route('/')
@@ -337,6 +393,16 @@ def logout():
     logger.info('haciendo logout')
     return redirect(url_for('login'))
     # return render_template('login.html')
+
+@app.before_request
+def before_request():
+    database.connect()
+
+@app.after_request
+def after_request(response):
+    database.close()
+    return response
+
 
 
 if __name__ == '__main__':

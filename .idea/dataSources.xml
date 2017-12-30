@@ -15,11 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="notification.db" uuid="772d009b-5227-4379-908f-e16e49595144">
+    <data-source source="LOCAL" name="notification.db" uuid="fe711daa-b02f-474d-abe8-451171f671f7">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/app/model/notification.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/notification.db</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

@@ -1,6 +1,7 @@
 from peewee import SqliteDatabase, Model, CharField
 
-db = SqliteDatabase('notification.db')
+# db = SqliteDatabase('notification.db')
+database = SqliteDatabase('notification.db', threadlocals=True)
 
 
 class Notification(Model):
@@ -10,17 +11,17 @@ class Notification(Model):
 
 
     class Meta:
-        database = db
+        database = database
 
 
-db.connect()
+# database.connect()
 
 if not Notification.table_exists():
     Notification.create_table()
 
 
 def create_notification(incidence_id, sender, receiver):
-    with db.atomic():
+    with database.atomic():
         Notification.create(incidence_id=incidence_id, sender=sender, receiver=receiver)
 
 
@@ -31,3 +32,6 @@ def get_notification(receiver: str):
 def delete_notification(incidence_id, sender):
     Notification.delete().where(Notification.incidence_id == incidence_id and
                                 Notification.sender == sender)
+
+def get_db():
+    return database
