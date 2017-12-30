@@ -10,7 +10,7 @@
       <user-name>kave</user-name>
       <introspection-schemas>*:pgpi</introspection-schemas>
     </data-source>
-    <data-source name="notification.db" uuid="fe711daa-b02f-474d-abe8-451171f671f7">
+    <data-source name="notification.db" uuid="bf633ba0-0c28-4433-ab1a-b7ed344a45b0">
       <database-info product="SQLite" version="3.16.1" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" />
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
