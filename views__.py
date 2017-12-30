@@ -16,7 +16,7 @@ from app.model.db_notify import *
 from app.model.database import *
 from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
 from playhouse.sqlite_ext import *
-from flask_peewee.db import Database
+# from flask_peewee.db import Database
 from app.model.logger import create_log
 
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
