@@ -72,7 +72,7 @@ logger.info(APP_DIR)
 
 flask_db = FlaskDB(app)
 database = flask_db.database
-database = ge
+# database = ge
 # database = flask_db.database
 
 

@@ -96,7 +96,8 @@ def execute_query(query):
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
-        result_set = cursor.fetchmany(size=1)
+        # result_set = cursor.fetchmany(size=1)
+        result_set = cursor.fetchall()
         cursor.close()
         logger.info('result_set: {}'.format(result_set))
     except Exception as err:
