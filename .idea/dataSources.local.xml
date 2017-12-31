@@ -10,7 +10,7 @@
       <user-name>kave</user-name>
       <introspection-schemas>*:pgpi</introspection-schemas>
     </data-source>
-    <data-source name="notification.db" uuid="fe711daa-b02f-474d-abe8-451171f671f7">
+    <data-source name="notification.db" uuid="633ed8d9-381b-405e-844c-43d3b3d65a60">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
     </data-source>
   </component>

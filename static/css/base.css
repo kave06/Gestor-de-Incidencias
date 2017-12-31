@@ -120,8 +120,11 @@ a.before:before,a.after:after{
     max-width: 19rem;
 }
 .dropdown-item {
-    color: #212529;
+    color: #212529 !important;
     white-space: unset;
+}
+.dropdown-item:active {
+    background-color: unset !important;
 }
 .dropdown-item i.fa.fa-trash {
     font-size: 20px;
@@ -138,6 +141,9 @@ a.before:before,a.after:after{
 }
 .dropdown-bottom:hover {
     color: black !important;
+}
+a.dropdown-item.small {
+    text-align: center;
 }
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link::after {
     width: 0;

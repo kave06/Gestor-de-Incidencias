@@ -74,15 +74,27 @@ def handle_login():
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
 def crear_incidencia():
     # logger.info('dentro de crear_incidencia()')
-    return render_template('crear_incidencia.html', username=session.get('username'),
-                           role=session.get('role'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('crear_incidencia.html', username=session.get('username'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, role=session.get('role'))
 
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
     incidencias = select_incidences_user(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/incidencias_abiertas', methods=['GET'])
@@ -90,8 +102,14 @@ def mostrar_incidencias_abiertas():
     incidencias = select_open_incidences(session.get('username'))
 
     # devices=get_devices()
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_abiertas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/resumen_incidencias_cliente', methods=['GET'])
@@ -113,8 +131,13 @@ def resumen_incidencias_cliente():
     # list[1] = end_date.strftime("%d-%m-%y")
     # list[2] = tiempo.strftime("%d-%m-%y")
 
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('resumen_incidencias_cliente.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias,
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias,
                            stats1=stats1, stats2=stats2, count=count, tiempo=tiempo)
 
 
@@ -124,29 +147,52 @@ def mostrar_incidencias_asignadas():
 
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/incidencias_cerradas', methods=['GET'])
 def mostrar_incidencias_cerradas():
     incidencias = select_closed_incidences()
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_cerradas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/incidencias_sin_asignar', methods=['GET'])
 def mostrar_incidencias_sin_asignar():
     incidencias = select_unassigned_incidences()
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/incidencias_todas_abiertas', methods=['GET'])
 def mostrar_todas_incidencias_abiertas():
     incidencias = select_all_open_incidences()
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('todas_incidencias_abiertas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/incidencias_todas', methods=['GET'])
@@ -154,16 +200,28 @@ def mostrar_todas_incidencias():
     incidencias = select_all_incidences()
     url = request.url.__str__()
     logger.info(url)
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('todas_incidencias.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/cerrar_incidencia', methods=['GET'])
 def cerrar_incidencia():
     incidencias = select_closed_incidences()
     url = request.url.__str__()
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_cerradas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'),notificaciones=notificaciones, empty_notif=empty_notif,  incidencias=incidencias)
 
 
 @app.route('/handle_data', methods=['POST'])
@@ -203,11 +261,17 @@ def handle_data():
     logger.info(devices_ids)
     assign_devices(id_incidencia, devices_ids)
 
-    return render_template('base.html', username=session.get('username'), role=session.get('role'))
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('base.html', username=session.get('username'), notificaciones=notificaciones, empty_notif=empty_notif, ole=session.get('role'))
 
 
 @app.route('/dashboard')
 def dashboard():
+    empty_notif = 0
     # TODO estas incidencias si no ese usan habría qur quitar las consultas
     # TODO xq se supone que cuando das al botón se hacen las consultas necesarias.
     # lista de notificaciones del usuario
@@ -220,13 +284,24 @@ def dashboard():
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
     incidencias = []  # he puesto en dashboard.html if='clienteX'
 
-    logger.info("Consulta notificaciones")
+    logger.info("Consulta notificaciones dashboard")
     username = session.get('username')
     notificaciones = get_notification(username)
+    logger.info(type(notificaciones))
     logger.info(notificaciones)
 
+    logger.info('len(notificaciones)')
+    logger.info(len(notificaciones))
+
+    if len(notificaciones) == 0:
+        logger.info('No hay notificaciones, pongo empty_notif a 1')
+        empty_notif = 1
+
+    logger.info('empty_notif')
+    logger.info(empty_notif)
+
     return render_template('dashboard.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones, incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,incidencias=incidencias)
 
 
 @app.route('/handle_horas', methods=['POST'])
@@ -236,8 +311,14 @@ def handle_horas():
     update_technician_hours(idinc, horas_inc)
     logger.info("Horas tratadas")
     incidencias = select_open_assigned_incidences(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_comment', methods=['POST'])
@@ -268,8 +349,14 @@ def handle_comment():
 
     insert_comment(comentario)
     incidencias = select_open_assigned_incidences(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_cierre_tecnico', methods=['POST'])
@@ -284,8 +371,14 @@ def handle_cierre_tecnico():
     role = session.get('role')
     notify_close(status, role)
     incidencias = select_open_assigned_incidences(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_cierre_cliente', methods=['POST'])
@@ -298,8 +391,14 @@ def handle_cierre_cliente():
     create_notification(id_incidence, sender, receiver)
 
     incidencias = select_open_incidences(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('incidencias_abiertas.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_cierre_cliente_todas', methods=['POST'])
@@ -316,20 +415,27 @@ def handle_cierre_cliente_todas():
     notify_close(status, role)
     incidencias = select_open_incidences(session.get('username'))
 
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     # devices=get_devices()
     return render_template('incidencias.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/notificaciones_tecnico', methods=['GET'])
 def notificaciones_tecnico():
     logger.info("Consulta notificaciones tecnico")
     username = session.get('username')
+    empty_notif = 0
     notificaciones = get_notification(username)
-    logger.info(notificaciones)
-    logger.info(type(notificaciones))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
     return render_template('notificaciones_tecnico.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones)
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif)
 
 
 @app.route('/logout')

@@ -216,60 +216,50 @@ lang='es'
 {#                                </span>#}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">Mis notificaciones:</h6>
-                                <!-- Aqui dentro, en cada dropdown-item va una notificación-->
+                                {% if empty_notif == 0 %}
+                                    <h6 class="dropdown-header">Mis notificaciones:</h6>
+                                {% elif empty_notif == 1 %}
+                                     <h6 class="dropdown-header" style="text-align: center;">No tienes notificaciones</h6>
+                                {%endif %}
 
                                 {% for notificacion in notificaciones %}
-{#                                        TODO Controlar si no hay notificaciones!!#}
-
-                                    {% if notificacion %}
-
-                                    {% else %}
-                                        <div class="dropdown-divider"></div>
-                                        <div class="dropdown-item">
-                                            <span>
-                                                <strong>No tienes notificaciones</strong>
-                                            </span>
-                                            <div class="dropdown-message small">No tienes notificaciones.</div>
-                                        </div>
-
-
+                                    {% if empty_notif == 0 %}
                                         <div class="dropdown-divider"></div>
                                         <div class="dropdown-item">
                                             <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>
-                                            <span class="small float-right text-muted"> 2017-11-23 13:10:00</span>
-                                            <br>
                                             <span>
-                                                <strong>Incidencia: {{ notificacion.incidence_id }}</strong>
+                                                <strong>&nbsp;Incidencia: {{ notificacion.incidence_id }}</strong>
                                             </span>
-                                            <div class="dropdown-message small">El usuario {{ notificacion.sender }} ha solicitado el cierre de esta incidencia.</div>
+                                            <div class="dropdown-message small">El usuario '{{ notificacion.sender }}' ha solicitado el cierre de esta incidencia.</div>
                                         </div>
-    {#                                    <div class="dropdown-divider"></div>#}
-    {#                                    <div class="dropdown-item">#}
-    {#                                        <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
-    {#                                        <span class="small float-right text-muted">2017-11-30 12:00:00</span>#}
-    {#                                        <br>#}
-    {#                                        <span>#}
-    {#                                            <strong>Incidencia: INC_2017_0002</strong>#}
-    {#                                        </span>#}
-    {#                                        <div class="dropdown-message small">El usuario cliente01 ha solicitado el cierre de esta incidencia.</div>#}
-    {#                                    </div>#}
-    {#                                    <div class="dropdown-divider"></div>#}
-    {#                                    <div class="dropdown-item">#}
-    {#                                        <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
-    {#                                        <span class="small float-right text-muted">2017-12-01 12:00:00</span>#}
-    {#                                        <br>#}
-    {#                                        <span>#}
-    {#                                            <strong>Incidencia: INC_2017_0003</strong>#}
-    {#                                        </span>#}
-    {#                                        <div class="dropdown-message small">El usuario cliente00 ha solicitado el cierre de esta incidencia.</div>#}
-    {#                                    </div>#}
                                     {%endif %}
                                 {% endfor %}
-                                <div class="dropdown-divider"></div>
-                                <div class="dropdown-bottom">
-                                    <a class="dropdown-item small" href="http://www.google.es"> <i class="fa fa-trash"></i>  Eliminar todas mis notificaiones</a>
-                                </div>
+                                {% if empty_notif == 0 %}
+                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-bottom">
+                                        <a class="dropdown-item small" href="http://www.google.es"> <i class="fa fa-trash"></i>  Eliminar todas mis notificaciones</a>
+                                    </div>
+                                {%endif %}
+{#                                <div class="dropdown-divider"></div>#}
+{#                                <div class="dropdown-item">#}
+{#                                    <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
+{#                                    <span class="small float-right text-muted">2017-11-30 12:00:00</span>#}
+{#                                    <br>#}
+{#                                    <span>#}
+{#                                        <strong>Incidencia: INC_2017_0002</strong>#}
+{#                                    </span>#}
+{#                                    <div class="dropdown-message small">El usuario cliente01 ha solicitado el cierre de esta incidencia.</div>#}
+{#                                </div>#}
+{#                                <div class="dropdown-divider"></div>#}
+{#                                <div class="dropdown-item">#}
+{#                                    <a class="pull-left" href="http://www.google.es"><i class="fa fa-trash" aria-hidden="true" style="color: #868e96"></i></a>#}
+{#                                    <span class="small float-right text-muted">2017-12-01 12:00:00</span>#}
+{#                                    <br>#}
+{#                                    <span>#}
+{#                                        <strong>Incidencia: INC_2017_0003</strong>#}
+{#                                    </span>#}
+{#                                    <div class="dropdown-message small">El usuario cliente00 ha solicitado el cierre de esta incidencia.</div>#}
+{#                                </div>#}
                             </div>
                         </li>
 

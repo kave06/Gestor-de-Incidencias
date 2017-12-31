@@ -15,7 +15,7 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="notification.db" uuid="fe711daa-b02f-474d-abe8-451171f671f7">
+    <data-source source="LOCAL" name="notification.db" uuid="633ed8d9-381b-405e-844c-43d3b3d65a60">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
