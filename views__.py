@@ -21,8 +21,6 @@ from app.model.logger import create_log
 
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'notification.db')
-# DEBUG = True
-# SECRET_KEY ='loqueyotediga'
 
 app = Flask(__name__)
 
@@ -36,16 +34,7 @@ moment = Moment(app)
 
 logger.info(APP_DIR)
 
-# database.close()
-# flask_db = FlaskDB(app)
-# database = FlaskDB(app)
-# database = flask_db.database
 database = get_db()
-notificacion = get_notification('tecnico01')
-print(type(notificacion))
-print(len((notificacion)))
-for rows in notificacion:
-    print(rows.incidence_id, rows.sender, rows.receiver)
 
 logger = create_log('{}/gestor.log'.format(APP_DIR))
 
@@ -133,10 +122,7 @@ def resumen_incidencias_cliente():
 def mostrar_incidencias_asignadas():
     logger.info(session.get('role'))
 
-    # if session.get('role') == 'tecnico':
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
-    # else:
-    #     incidencias = select_open_assigned_incidences(session.get('username'))
 
     return render_template('incidencias_asignadas.html', username=session.get('username'),
                            role=session.get('role'), incidencias=incidencias)
