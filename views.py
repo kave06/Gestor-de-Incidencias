@@ -8,7 +8,7 @@ from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
 from app.model.user import mapping_object, print_user, get_supervisor
-from app.model.comment import Comment, insert_comment
+from app.model.comment import Comment, insert_comment, select_comments
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
@@ -316,6 +316,38 @@ def notificaciones_tecnico():
     notificaciones = get_notification(username)
     return render_template('notificaciones_tecnico.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones)
+
+@app.route('/handle_prioridad', methods=['POST'])
+def handle_prioridad():
+    prioridad = request.form['prioridad']
+    incidence_id = request.form['incidence_id']
+
+    if prioridad == 'Muy baja':
+        prioridad = 1
+    elif prioridad == 'Baja':
+        prioridad = 2
+    elif prioridad == 'Media':
+        prioridad = 3
+    elif prioridad == 'Alta':
+        prioridad = 4
+    elif prioridad == 'Muy alta':
+        prioridad = 5
+
+
+    update_priority(incidence_id,prioridad)
+    incidencias = select_unassigned_incidences()
+    return render_template('incidencias_sin_asignar.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
+
+
+@app.route('/handle_inventario', methods=['POST'])
+def handle_inventario():
+    devices_ids = request.form['id_dispositivo']
+    incidence_id= request.form['incidence_id']
+    assign_devices(incidence_id, devices_ids)
+    incidencias = select_unassigned_incidences()
+    return render_template('incidencias_sin_asignar.html', username=session.get('username'),
+                           role=session.get('role'), incidencias=incidencias)
 
 
 @app.route("/logout")

@@ -28,10 +28,15 @@ class Incidence:
 
 
 def select_incidence(incidence_id):
-    result_set = ''
-    query = "SELECT * " \
-            "FROM incidences " \
-            "WHERE incidence_id='{}'".format(incidence_id)
+    result_set = []
+    query = "SELECT t1.incidence_id, t1.title, t1.description, t1.username," \
+            " t1.incidence_date, t5.status_name, t3.priority_name," \
+            "t1.technician_hours, t1.resolve,t2.category_name,t1.priority " \
+            "FROM incidences AS t1 " \
+            "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
+            "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
+            "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
+            "WHERE t1.incidence_id='{}'".format(incidence_id)
 
     logger.info(query)
 
@@ -40,7 +45,12 @@ def select_incidence(incidence_id):
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
-        result_set = cursor.fetchmany(size=1)
+
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
         cursor.close()
     except Exception as err:
         logger.error(err)
@@ -535,3 +545,21 @@ def client_stats2(cliente) -> tuple:
 
     logger.info(result_set)
     return result_set
+
+def update_priority(incidence_id,priority):
+
+    query = "UPDATE incidences SET " \
+            "priority={} " \
+            "WHERE incidence_id='{}'".format(priority,incidence_id)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+    except Exception as err:
+        logger.error(err)

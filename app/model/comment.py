@@ -35,3 +35,33 @@ def insert_comment(comment):
         cursor.close()
     except Exception as err:
         logger.error(err)
+
+
+def select_comments(incidence_id):
+    result_set = []
+    query = "SELECT t1.comment_id, t1.incidence_id, t1.username, " \
+            "t2.status_name, t1.content " \
+            "FROM comments AS t1 " \
+            "JOIN (type_of_status AS t2) " \
+            "ON (t1.status=t2.status_id) " \
+            "WHERE incidence_id='{}'".format(incidence_id)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    logger.info('result_set: {}'.format(result_set))
+    return result_set

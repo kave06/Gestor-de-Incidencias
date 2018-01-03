@@ -77,3 +77,48 @@ def get_supervisor():
     return result_set[0][0]
 
 
+def select_technicians() -> tuple:
+    result_set = []
+
+    query = "SELECT t1.username_id, count(*) " \
+            "FROM users AS t1 " \
+            "LEFT JOIN (status AS t2, assigned_technicians AS t3)" \
+            "ON (t1.username_id=t3.technician_id AND t2.incidence_id=t3.incidence_id) " \
+            "WHERE t1.role_id=2 AND " \
+            "t2.end_date='00/00/00 00:00:00' AND t2.status_id=4 " \
+            "UNION " \
+            "SELECT username_id, count(*) " \
+            "FROM users " \
+            "WHERE role_id = 2"
+
+
+    # logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        # result_set = cursor.fetchall()
+        cursor.close()
+
+        for value in cursor:
+            result_set.append(value)
+
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+    # logger.info('result_set: {}'.format(result_set))
+    # logger.info('type: {}'.format(type(result_set)))
+    # logger.info('result_set[0][0]: {}'.format(result_set[0][0]))
+    # logger.info(len(result_set[0]))
+
+    return result_set
+
+tecnicos = select_technicians()
+for tecnico in tecnicos:
+    logger.info(tecnico)
+
+
+
