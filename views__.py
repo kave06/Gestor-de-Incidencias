@@ -43,6 +43,16 @@ logger = create_log('{}/gestor.log'.format(APP_DIR))
 def login():
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session['username'] = ""
+    session['role'] = ""
+    logger.info('cerrando la sesión')
+    logger.info('usuario: {}, rol: {}.'.format(session['username'], session['role']))
+    print('...sesión cerrada!')
+    return redirect(url_for('login'))
+
+
 
 @app.route('/handle_login', methods=['POST'])
 def handle_login():
@@ -460,13 +470,6 @@ def notificaciones_tecnico():
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif)
 
 
-@app.route('/logout')
-def logout():
-    logger.info('haciendo logout')
-    return redirect(url_for('login'))
-    # return render_template('login.html')
-
-
 # @app.before_request
 # def before_request():
 #     database.connect()
@@ -545,6 +548,7 @@ def handle_incidencia_solicitada():
 
     return render_template('incidencias_solicitadas.html', username=username,
                            role=role, incidencias=incidencias)
+
 
 
 if __name__ == '__main__':
