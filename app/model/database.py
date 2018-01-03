@@ -47,6 +47,7 @@ def connect_db() -> pymysql.connect:
        # FLAG_RECONNECT = True
     return cnx
 
+
 def get_technician(id_incidence):
     query = "SELECT technician_id " \
             "FROM assigned_technicians " \
@@ -71,6 +72,7 @@ def select_open_assigned_incidences(technician) -> tuple:
     result_set = execute_query(query)
     return result_set
 
+
 def select_open_assigned_incidences_tech(technician) -> tuple:
     #TODO comprobar vista global y revisar esta query
 
@@ -86,6 +88,7 @@ def select_open_assigned_incidences_tech(technician) -> tuple:
 
     result_set = execute_query(query)
     return result_set
+
 
 def execute_query(query):
     # logger.info('en execute')
@@ -105,6 +108,7 @@ def execute_query(query):
 
     return result_set
 
+
 def insert_query(query):
     # logger.info('en execute')
     result_set = ''
@@ -116,11 +120,11 @@ def insert_query(query):
         cursor.execute(query)
         cnx.commit()
         cursor.close()
-        logger.info('result_set: {}'.format(result_set))
     except Exception as err:
         logger.error(err)
 
     return result_set
+
 
 def technician_list():
     query = "SELECT  username_id " \
@@ -129,6 +133,7 @@ def technician_list():
 
     list = execute_query(query)
     return list
+
 
 def assign_tech(incidence_id, tech_id):
     query = "INSERT INTO assigned_technicians VALUES ('{}','{}')" \

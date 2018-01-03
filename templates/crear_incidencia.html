@@ -4,6 +4,8 @@
 {% block title %}<title>Crear Incidencia</title>{% endblock %}
 
 {% block css %}
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='/static/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Bootstrap core CSS-->
     <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -49,9 +51,21 @@
                         <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
                     </div>
 
+{#                    <div class="row form-group input-container">#}
+{#                        <span>Identificador del dispositivo</span>#}
+{#                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >#}
+{#                    </div>#}
+
                     <div class="row form-group input-container">
-                        <span>Identificador del dispositivo</span>
-                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >
+                        <label class="col-form-label">Identificador del dispositivo</label>
+                        <select name="id_dispositivo" class="form-control selectpicker" id="exampleSelect0" multiple>
+                            <option selected disabled hidden style='display: none' value=''>Seleccione un dispositivo si lo conoce...</option>
+                            {% for dispositivo in dispositivos %}
+                                <option>{{ dispositivo[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-info-circle icon-characters" aria-hidden="true"></i>
+                        <div id="charNum"> <span>Para seleccionar varios dispositivos use la tecla 'Ctrl' de su teclado.</span> </div>
                     </div>
 
                     <div class="row form-group col-md-6 pull-left">
@@ -93,6 +107,7 @@
 
 {% block scripts %}
     <!-- Bootstrap core JavaScript-->
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
     <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->

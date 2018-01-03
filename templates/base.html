@@ -13,6 +13,8 @@ lang='es'
     {% block title %}<title>Gestor de Incidencias</title>{% endblock %}
 
     {% block css %}
+        <!-- Bootstrap -->
+        <link href="{{ url_for('static', filename='/static/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Bootstrap core CSS-->
         <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Custom fonts for this template-->
@@ -300,6 +302,8 @@ lang='es'
 
     {% block scripts %}
 <!-- Bootstrap core JavaScript-->
+        <script src="/static/js/bootstrap.min.js"></script>
+
 <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
 <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->

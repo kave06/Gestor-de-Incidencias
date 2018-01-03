@@ -15,15 +15,6 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="notification.db" uuid="633ed8d9-381b-405e-844c-43d3b3d65a60">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/notification.db</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
-    </data-source>
     <data-source source="LOCAL" name="jair" uuid="57f5ae16-6f69-4321-8885-a7342f188142">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -36,6 +27,15 @@
         <property name="characterEncoding" value="utf8" />
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="notification.db" uuid="f56218bd-4727-4c4a-98ac-0e1a5d52b2fa">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/notification.db</jdbc-url>
+      <driver-properties>
+        <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
   </component>
