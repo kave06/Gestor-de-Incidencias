@@ -232,12 +232,12 @@ def handle_data():
     devices_ids = request.form['id_dispositivo']
 
     fecha_incidencia = request.form['fecha_incidencia']
+    logger.info(fecha_incidencia)
     if fecha_incidencia == "":
         fecha_incidencia = datetime.now()
-    else:
-        fecha_incidencia = fecha_incidencia + str(datetime.now().hour) + ':00:00'
+    # else:
+    #     fecha_incidencia = fecha_incidencia + str(datetime.now().hour) + ':00:00'
 
-    # TODO cambiar a recoger el usuario por sesión  usuario = current_user.username
     usuario = session.get('username')
     categoria = request.form['categoria']
 
@@ -259,14 +259,18 @@ def handle_data():
     status = Status(id_incidencia, usuario, 1)
     insert_status(status)
     logger.info(devices_ids)
-    assign_devices(id_incidencia, devices_ids)
+
+    if devices_ids != '':
+        logger.info('devices: {}'.format(devices_ids))
+        assign_devices(id_incidencia, devices_ids)
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('base.html', username=session.get('username'), notificaciones=notificaciones, empty_notif=empty_notif, ole=session.get('role'))
+    return render_template('dashboard.html', username=session.get('username'),
+                           notificaciones=notificaciones, empty_notif=empty_notif, role=session.get('role'))
 
 
 @app.route('/dashboard')
@@ -318,7 +322,8 @@ def handle_horas():
         empty_notif = 1
 
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_comment', methods=['POST'])
@@ -378,7 +383,8 @@ def handle_cierre_tecnico():
         empty_notif = 1
 
     return render_template('incidencias_asignadas.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif, incidencias=incidencias)
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
 
 
 @app.route('/handle_cierre_cliente', methods=['POST'])
@@ -450,10 +456,10 @@ def logout():
 #     database.connect()
 
 
-@app.after_request
-def after_request(response):
-    database.close()
-    return response
+# @app.after_request
+# def after_request(response):
+#     database.close()
+#     return response
 
 
 if __name__ == '__main__':

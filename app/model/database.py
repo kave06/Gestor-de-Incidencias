@@ -104,3 +104,20 @@ def execute_query(query):
         logger.error(err)
 
     return result_set
+
+def insert_query(query):
+    # logger.info('en execute')
+    result_set = ''
+    logger.info(query)
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+        logger.info('result_set: {}'.format(result_set))
+    except Exception as err:
+        logger.error(err)
+
+    return result_set

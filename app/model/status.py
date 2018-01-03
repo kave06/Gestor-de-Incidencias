@@ -1,5 +1,5 @@
 from app.model.logger import create_log
-from app.model.database import connect_db
+from app.model.database import connect_db, execute_query, insert_query
 from datetime import date, time, datetime
 import os
 from app.model.database import execute_query
@@ -50,14 +50,24 @@ def update_status(status, new_type_of_status, username):
         #end_date = None
 
     query = "UPDATE status SET end_date ='{}' \
-          WHERE incidence_id='{}' and username='{}' and status_id='{}'" \
+          WHERE incidence_id='{}' and username='{}' and status_id={}" \
         .format(datetime.now(), status.incidence_id,
                 status.username, status.status_id)
+    logger.info('update......................')
+    logger.info(query)
+    insert_query(query)
     #repasar el concepto de username en status PONER EL USERNAME
-    query = query + ";" + "INSERT INTO status VALUES ('{}','{}','{}','{}')" \
-                .format(status.incidence_id, username, new_type_of_status, end_date)
+    # query = query + " ;" + " INSERT INTO status VALUES ('{}','{}',{},'{}')" \
+    #             .format(status.incidence_id, username, new_type_of_status, end_date)
+
+    logger.info('insert..................')
+    query = "INSERT INTO status VALUES ('{}','{}',{},'{}')"\
+        .format(status.incidence_id, username, new_type_of_status, end_date)
 
     logger.info(query)
+    insert_query(query)
+
+
 
     cnx = connect_db()
 

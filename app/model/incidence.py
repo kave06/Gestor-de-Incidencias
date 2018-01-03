@@ -334,7 +334,7 @@ def select_closed_incidences() -> tuple:
             "WHERE " \
             " t1.incidence_id IN( " \
             "SELECT incidence_id FROM status " \
-            "WHERE status_id=6)"
+            "WHERE status_id=6) AND t4.status_id=6"
             #"WHERE incidence_id IN ( " \
             #"SELECT DISTINCT incidence_id FROM status " \
 
