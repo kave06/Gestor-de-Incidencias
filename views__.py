@@ -552,4 +552,5 @@ def handle_incidencia_solicitada():
 
 
 if __name__ == '__main__':
+
     manager.run()

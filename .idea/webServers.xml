@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f6cb809a-1562-4897-82e5-237e1a8fa3ed" name="pgpi" url="http://virtual.lab.inf.uva.es">
+        <fileTransfer host="virtual.lab.inf.uva.es" port="28031" rootFolder="/home/usuario" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="28031" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
