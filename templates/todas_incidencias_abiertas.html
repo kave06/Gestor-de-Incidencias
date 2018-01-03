@@ -87,7 +87,7 @@
                                           </div>
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
+                                        {#  <button type="button" class="btn btn-danger" data-title="Cerrar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Cerrar incidencia</button>#}
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                                       </div>
                                     </div>
@@ -108,14 +108,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Cerrar ...</h4>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-info modal-body" id="idInc"></div>
-                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea cerrar esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <form class="form-incidencia" action="{{ url_for('handle_horas') }}" method="post" > <!--form-->
+                            <input type="hidden" name="incidence_id" value="">
+                            <div class="submit-row"> <!--form-->
+                                <input class="btn btn-block btn-block-incidencia submit-form" id="submit-cierre-supervisor" name="submit-cierre-supervisor" value=" Sí " type="submit">
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
+                            </div>
+                        </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->

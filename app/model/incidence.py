@@ -574,6 +574,6 @@ def update_priority(incidence_id, priority):
 def request_incidence():
     query = "SELECT * " \
             "FROM global " \
-            "WHERE status_name='solicitada' AND end_date='0000-00-00 00:00:00' "
+            "WHERE status_name='Solicitada' AND end_date='0000-00-00 00:00:00' "
     result_set = execute_query(query)
     return result_set

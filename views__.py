@@ -500,8 +500,14 @@ def handle_prioridad():
     update_priority(incidence_id, prioridad)
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
+    username = session.get('username')
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias, tech_list=tech_list)
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif,  incidencias=incidencias, tech_list=tech_list)
 
 
 @app.route('/handle_inventario', methods=['POST'])
@@ -511,8 +517,14 @@ def handle_inventario():
     assign_devices(incidence_id, devices_ids)
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
+    username = session.get('username')
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias, tech_list=tech_list)
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif,  incidencias=incidencias, tech_list=tech_list)
 
 
 @app.route('/handle_assing_tech', methods=['POST'])
@@ -527,9 +539,14 @@ def handle_assign_tech():
 
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
-
+    username = session.get('username')
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
-                           role=session.get('role'), incidencias=incidencias, tech_list=tech_list)
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias, tech_list=tech_list)
 
 
 @app.route('/handle_incidencia_solicitadas', methods=['GET'])
@@ -545,9 +562,48 @@ def handle_incidencia_solicitada():
     #     'incidencias': incidencias
     #     # 'tech_list' : tech_list
     # }
-
+    username = session.get('username')
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
     return render_template('incidencias_solicitadas.html', username=username,
-                           role=role, incidencias=incidencias)
+                           role=role,notificaciones=notificaciones,
+                           empty_notif=empty_notif,  incidencias=incidencias)
+
+@app.route('/handle_aceptar', methods=['POST'])
+def handle_aceptar():
+    incidence_id = request.form['incidence_id']
+    username = request.form['username']
+    status = Status(incidence_id, username, 1)
+    update_status(status, 2, session.get('username'))
+
+    incidencias = request_incidence()
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
+
+@app.route('/handle_rechazar', methods=['POST'])
+def handle_rechazar():
+    incidence_id = request.form['incidence_id']
+    username = request.form['username']
+    status = Status(incidence_id, username, 1)
+    update_status(status, 3, session.get('username'))
+
+    incidencias = request_incidence()
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
 
 
 
