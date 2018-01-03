@@ -99,8 +99,8 @@
                                       </div>
                                         <div class="modal-footer">
 
-                                          <button type="button" class="btn btn-default" data-title="Aceptar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#aceptarModal" ><span class="fa fa-check" aria-hidden="true"></span> Aceptar incidencia</button>
-                                            <button type="button" class="btn btn-default" data-title="Rechazar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#rechazarModal" ><span class="fa fa-times" aria-hidden="true"></span> Rechazar incidencia</button>
+                                          <button type="button" class="btn btn-default" data-title="Aceptar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#aceptarModal" ><span class="fa fa-check" aria-hidden="true"></span> Aceptar incidencia</button>
+                                            <button type="button" class="btn btn-default" data-title="Rechazar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#rechazarModal" ><span class="fa fa-times" aria-hidden="true"></span> Rechazar incidencia</button>
 
                                       </div>
                                     </div>
@@ -128,7 +128,13 @@
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea aceptar esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <form class="form-incidencia" action="{{ url_for('handle_aceptar') }}" method="post" > <!--form-->
+                            <input type="hidden" name="incidence_id" value="">
+                            <input type="hidden" name="username" value="">
+
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
+                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-aceptar" name="submit-aceptar" value=" Sí " type="submit">
+                            </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->
@@ -148,7 +154,13 @@
                         <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea rechazar esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <form class="form-incidencia" action="{{ url_for('handle_rechazar') }}" method="post" > <!--form-->
+                            <input type="hidden" name="incidence_id" value="">
+                            <input type="hidden" name="username" value="">
+
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>  #}
+                         <input class="btn btn-block btn-block-incidencia submit-form" id="submit-rechazar" name="submit-rechazar" value=" Sí " type="submit">
+                        </form>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->
@@ -268,7 +280,10 @@
                 {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                var getUsuarioFromRowEliminar = $(this).data('incidenciauserElim');
                 //make your ajax call populate items or what even you need
+                $('#aceptarModal input[name="incidence_id"]').val(getIdFromRowEliminar)
+                $('#aceptarModal input[name="username"]').val(getUsuarioFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
@@ -277,7 +292,10 @@
                 {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                var getUsuarioFromRowEliminar = $(this).data('incidenciauserElim');
                 //make your ajax call populate items or what even you need
+                $('#rechazarModal input[name="incidence_id"]').val(getIdFromRowEliminar)
+                $('#rechazarModal input[name="username"]').val(getUsuarioFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
@@ -295,8 +313,10 @@
                 $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
                 $('#aceptarModal').data('incidenciatituloElim',$(this).data('titulo'));
                 $('#aceptarModal').data('incidenciaidElim',$(this).data('id'));
+                $('#aceptarModal').data('incidenciauserElim',$(this).data('usuario'));
                 $('#rechazarModal').data('incidenciatituloElim',$(this).data('titulo'));
                 $('#rechazarModal').data('incidenciaidElim',$(this).data('id'));
+                $('#rechazarModal').data('incidenciauserElim',$(this).data('usuario'));
 
             });
         });
