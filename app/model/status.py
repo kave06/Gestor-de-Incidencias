@@ -49,8 +49,7 @@ def update_status(status, new_type_of_status, username):
         end_date = '0000-00-00 00:00:00'
         #end_date = None
 
-    query = "UPDATE status SET end_date ='{}' \
-          WHERE incidence_id='{}' and username='{}' and status_id={}" \
+    query = "UPDATE status SET end_date ='{}' WHERE incidence_id='{}' and username='{}' and status_id={}" \
         .format(datetime.now(), status.incidence_id,
                 status.username, status.status_id)
     logger.info('update......................')

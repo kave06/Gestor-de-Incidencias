@@ -96,8 +96,8 @@ def execute_query(query):
     try:
         cursor = cnx.cursor()
         cursor.execute(query)
-        result_set = cursor.fetchmany(size=1)
-        # result_set = cursor.fetchall()
+        # result_set = cursor.fetchmany(size=1)
+        result_set = cursor.fetchall()
         cursor.close()
         logger.info('result_set: {}'.format(result_set))
     except Exception as err:
@@ -121,3 +121,17 @@ def insert_query(query):
         logger.error(err)
 
     return result_set
+
+def technician_list():
+    query = "SELECT  username_id " \
+            "FROM users " \
+            "WHERE role_id=2"
+
+    list = execute_query(query)
+    return list
+
+def assign_tech(incidence_id, tech_id):
+    query = "INSERT INTO assigned_technicians VALUES ('{}','{}')" \
+            .format(incidence_id, tech_id)
+    insert_query(query)
+

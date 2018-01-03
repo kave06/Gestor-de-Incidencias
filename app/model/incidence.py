@@ -1,7 +1,7 @@
 from datetime import date, time, datetime
 
 from app.model.logger import create_log
-from app.model.database import connect_db
+from app.model.database import connect_db, execute_query, insert_query
 
 # logger = create_log('controller.log')
 
@@ -16,10 +16,10 @@ class Incidence:
         self.description = description
         self.username = username
         self.incidence_date = incidence_date
-    # self.fecha_alta = datetime.today()
-    # self.fecha_alta = datetime.now()
-    # .strftime('%Y-%m-%d %H:%M:%S')
-    # logger.info(self.fecha_alta)
+        # self.fecha_alta = datetime.today()
+        # self.fecha_alta = datetime.now()
+        # .strftime('%Y-%m-%d %H:%M:%S')
+        # logger.info(self.fecha_alta)
         self.category_id = category_id
         self.priority_id = 1
         self.technician_hours = 0
@@ -144,10 +144,10 @@ def select_open_incidences(usuario) -> tuple:
             "WHERE t1.username='{}' AND " \
             "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN( " \
             "SELECT DISTINCT incidence_id FROM status " \
-	        "WHERE incidence_id NOT IN ( " \
-		    "SELECT DISTINCT incidence_id FROM status " \
-		    "WHERE status_id=6 and username='{}'))" \
-            "order by t1.priority desc".format(usuario,usuario)
+            "WHERE incidence_id NOT IN ( " \
+            "SELECT DISTINCT incidence_id FROM status " \
+            "WHERE status_id=6 and username='{}'))" \
+            "order by t1.priority desc".format(usuario, usuario)
 
     logger.info(query)
 
@@ -174,12 +174,12 @@ def select_open_incidences(usuario) -> tuple:
     return result_set
 
 
-def set_resolve(incidence,resolve):
+def set_resolve(incidence, resolve):
     incidence.resolve = resolve
 
 
 def get_next_id():
-    #result_set = []
+    # result_set = []
 
     query = "Select count(*) from incidences "
 
@@ -192,23 +192,22 @@ def get_next_id():
         cursor.execute(query)
         result_set = cursor.fetchmany(1)
         cursor.close()
-        last_row = result_set[0][0] +1
+        last_row = result_set[0][0] + 1
         # logger.info(type(last_row))
         logger.info('las_row: {}'.format(last_row))
 
-
         incidence_id = ''
         incidence_id += 'INC_'
-        incidence_id += str(date.today().year)+"_"
+        incidence_id += str(date.today().year) + "_"
         logger.info(type(incidence_id))
         logger.info(incidence_id)
 
         if last_row < 10:
-            incidence_id = incidence_id + "000"+ str(last_row)
-        elif last_row <100:
-            incidence_id = incidence_id + "00"+ str(last_row)
-        elif last_row <1000:
-            incidence_id = incidence_id + "0"+ str(last_row)
+            incidence_id = incidence_id + "000" + str(last_row)
+        elif last_row < 100:
+            incidence_id = incidence_id + "00" + str(last_row)
+        elif last_row < 1000:
+            incidence_id = incidence_id + "0" + str(last_row)
         else:
             incidence_id = incidence_id + last_row
     except Exception as err:
@@ -266,7 +265,7 @@ def select_open_assigned_incidences(tecnico) -> tuple:
             "WHERE technician_id='{}' " \
             "AND t5.status_name = 'Asignada') " \
             "order by t1.priority desc".format(tecnico)
-    #"WHERE t1.username='{}' AND " \
+    # "WHERE t1.username='{}' AND " \
     logger.info(query)
 
     cnx = connect_db()
@@ -282,7 +281,6 @@ def select_open_assigned_incidences(tecnico) -> tuple:
         cursor.close()
     except Exception as err:
         logger.error(err)
-
 
     return result_set
 
@@ -319,8 +317,8 @@ def select_assigned_incidences(tecnico) -> tuple:
     except Exception as err:
         logger.error(err)
 
-
     return result_set
+
 
 def select_closed_incidences() -> tuple:
     result_set = []
@@ -335,8 +333,8 @@ def select_closed_incidences() -> tuple:
             " t1.incidence_id IN( " \
             "SELECT incidence_id FROM status " \
             "WHERE status_id=6) AND t4.status_id=6"
-            #"WHERE incidence_id IN ( " \
-            #"SELECT DISTINCT incidence_id FROM status " \
+    # "WHERE incidence_id IN ( " \
+    # "SELECT DISTINCT incidence_id FROM status " \
 
     logger.info(query)
 
@@ -346,7 +344,7 @@ def select_closed_incidences() -> tuple:
         cursor = cnx.cursor()
         cursor.execute(query)
         # result_set = cursor.fetchall()
-        #cursor.close()
+        # cursor.close()
 
         for value in cursor:
             result_set.append(value)
@@ -372,9 +370,10 @@ def select_unassigned_incidences() -> tuple:
             "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
-	        "WHERE t1.incidence_id NOT IN ( " \
-		    "SELECT DISTINCT incidence_id FROM status " \
-		    "WHERE status_id BETWEEN 2 and 6)" \
+            "WHERE t1.incidence_id NOT IN ( " \
+            "SELECT DISTINCT incidence_id FROM status " \
+            "WHERE status_id BETWEEN 3 and 6)" \
+            "AND t4.status_id =2 " \
             "order by t1.priority desc"
 
     logger.info(query)
@@ -393,7 +392,6 @@ def select_unassigned_incidences() -> tuple:
     except Exception as err:
         logger.error(err)
 
-
     return result_set
 
 
@@ -406,9 +404,9 @@ def select_all_open_incidences() -> tuple:
             "JOIN (categories AS t2, priorities AS t3, status AS t4, type_of_status AS t5)" \
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
-	        "WHERE t1.incidence_id NOT IN ( " \
-		    "SELECT DISTINCT incidence_id FROM status " \
-		    "WHERE status_id=6)" \
+            "WHERE t1.incidence_id NOT IN ( " \
+            "SELECT DISTINCT incidence_id FROM status " \
+            "WHERE status_id=6)" \
             "AND t4.end_date='00-00-00 00:00:00'" \
             "order by t1.priority desc"
 
@@ -428,9 +426,7 @@ def select_all_open_incidences() -> tuple:
     except Exception as err:
         logger.error(err)
 
-
     return result_set
-
 
 
 def select_all_incidences() -> tuple:
@@ -443,7 +439,7 @@ def select_all_incidences() -> tuple:
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
             "WHERE t4.end_date ='00-00-00 00:00:00' OR t4.status_id=6 " \
-	        "order by t4.status_id"
+            "order by t4.status_id"
 
     logger.info(query)
 
@@ -461,15 +457,13 @@ def select_all_incidences() -> tuple:
     except Exception as err:
         logger.error(err)
 
-
     return result_set
 
 
-def update_technician_hours(incidence_id,hours):
-
+def update_technician_hours(incidence_id, hours):
     query = "UPDATE incidences SET " \
             "technician_hours=technician_hours+{} " \
-            "WHERE incidence_id='{}'".format(hours,incidence_id)
+            "WHERE incidence_id='{}'".format(hours, incidence_id)
 
     logger.info(query)
 
@@ -498,14 +492,12 @@ def client_stats1(cliente) -> tuple:
         cursor = cnx.cursor()
         cursor.execute(query)
 
-        #for value in cursor:
+        # for value in cursor:
         #    result_set.append(value)
         result_set.append(cursor.fetchone())
         cursor.close()
     except Exception as err:
         logger.error(err)
-
-
 
     logger.info(result_set)
     return result_set
@@ -514,10 +506,10 @@ def client_stats1(cliente) -> tuple:
 def client_stats2(cliente) -> tuple:
     result_set = []
 
-    query2="SELECT t1.incidence_id,t1.incidence_date,t2.end_date from incidences as t1 " \
-          "JOIN (status as t2)" \
-           "ON (t1.incidence_id=t2.incidence_id)" \
-          "WHERE t1.username='{}' AND t2.status_id=6".format(cliente)
+    query2 = "SELECT t1.incidence_id,t1.incidence_date,t2.end_date from incidences as t1 " \
+             "JOIN (status as t2)" \
+             "ON (t1.incidence_id=t2.incidence_id)" \
+             "WHERE t1.username='{}' AND t2.status_id=6".format(cliente)
 
     logger.info(query2)
 
@@ -527,7 +519,7 @@ def client_stats2(cliente) -> tuple:
         cursor = cnx.cursor()
         cursor.execute(query2)
 
-        #for value in cursor:
+        # for value in cursor:
         #    result_set.append(value)
         result_set.append(cursor.fetchone())
         cursor.close()
@@ -558,6 +550,30 @@ def select_solicited_incidences(supervisor) -> tuple:
         cursor.close()
     except Exception as err:
         logger.error(err)
+    return result_set
+
+def update_priority(incidence_id, priority):
+
+    query = "UPDATE incidences SET " \
+        "priority={} " \
+            "WHERE incidence_id='{}'".format(priority, incidence_id)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
 
 
+def request_incidence():
+    query = "SELECT * " \
+            "FROM global " \
+            "WHERE status_name='solicitada' AND end_date='0000-00-00 00:00:00' "
+    result_set = execute_query(query)
     return result_set

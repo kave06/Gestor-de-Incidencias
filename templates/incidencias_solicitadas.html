@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 
-{% block title %}<title>Incidencias sin asignar</title>{% endblock %}
+{% block title %}<title>Todas las Incidencias Solicitadas</title>{% endblock %}
 
 {% block css %}
     <!-- Bootstrap core CSS-->
@@ -31,7 +31,7 @@
               <!-- Example DataTables Card-->
               <div class="card mb-3">
                   <div class="card-header">
-                      <h4><i class="fa fa-table"></i> Todas las incidencias sin asignar</h4>
+                      <h4><i class="fa fa-table"></i>Incidencias solicitadas</h4>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -40,10 +40,16 @@
                                 <tr>
                                     <th>Título</th>
                                     <th>Fecha de incidencia</th>
-                                    <th>Estado</th>
-                                    <th>Prioridad</th>
+                                    <th>Resolución</th>
                                 </tr>
                               </thead>
+{#                              <tfoot>#}
+{#                                <tr>#}
+{#                                    <th>Título</th>#}
+{#                                    <th>Fecha de incidencia</th>#}
+{#                                    <th>Resolución</th>#}
+{#                                </tr>#}
+{#                              </tfoot>#}
                               <tbody>
                                 {% for incidencia in incidencias %}
                                 <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
@@ -54,8 +60,13 @@
                                     data-categoria="{{ incidencia[9] }}" data-target="#myModal1">
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
-                                    <td data-th="Estado">{{ incidencia[5] }}</td>
-                                    <td data-th="Prioridad">{{ incidencia[6] }}</td>
+                                    {# <td data-th="Estado">{{ incidencia[5] }}</td>#}
+                                    {% if incidencia[8] == 0 %}
+                                    <td data-th="Resolución">No resuelta</td>
+                                    {% else %}
+                                    <td data-th="Resolución">Resuelta</td>
+                                    {% endif %}
+
                                 </tr>
                                 <!-- Modal incidencia -->
                                 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -82,17 +93,15 @@
                                                       <div id="priorInc" class="modal-body"></div>
                                                       <div id="horasInc" class="modal-body"></div>
                                                       <div id="estadoInc" class="modal-body"></div>
-                                                      <div id="resueltoInc" class="modal-body"></div>
                                                   </ul>
                                               </div>
                                           </div>
                                       </div>
-                                      <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-title="Asignar prioridad" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#asignaPrioridad" ><span class="fa fa-exclamation" aria-hidden="true"></span> Asignar prioridad</button>
-                                          <button type="button" class="btn btn-default" data-title="Asignar inventario" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#asignaInventario" ><span class="fa fa-cubes" aria-hidden="true"></span> Asignar inventario</button>
-                                          <button type="button" class="btn btn-default" data-title="Asginar tecnico" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#asignaTecnico" ><span class="fa fa-wrench" aria-hidden="true"></span> Asignar técnico</button>
-                                        {# <button type="button" class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button> #}
-                        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
+                                        <div class="modal-footer">
+
+                                          <button type="button" class="btn btn-default" data-title="Aceptar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#aceptarModal" ><span class="fa fa-check" aria-hidden="true"></span> Aceptar incidencia</button>
+                                            <button type="button" class="btn btn-default" data-title="Rechazar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#rechazarModal" ><span class="fa fa-times" aria-hidden="true"></span> Rechazar incidencia</button>
+
                                       </div>
                                     </div>
                                   </div>
@@ -106,107 +115,41 @@
             </div> <!-- /.container-fluid-->
         </div> <!-- /.content-wrapper-->
 
-        <!-- Modal asignar prioridad -->
-        <div class="modal fade" id="asignaPrioridad" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <!-- Modal aceptar incidencia -->
+        <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-clock-o" aria-hidden="true"></i> Asignar prioridad a...</h4>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Aceptar la incidencia ...</h4>
                     </div>
                     <div class="modal-body">
-                         <form class="form-incidencia" action="{{ url_for('handle_prioridad') }}" method="post" > <!--form-->
                         <div class="alert alert-info modal-body" id="idInc"></div>
-                    <div class="form-group">
-                        <label class="col-form-label">Prioridad de la incidencia</label>
-                        <select name="prioridad" class="form-control" id="selectPrioridad" required>
-{#                            <option value="" selected disabled>Please select an option...</option>#}
-                            <option selected disabled hidden style='display: none' value=''>Seleccione una opción...</option>
-                            <option>Muy baja</option>
-                            <option>Baja</option>
-                            <option>Media</option>
-                            <option>Alta</option>
-                            <option>Muy alta</option>
-                        </select>
-                    </div>
-                        {#  <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> El número de horas introducidas se añadirá a las introducidas con anterioridad. ¿Desea añadirlas?</div>#}
-                             <input type="hidden" name="incidence_id" value="">
-                             <div class="submit-row"> <!--form-->
-                                 <input class="btn btn-block btn-block-incidencia submit-form" id="submit-prioridad" name="submit-prioridad" value=" Asignar " type="submit">
-                            </div>
-                             </form>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea aceptar esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        {#  <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> Cancelar</button>
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->
             </div> <!-- /.modal-dialog -->
         </div>
 
-                <!-- Modal asignar inventario -->
-        <div class="modal fade" id="asignaInventario" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <!-- Modal rechazar incidencia -->
+        <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-clock-o" aria-hidden="true"></i> Asignar elementos del inventario a...</h4>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Rechazar la incidencia ...</h4>
                     </div>
                     <div class="modal-body">
-                         <form class="form-incidencia" action="{{ url_for('handle_inventario') }}" method="post" > <!--form-->
                         <div class="alert alert-info modal-body" id="idInc"></div>
-                    <div class="row form-group input-container">
-                        <span>Identificador del dispositivo</span>
-                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >
-                    </div>
-                        {#  <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> El número de horas introducidas se añadirá a las introducidas con anterioridad. ¿Desea añadirlas?</div>#}
-                             <input type="hidden" name="incidence_id" value="">
-                             <div class="submit-row"> <!--form-->
-                                 <input class="btn btn-block btn-block-incidencia submit-form" id="submit-inventario" name="submit-inventario" value=" Asignar " type="submit">
-                            </div>
-                             </form>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea rechazar esta incidencia?</div>
                     </div>
                     <div class="modal-footer ">
-                        {#  <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> Cancelar</button>
-                    </div>
-                </div>  <!-- /.modal-content -->
-            </div> <!-- /.modal-dialog -->
-        </div>
-
-                <!-- Modal asignar técnico -->
-        <div class="modal fade" id="asignaTecnico" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-clock-o" aria-hidden="true"></i> Asignar un técnico a...</h4>
-                    </div>
-                    <div class="modal-body">
-                         <form class="form-incidencia" action="{{ url_for('handle_assign_tech') }}" method="post" > <!--form-->
-                        <div class="alert alert-info modal-body" id="idInc"></div>
-                    <div class="form-group">
-                        <label class="col-form-label">Técnicos disponibles</label>
-                        <select name="tech_assign" class="form-control" id="select_tech" required>
-{#                            <option value="" selected disabled>Please select an option...</option>#}
-                            <option selected disabled hidden style='display: none' value=''>Seleccione un técnico...</option>
-                            {{ tech_list }}
-                            {% for tech in tech_list %}
-                            <option>{{ tech[0] }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                        {#  <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> El número de horas introducidas se añadirá a las introducidas con anterioridad. ¿Desea añadirlas?</div>#}
-
-                             <input type="hidden" name="incidence_id" value="">
-                             <div class="submit-row"> <!--form-->
-                                 <input class="btn btn-block btn-block-incidencia submit-form" id="submit-horas" name="submit-horas" value=" Asignar " type="submit">
-                            </div>
-                             </form>
-                    </div>
-                    <div class="modal-footer ">
-                        {#  <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> Cancelar</button>
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
                 </div>  <!-- /.modal-content -->
             </div> <!-- /.modal-dialog -->
@@ -320,7 +263,7 @@
                 $(this).find('#resueltoInc').html($("<li><span><b>Resuelta:</b> "+getResueltoFromRow+"</span></li>"))
                 $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
             });
-            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
+            $( "#aceptarModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
                 {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
@@ -329,33 +272,12 @@
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
-            $( "#asignaPrioridad" ).on('shown.bs.modal', function(e){ //subscribe to show method
+            $( "#rechazarModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
                 {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
                 //make your ajax call populate items or what even you need
-                $('#asignaPrioridad input[name="incidence_id"]').val(getIdFromRowEliminar)
-                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
-                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
-            });
-            $( "#asignaInventario" ).on('shown.bs.modal', function(e){ //subscribe to show method
-                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
-                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
-                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
-                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
-                //make your ajax call populate items or what even you need
-                $('#asignaInventario input[name="incidence_id"]').val(getIdFromRowEliminar)
-                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
-                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
-            });
-            $( "#asignaTecnico" ).on('shown.bs.modal', function(e){ //subscribe to show method
-                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
-                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
-                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
-                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
-                //make your ajax call populate items or what even you need
-                $('#asignaTecnico input[name="incidence_id"]').val(getIdFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
@@ -371,14 +293,10 @@
                 $('#myModal1').data('incidenciahoras',$(this).data('horas'));
                 $('#myModal1').data('incidenciaresuelto',$(this).data('resuelto'));
                 $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
-                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
-                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
-                $('#asignaPrioridad').data('incidenciatituloElim',$(this).data('titulo'));
-                $('#asignaPrioridad').data('incidenciaidElim',$(this).data('id'));
-                $('#asignaInventario').data('incidenciatituloElim',$(this).data('titulo'));
-                $('#asignaInventario').data('incidenciaidElim',$(this).data('id'));
-                $('#asignaTecnico').data('incidenciatituloElim',$(this).data('titulo'));
-                $('#asignaTecnico').data('incidenciaidElim',$(this).data('id'));
+                $('#aceptarModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#aceptarModal').data('incidenciaidElim',$(this).data('id'));
+                $('#rechazarModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#rechazarModal').data('incidenciaidElim',$(this).data('id'));
 
             });
         });
