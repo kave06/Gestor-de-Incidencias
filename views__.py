@@ -43,6 +43,7 @@ logger = create_log('{}/gestor.log'.format(APP_DIR))
 def login():
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
     session['username'] = ""
@@ -51,7 +52,6 @@ def logout():
     logger.info('usuario: {}, rol: {}.'.format(session['username'], session['role']))
     print('...sesión cerrada!')
     return redirect(url_for('login'))
-
 
 
 @app.route('/handle_login', methods=['POST'])
@@ -507,7 +507,7 @@ def handle_prioridad():
         empty_notif = 1
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
-                           empty_notif=empty_notif,  incidencias=incidencias, tech_list=tech_list)
+                           empty_notif=empty_notif, incidencias=incidencias, tech_list=tech_list)
 
 
 @app.route('/handle_inventario', methods=['POST'])
@@ -524,7 +524,7 @@ def handle_inventario():
         empty_notif = 1
     return render_template('incidencias_sin_asignar.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
-                           empty_notif=empty_notif,  incidencias=incidencias, tech_list=tech_list)
+                           empty_notif=empty_notif, incidencias=incidencias, tech_list=tech_list)
 
 
 @app.route('/handle_assing_tech', methods=['POST'])
@@ -568,8 +568,9 @@ def handle_incidencia_solicitada():
     if len(notificaciones) == 0:
         empty_notif = 1
     return render_template('incidencias_solicitadas.html', username=username,
-                           role=role,notificaciones=notificaciones,
-                           empty_notif=empty_notif,  incidencias=incidencias)
+                           role=role, notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
+
 
 @app.route('/handle_aceptar', methods=['POST'])
 def handle_aceptar():
@@ -584,9 +585,10 @@ def handle_aceptar():
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('incidencias_asignadas.html', username=session.get('username'),
+    return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
+
 
 @app.route('/handle_rechazar', methods=['POST'])
 def handle_rechazar():
@@ -601,12 +603,10 @@ def handle_rechazar():
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('incidencias_asignadas.html', username=session.get('username'),
+    return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
 
 
-
 if __name__ == '__main__':
-
     manager.run()
