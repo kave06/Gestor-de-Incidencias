@@ -218,7 +218,7 @@ def mostrar_incidencias_notificadas_cierre():
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('todas_incidencias_abiertas.html', username=session.get('username'),
+    return render_template('incidencias_notificadas_resolucion.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                            incidencias=incidencias)
 
@@ -674,7 +674,7 @@ def handle_rechazar():
     return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
-
+    
 
 @app.route('/handle_cierre_supervisor', methods=['POST'])
 def handle_cierre_supervisor():
@@ -699,7 +699,7 @@ def handle_cierre_supervisor():
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('todas_incidencias_abiertas.html', username=session.get('username'),
+    return render_template('incidencias_notificadas_resolucion.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
 
