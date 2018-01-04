@@ -583,3 +583,21 @@ def request_devices():
             "FROM devices "
     result_set = execute_query(query)
     return result_set
+
+
+def update_resolve(incidence_id, resolve):
+    query = "UPDATE incidences SET " \
+            "resolve={} " \
+            "WHERE incidence_id='{}'".format(resolve, incidence_id)
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
