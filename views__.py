@@ -205,9 +205,9 @@ def mostrar_incidencias_sin_asignar():
                            empty_notif=empty_notif, incidencias=incidencias, tech_list=tech_list)
 
 
-@app.route('/incidencias_todas_abiertas', methods=['GET'])
-def mostrar_todas_incidencias_abiertas():
-    incidencias = select_all_open_incidences()
+@app.route('/incidencias_notificadas_cierre', methods=['GET'])
+def mostrar_incidencias_notificadas_cierre():
+    incidencias = select_incidences_notify_for_closed()
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
@@ -635,6 +635,7 @@ def handle_rechazar():
     return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
+
 
 
 if __name__ == '__main__':

@@ -185,3 +185,17 @@ def assign_tech(incidence_id, tech_id):
             .format(incidence_id, tech_id)
     insert_query(query)
 
+def select_incidences_notify_for_closed() -> tuple:
+    #TODO comprobar vista global y revisar esta query
+
+    query = "SELECT incidence_id, title, description, username," \
+            " incidence_date, status_name, priority_name, technician_hours," \
+            " resolve, category_name, priority " \
+            "FROM global " \
+            "WHERE status_name='Notificada_resolucion' AND end_date='0000-00-00 00:00:00'" \
+            "ORDER BY priority DESC "\
+
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
