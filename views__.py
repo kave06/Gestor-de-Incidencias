@@ -99,12 +99,21 @@ def crear_incidencia():
 
 @app.route('/incidencias', methods=['GET'])
 def mostrar_incidencias():
+
+    # comentarios = {}
     incidencias = select_incidences_user(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
         empty_notif = 1
+
+    # for incidencia in incidencias:
+    #     # comentarios = comentarios + select_comments_incidence(incidencia[0])
+    #     if select_comments_incidence(incidencia[0]):
+    #         comentarios[incidencia[0]] = select_comments_incidence(incidencia[0])
+    #
+    # print(comentarios)
 
     return render_template('incidencias.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
@@ -634,6 +643,22 @@ def handle_rechazar():
     return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
+
+
+@app.route('/handle_comentarios',  methods=['GET','POST'])
+def handle_comentarios():
+    incidence_id = request.form['incidence_id']
+    comentarios = select_comments_incidence(incidence_id)
+    # print(comentarios)
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('comentarios_incidencia.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidence_id=incidence_id, comentarios=comentarios)
 
 
 if __name__ == '__main__':
