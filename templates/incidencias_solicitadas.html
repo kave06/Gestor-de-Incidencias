@@ -40,14 +40,12 @@
                                 <tr>
                                     <th>Título</th>
                                     <th>Fecha de incidencia</th>
-                                    <th>Resolución</th>
                                 </tr>
                               </thead>
 {#                              <tfoot>#}
 {#                                <tr>#}
 {#                                    <th>Título</th>#}
 {#                                    <th>Fecha de incidencia</th>#}
-{#                                    <th>Resolución</th>#}
 {#                                </tr>#}
 {#                              </tfoot>#}
                               <tbody>
@@ -61,11 +59,6 @@
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     {# <td data-th="Estado">{{ incidencia[5] }}</td>#}
-                                    {% if incidencia[8] == 0 %}
-                                    <td data-th="Resolución">No resuelta</td>
-                                    {% else %}
-                                    <td data-th="Resolución">Resuelta</td>
-                                    {% endif %}
 
                                 </tr>
                                 <!-- Modal incidencia -->
