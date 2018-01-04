@@ -53,6 +53,7 @@ def connect_db() -> pymysql.connect:
        # FLAG_RECONNECT = True
     return cnx
 
+
 def get_technician(id_incidence):
     query = "SELECT technician_id " \
             "FROM assigned_technicians " \
@@ -165,7 +166,6 @@ def insert_query(query):
         cursor.execute(query)
         cnx.commit()
         cursor.close()
-        logger.info('result_set: {}'.format(result_set))
     except Exception as err:
         logger.error(err)
 

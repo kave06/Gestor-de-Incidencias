@@ -152,4 +152,3 @@ def notify_close(status:Status, role):
 #     status = Status('INC_2017_0005','cliente00', 5 )
 #     update_status(status, 5)
 #     notify_close(status,'cliente')
-

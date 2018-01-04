@@ -576,4 +576,10 @@ def request_incidence():
             "FROM global " \
             "WHERE status_name='Solicitada' AND end_date='0000-00-00 00:00:00' "
     result_set = execute_query(query)
+    return
+
+def request_devices():
+    query = "SELECT * " \
+            "FROM devices "
+    result_set = execute_query(query)
     return result_set

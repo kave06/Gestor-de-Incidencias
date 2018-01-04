@@ -2,7 +2,7 @@ import os
 # import datetime
 from datetime import datetime
 from app.model.incidence import *
-from app.model.device import assign_devices, get_devices
+from app.model.device import assign_devices, get_devices, insert_assigned_devices
 from app.model.status import insert_status, Status, update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
@@ -85,13 +85,16 @@ def handle_login():
 def crear_incidencia():
     # logger.info('dentro de crear_incidencia()')
 
+    dispositivos = request_devices()
+    logger.info('Dispositivos: {}'.format(dispositivos))
+
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('crear_incidencia.html', username=session.get('username'), notificaciones=notificaciones,
-                           empty_notif=empty_notif, role=session.get('role'))
+    return render_template('crear_incidencia.html', username=session.get('username'), dispositivos=dispositivos,
+                           notificaciones=notificaciones, empty_notif=empty_notif, role=session.get('role'))
 
 
 @app.route('/incidencias', methods=['GET'])
@@ -252,7 +255,7 @@ def handle_data():
     titulo_incidencia = request.form['titulo_incidencia']
     descripcion_incidencia = request.form['descripcion_incidencia']
 
-    devices_ids = request.form['id_dispositivo']
+    devices_ids = request.form.getlist('id_dispositivo')
 
     fecha_incidencia = request.form['fecha_incidencia']
     logger.info(fecha_incidencia)
@@ -281,11 +284,15 @@ def handle_data():
     insert_incidence(incidencia)
     status = Status(id_incidencia, usuario, 1)
     insert_status(status)
-    logger.info(devices_ids)
 
-    if devices_ids != '':
-        logger.info('devices: {}'.format(devices_ids))
-        assign_devices(id_incidencia, devices_ids)
+    logger.info('Assigned devices: {}'.format(devices_ids))
+    for device_id in devices_ids:
+        logger.info('Listando devices: {}'.format(device_id))
+        insert_assigned_devices(id_incidencia, device_id)
+
+    # if devices_ids != '':
+    #     logger.info('devices: {}'.format(devices_ids))
+    #     assign_devices(id_incidencia, devices_ids)
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))

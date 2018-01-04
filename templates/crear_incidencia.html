@@ -4,6 +4,8 @@
 {% block title %}<title>Crear Incidencia</title>{% endblock %}
 
 {% block css %}
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='/static/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Bootstrap core CSS-->
     <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -17,6 +19,8 @@
     <link href="../static/css/crear_incidencia.css" rel="stylesheet">
     <!-- Custom styles from base-->
     <link href="/static/css/base.css" rel="stylesheet">
+    <!-- Using Select2 (https://select2.org) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 
@@ -49,9 +53,23 @@
                         <div id="charNum"> <span>Máximo 500 caracteres.</span> </div>
                     </div>
 
+{#                    <div class="row form-group input-container">#}
+{#                        <span>Identificador del dispositivo</span>#}
+{#                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >#}
+{#                    </div>#}
+
                     <div class="row form-group input-container">
-                        <span>Identificador del dispositivo</span>
-                        <input class="form-control" name="id_dispositivo" type="text" data-min-length="10" placeholder="Introducir el identificador del dispositivo separado por comas." >
+                        <label class="col-form-label">Identificador del dispositivo</label>
+                        <select name="id_dispositivo" class="form-control js-example-basic-multiple" id="exampleSelect0" multiple="multiple">
+{#                            <option selected disabled hidden style='display: none' value=''>Seleccione un dispositivo si lo conoce...</option>#}
+                            {% for dispositivo in dispositivos %}
+                                <option>{{ dispositivo[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-info-circle icon-characters" aria-hidden="true"></i>
+                        <div id="charNum" style="text-align: left;line-height: 1.3;margin-top: 5px;">
+                            <span>Puede seleccionar varios dispositivos si lo desea <br> <i class="fa fa-times-circle icon-characters" style="margin-left: -18px;margin-right: 2px;" aria-hidden="true"></i> También puede eliminar dispositivos seleccionados pulsando <i class="fa fa-times" style="font-size: smaller;" aria-hidden="true"></i></span>
+                        </div>
                     </div>
 
                     <div class="row form-group col-md-6 pull-left">
@@ -93,6 +111,7 @@
 
 {% block scripts %}
     <!-- Bootstrap core JavaScript-->
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
     <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
@@ -100,7 +119,10 @@
     <!-- Custom scripts for all pages-->
     <script src="startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="http://code.jquery.com/jquery-1.5.js"></script>
+        <!-- Loading JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Using Select2 (https://select2.org) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         $('#txtArea').keyup(function () {
             var max = 500;
@@ -134,5 +156,10 @@
         }
         today = yyyy+'-'+mm+'-'+dd;
         document.getElementById("incidencia-date-input").setAttribute("max", today);
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
     </script>
 {% endblock scripts %}

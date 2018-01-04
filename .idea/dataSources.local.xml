@@ -19,8 +19,6 @@
         <enabled>true</enabled>
         <proxy-host>jair.lab.inf.uva.es</proxy-host>
         <proxy-port>28031</proxy-port>
-        <secret-storage>master_key</secret-storage>
-        <user>kavheid</user>
         <use-password>true</use-password>
         <auth-type>PASSWORD</auth-type>
       </ssh-properties>
