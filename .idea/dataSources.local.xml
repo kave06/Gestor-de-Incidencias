@@ -10,6 +10,9 @@
       <user-name>kave</user-name>
       <introspection-schemas>*:pgpi</introspection-schemas>
     </data-source>
+    <data-source name="notification.db" uuid="633ed8d9-381b-405e-844c-43d3b3d65a60">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
     <data-source name="jair" uuid="57f5ae16-6f69-4321-8885-a7342f188142">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <secret-storage>master_key</secret-storage>
