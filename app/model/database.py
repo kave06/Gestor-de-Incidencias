@@ -272,3 +272,85 @@ def client_total_closed2(cliente) -> tuple:
     logger.info(result_set)
 
     return result_set
+
+
+def count_total_assigned_incidences(technician) -> tuple:
+    query = "SELECT count(incidence_id) from status " \
+            "WHERE incidence_id IN (" \
+            "SELECT incidence_id from assigned_technicians " \
+            "WHERE technician_id='{}') " \
+            " AND end_date='0000-00-00 00:00:00' " \
+            "AND status_id=4".format(technician)
+
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+
+def count_total_notify_closed_assigned_incidences(technician) -> tuple:
+    query = "SELECT count(incidence_id) from status " \
+            "WHERE incidence_id IN (" \
+            "SELECT incidence_id from assigned_technicians " \
+            "WHERE technician_id='{}') " \
+            " AND status_id=5".format(technician)
+
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+
+def count_total_closed_assigned_incidences(technician) -> tuple:
+    query = "SELECT count(incidence_id) from status " \
+            "WHERE incidence_id IN (" \
+            "SELECT incidence_id from assigned_technicians " \
+            "WHERE technician_id='{}') " \
+            " AND status_id=6".format(technician)
+
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+
+def count_total_incidences() -> tuple:
+    query = "SELECT count(incidence_id) from incidences"
+
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+
+def count_total_open() -> tuple:
+    query = "SELECT  count(t1.incidence_id) from incidences as t1 " \
+             "JOIN (status as t2)" \
+             "ON (t1.incidence_id=t2.incidence_id)" \
+             "WHERE t2.status_id BETWEEN 1 and 4" \
+            " AND t2.end_date='0000-00-00 00:00:00'"
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+
+def count_total_notify_closed() -> tuple:
+    query = "SELECT count(t1.incidence_id) from incidences as t1 " \
+             "JOIN (status as t2)" \
+             "ON (t1.incidence_id=t2.incidence_id)" \
+             "WHERE t2.status_id=5"
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
+
+def count_total_closed() -> tuple:
+    query = "SELECT count(t1.incidence_id) from incidences as t1 " \
+             "JOIN (status as t2)" \
+             "ON (t1.incidence_id=t2.incidence_id)" \
+             "WHERE t2.status_id=6"
+    result_set = execute_query(query)
+    logger.info(result_set)
+
+    return result_set
