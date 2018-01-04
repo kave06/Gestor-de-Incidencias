@@ -590,8 +590,9 @@ def handle_incidencia_solicitada():
     # }
     username = session.get('username')
     empty_notif = 0
-    # notificaciones = get_notification(username)
-    notificaciones = select_solicited_incidences()
+    notificaciones = get_notification(username)
+    incidencias = select_solicited_incidences()
+
     if len(notificaciones) == 0:
         empty_notif = 1
     return render_template('incidencias_solicitadas.html', username=username,

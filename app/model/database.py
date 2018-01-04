@@ -103,7 +103,8 @@ def select_solicited_incidences() -> tuple:
             "FROM global " \
             "WHERE  incidence_id  NOT IN ( " \
             "SELECT incidence_id " \
-            "FROM status_id BETWEEN 2 and 6 " \
+            "FROM status " \
+            "WHERE status_id BETWEEN 2 and 6 " \
             ") ORDER BY priority DESC "\
 
     result_set = execute_query(query)
