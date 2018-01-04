@@ -91,9 +91,22 @@
                                           </div>
                                       </div>
                                         <div class="modal-footer">
+<form class="form-incidencia" action="{{ url_for('handle_aceptar') }}" method="post" > <!--form-->
+                            <input type="hidden" name="incidence_id" value="">
+                            <input type="hidden" name="username" value="">
 
-                                          <button type="button" class="btn btn-default" data-title="Aceptar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#aceptarModal" ><span class="fa fa-check" aria-hidden="true"></span> Aceptar incidencia</button>
-                                            <button type="button" class="btn btn-default" data-title="Rechazar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#rechazarModal" ><span class="fa fa-times" aria-hidden="true"></span> Rechazar incidencia</button>
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>#}
+                            <input class="btn btn-block btn-block-incidencia submit-form" id="submit-aceptar" name="submit-aceptar" value=" Aceptar incidencia " type="submit">
+                            </form>
+                                            <form class="form-incidencia" action="{{ url_for('handle_rechazar') }}" method="post" > <!--form-->
+                            <input type="hidden" name="incidence_id" value="">
+                            <input type="hidden" name="username" value="">
+
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>  #}
+                         <input class="btn btn-block btn-block-incidencia submit-form" id="submit-rechazar" name="submit-rechazar" value=" Rechazar incidencia " type="submit">
+                        </form>
+                                        {#   <button type="button" class="btn btn-default" data-title="Aceptar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#aceptarModal" ><span class="fa fa-check" aria-hidden="true"></span> Aceptar incidencia</button>#}
+                                          {#    <button type="button" class="btn btn-default" data-title="Rechazar incidencia" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}" data-usuario="{{ incidencia[3] }}" data-target="#rechazarModal" ><span class="fa fa-times" aria-hidden="true"></span> Rechazar incidencia</button>#}
 
                                       </div>
                                     </div>
@@ -257,6 +270,8 @@
                 else
                     getResueltoFromRow="No";
                 //make your ajax call populate items or what even you need
+                $('#myModal1 input[name="incidence_id"]').val(getIdFromRow)
+                $('#myModal1 input[name="username"]').val(getUserFromRow)
                 $(this).find('#incTitulo').html($('<h4 class=\'modal-title\'><i class=\'fa fa-address-card-o\' aria-hidden=\'true\'></i><a id="titulo"> '+getTituloFromRow+'</a></h4>'))
                 $(this).find('#idInc').html($("<li><span><b>Identificador de la incidencia:</b><a id='ident'> "+getIdFromRow+"</a></span></li>"))
                 $(this).find('#userInc').html($("<li><span><b>Creada por el usuario:</b>  "+getUserFromRow+"</span></li>"))

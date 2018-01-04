@@ -607,7 +607,8 @@ def handle_aceptar():
     status = Status(incidence_id, username, 1)
     update_status(status, 2, session.get('username'))
 
-    incidencias = request_incidence()
+    incidencias = select_solicited_incidences()
+    logger.info(incidencias[0][0])
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
@@ -625,7 +626,7 @@ def handle_rechazar():
     status = Status(incidence_id, username, 1)
     update_status(status, 3, session.get('username'))
 
-    incidencias = request_incidence()
+    incidencias = select_solicited_incidences()
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
