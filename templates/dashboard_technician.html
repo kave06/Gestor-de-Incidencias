@@ -1,0 +1,275 @@
+
+{% extends "base.html" %}
+
+{% block title %}<title>Todas Mis Incidencias</title>{% endblock %}
+
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Custom styles from base-->
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+    <!-- Custom styles for Font Awesome Animations -->
+    <link rel="stylesheet" href="/static/css/font-awesome-animation.min.css" type="text/css">
+    <!-- styles para Dashboard -->
+    <link rel="stylesheet" href="../static/css/dashboard.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block page_content %}
+
+    {% block content %}
+        {% if role == 'cliente' or role == 'tecnico' or role == 'supervisor' %}
+        <div class="content-wrapper">
+            <div class="container-fluid">
+              <!-- Example DataTables Card-->
+              <div class="card mb-3">
+                  <div class="card-header">
+                      <h4><i class="fa fa-table"></i> Incidencias que puedes cerrar</h4>
+                  </div>
+              {% if incidencias %}
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table id="incidenciasTodasDataTable" class="table table-bordered table-hover table-striped" width="100%" cellspacing="0">
+                              <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha de incidencia</th>
+                                    <th>Estado</th>
+                                </tr>
+                              </thead>{#
+                              <tfoot>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha de incidencia</th>
+                                    <th>Estado</th>
+                                </tr>
+                              </tfoot>#}
+                              <tbody>
+                                {% for incidencia in incidencias %}
+                                <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
+                                    data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"
+                                    data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"
+                                    data-estado="{{ incidencia[5] }}"  data-prioridad="{{ incidencia[6] }}"
+                                    data-horas="{{ incidencia[7] }}"  data-resuelto="{{ incidencia[8] }}"
+                                    data-categoria="{{ incidencia[9] }}"data-target="#myModal1">
+                                    <td data-th="Título">{{ incidencia[1] }}</td>
+                                    <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
+                                    <td data-th="Estado">{{ incidencia[5] }}</td>
+                                </tr>
+                                <!-- Modal incidencia -->
+                                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                  <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                        {#                  <h4 class="modal-title" id="incTitulo"><i class="fa fa-address-card-o" aria-hidden="true"></i></h4>#}
+                                          <div id="incTitulo" class="modal-body"></div>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                                      </div>
+                                      <div id="incidencia-detalles" class="modal-body">
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <ul>
+                                                      <div id="idInc" class="modal-body"></div>
+                                                      <div id="userInc" class="modal-body"></div>
+                                                      <div id="descInc" class="modal-body"></div>
+                                                  </ul>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <ul>
+                                                      <div id="fechaInc" class="modal-body"></div>
+                                                      <div id="catInc" class="modal-body"></div>
+                                                      <div id="priorInc" class="modal-body"></div>
+                                                      <div id="horasInc" class="modal-body"></div>
+                                                      <div id="estadoInc" class="modal-body"></div>
+                                                      <div id="resueltoInc" class="modal-body"></div>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
+                        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                    </div>
+                </div>
+              {% else %}
+                  <h5 style="text-align: center; margin: 30px;"><i class="fa fa-exclamation-triangle"></i> No tienes incidencias para cerrar</h5>
+              {%endif %}
+              </div>
+            </div> <!-- /.container-fluid-->
+            <!-- Tarjeta de incidencia (heredado de Modal) -->
+{#            <div class="container-fluid">#}
+{#                <div class="col-md-12 parallax-pal">#}
+{#                    <h3 class="title-font xlarge pal">#}
+{#                        <span class="light">Mi última</span>#}
+{#                        <span class="xbold"> incidencia</span>#}
+{#                    </h3>#}
+{#                </div><!-- End .col-md-12 -->#}
+{#                <div id="myModal1" class="modal-dialog modal-lg" role="document">#}
+{#                    <div class="modal-content">#}
+{#                      <div class="modal-header">#}
+{#                          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-address-card-o" aria-hidden="true"></i> {{ incidencia[0][1] }} </h4>#}
+{#                      </div>#}
+{#                      <div id="incidencia-detalles" class="modal-body">#}
+{#                          <div class="row">#}
+{#                              <div class="col-md-6">#}
+{#                                  <ul>#}
+{#                                      <div id="idInc" class="modal-body"><span><b>Identificador de la incidencia:</b> {{ incidencia[0][0] }} </span></div>#}
+{#                                      <div id="userInc" class="modal-body"><span><b>Creada por el usuario:</b> {{ incidencia[0][3] }} </span></div>#}
+{#                                      <div id="descInc" class="modal-body"><span><b>Descripción:</b> {{ incidencia[0][2] }} </span></div>#}
+{#                                  </ul>#}
+{#                              </div>#}
+{#                              <div class="col-md-6">#}
+{#                                  <ul>#}
+{#                                      <div id="fechaInc" class="modal-body"><span><b>Fecha:</b> {{ incidencia[0][4] }} </span></div>#}
+{#                                      <div id="catInc" class="modal-body"><span><b>Categoría:</b> {{ incidencia[0][9] }} </span></div>#}
+{#                                      <div id="priorInc" class="modal-body"><span><b>Prioridad:</b> {{ incidencia[0][6] }} </span></div>#}
+{#                                      <div id="horasInc" class="modal-body"><span><b>Horas dedicadas por el técnico a su resolución:</b> {{ incidencia[0][7] }} </span></div>#}
+{#                                      <div id="estadoInc" class="modal-body"><span><b>Estado:</b> {{ incidencia[0][5] }} </span></div>#}
+{#                                  </ul>#}
+{#                              </div>#}
+{#                          </div>#}
+{#                      </div>#}
+{#                      <div class="modal-footer">#}
+{#                        <button type="button" id="modalButtonCierre" class="btn btn-danger" data-toggle="modal" data-titulo="{{ incidencia[0][1] }}" data-id="{{ incidencia[0][0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>#}
+        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div> <!-- /.modal-dialog -->#}
+{##}
+{#            </div> <!-- /.container-fluid -->#}
+
+        <!-- Parallax -->
+        <section id="saparator1" class="parallax" style="background-image: url('/static/img/dashboard-tools.jpg')" data-stellar-background-ratio="0.6" data-stellar-vertical-offset="20">
+            <div class="parallax-overlay-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 parallax-pal">
+                            <h2 class="title-font xlarge pal">
+                                <span class="xbold">RESUMEN</span>
+                                <span class="light"> DE MIS INCIDENCIAS</span>
+                            </h2>
+                            <h3 class="pal"></h3>
+                        </div><!-- End .col-md-12 -->
+                    </div><!-- End .row -->
+
+                    <div class="row">
+                        <!-- Status todas-->
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <a href="">
+                                <div class="status-circle animation flipInX animation-visible" data-animation="flipInX" data-animation-delay="400" data-perc="1300" style="animation-delay: 400ms;">
+                                    <div class="circle-container">
+                                        <span class="fa fa-table" aria-hidden="true"></span>
+                                        <p class="status-number"><span class="timer">{{ total_incidences[0][0] }}</span></p>
+                                        <p>Incidencias<br>en total mias</p>
+                                    </div><!-- End .circle-container -->
+                                </div><!-- End .status-circle -->
+                            </a>
+                        </div><!-- End .col-xs-12 col-sm-6 -->
+
+                        <!-- Status abiertas -->
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <a href="#">
+                                <div class="status-circle animation flipInX animation-visible" data-animation="flipInX" data-animation-delay="400" data-perc="1300" style="animation-delay: 400ms;">
+                                    <div class="circle-container">
+                                        <span class="fa fa-folder-open" aria-hidden="true"></span>
+                                        <p class="status-number"><span class="timer">{{ total_assigned[0][0] }}</span></p>
+                                        <p>Incidencias<br>asignadas</p>
+                                    </div><!-- End .circle-container -->
+                                </div><!-- End .status-circle -->
+                            </a>
+                        </div><!-- End .col-xs-12 col-sm-6 -->
+
+                        <!-- Status pendientes de cierre -->
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+{#                            <a href="#">#}
+                                <div class="status-circle animation flipInX animation-visible" data-animation="flipInX" data-animation-delay="400" data-perc="1300" style="animation-delay: 400ms;">
+                                    <div class="circle-container">
+                                        <span class="fa fa-calendar-check-o" aria-hidden="true"></span>
+                                        <p class="status-number"><span class="timer">{{ total_notify_closed[0][0] }}</span></p>
+                                        <p>Pendientes<br>de cierre</p>
+                                    </div><!-- End .circle-container -->
+                                </div><!-- End .status-circle -->
+{#                            </a>#}
+                        </div><!-- End .col-xs-12 col-sm-6 -->
+
+                        <!-- Status cerradas -->
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <a href="#">
+                                <div class="status-circle animation flipInX animation-visible" data-animation="flipInX" data-animation-delay="400" data-perc="1300" style="animation-delay: 400ms;">
+                                    <div class="circle-container">
+                                        <span class="fa fa-folder" aria-hidden="true"></span>
+                                        <p class="status-number"><span class="timer">{{ total_closed[0][0] }}</span></p>
+                                        <p>Incidencias asig-<br>nadas cerradas</p>
+                                    </div><!-- End .circle-container -->
+                                </div><!-- End .status-circle -->
+                            </a>
+                        </div><!-- End .col-xs-12 col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <!-- End Status -->
+                </div><!-- End .container -->
+            </div><!-- End .parallax-overlay-1 -->
+        </section> <!--  Parallax End -->
+        </div> <!-- /.content-wrapper -->
+{% endif %}
+        <!-- Modal confirmar cierre -->
+        <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info modal-body" id="idInc"></div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
+                    </div>
+                </div>  <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div>
+
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
+    <script>
+        $(function(){
+            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
+                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                //make your ajax call populate items or what even you need
+                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
+                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
+            });
+            $("#modalButtonCierre").on('click', function(){
+                //or do your operations here instead of on show of modal to populate values to modal.
+                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
+
+            });
+        });
+    </script>
+{% endblock scripts %}

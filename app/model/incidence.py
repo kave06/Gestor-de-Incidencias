@@ -478,58 +478,6 @@ def update_technician_hours(incidence_id, hours):
         logger.error(err)
 
 
-def client_stats1(cliente) -> tuple:
-    result_set = []
-
-    query = "SELECT count(*) from incidences " \
-            "WHERE username='{}'".format(cliente)
-
-    logger.info(query)
-
-    cnx = connect_db()
-
-    try:
-        cursor = cnx.cursor()
-        cursor.execute(query)
-
-        # for value in cursor:
-        #    result_set.append(value)
-        result_set.append(cursor.fetchone())
-        cursor.close()
-    except Exception as err:
-        logger.error(err)
-
-    logger.info(result_set)
-    return result_set
-
-
-def client_stats2(cliente) -> tuple:
-    result_set = []
-
-    query2 = "SELECT t1.incidence_id,t1.incidence_date,t2.end_date from incidences as t1 " \
-             "JOIN (status as t2)" \
-             "ON (t1.incidence_id=t2.incidence_id)" \
-             "WHERE t1.username='{}' AND t2.status_id=6".format(cliente)
-
-    logger.info(query2)
-
-    cnx = connect_db()
-
-    try:
-        cursor = cnx.cursor()
-        cursor.execute(query2)
-
-        # for value in cursor:
-        #    result_set.append(value)
-        result_set.append(cursor.fetchone())
-        cursor.close()
-    except Exception as err:
-        logger.error(err)
-
-    logger.info(result_set)
-    return result_set
-
-
 def select_solicited_incidences(supervisor) -> tuple:
     result_set = []
 

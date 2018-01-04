@@ -130,18 +130,20 @@ def mostrar_incidencias_abiertas():
 @app.route('/resumen_incidencias_cliente', methods=['GET'])
 def resumen_incidencias_cliente():
     incidencias = select_closed_incidences()
-    stats1 = client_stats1(session.get('username'))
-    stats2 = client_stats2(session.get('username'))
+    total_incidences = client_total_incidences(session.get('username'))
+    total_closed = client_total_closed2(session.get('username'))
+    total_open=client_total_open(session.get('username'))
+    total_notify_closed=client_total_notify_closed(session.get('username'))
     # se recogen las incidencias cerradas con fechas
     count = 0
     list = [1, 2, 3]
-    for a in stats2:
+    for a in total_closed:
         # var=stats2[0][count]
         count += 1
         # list.append(var)
-    origin_date = datetime.date(stats2[0][1])
-    end_date = datetime.date(stats2[0][2])
-    tiempo = end_date - origin_date
+    #origin_date = datetime.date(total_closed[0][1])
+    #end_date = datetime.date(total_closed[0][2])
+    #tiempo = end_date - origin_date
     # list.append(origin_date.strftime("%d-%m-%y"))
     # list[1] = end_date.strftime("%d-%m-%y")
     # list[2] = tiempo.strftime("%d-%m-%y")
@@ -154,7 +156,9 @@ def resumen_incidencias_cliente():
     return render_template('resumen_incidencias_cliente.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                            incidencias=incidencias,
-                           stats1=stats1, stats2=stats2, count=count, tiempo=tiempo)
+                           stats1=total_incidences, stats4=total_closed,
+                           stats2=total_open,stats3=total_notify_closed,
+                           count=count, tiempo=0)
 
 
 @app.route('/incidencias_asignadas', methods=['GET'])
@@ -299,7 +303,7 @@ def handle_data():
     if len(notificaciones) == 0:
         empty_notif = 1
 
-    return render_template('dashboard.html', username=session.get('username'),
+    return render_template('dashboard_technician.html', username=session.get('username'),
                            notificaciones=notificaciones, empty_notif=empty_notif, role=session.get('role'))
 
 
@@ -310,13 +314,49 @@ def dashboard():
     # TODO xq se supone que cuando das al botón se hacen las consultas necesarias.
     # lista de notificaciones del usuario
     if session.get('role') == 'cliente':
+        total_incidences = client_total_incidences(session.get('username'))
+        total_closed = client_total_closed(session.get('username'))
+        total_open = client_total_open(session.get('username'))
+        total_notify_closed = client_total_notify_closed(session.get('username'))
+
+        notificaciones = get_notification(session.get('username'))
         incidencias = select_open_assigned_incidences_client(session.get('username'))
+        return render_template('dashboard_client.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_open=total_open,total_notify_closed=total_notify_closed,
+                               total_closed=total_closed)
+
     elif session.get('role') == 'tecnico':
         incidencias = select_open_assigned_incidences_tech( session.get('username'))
+        notificaciones = get_notification(session.get('username'))
+        if len(notificaciones) == 0:
+            logger.info('No hay notificaciones, pongo empty_notif a 1')
+            empty_notif = 1
+        total_incidences=client_total_open(session.get('username'))
+        total_assigned= count_total_assigned_incidences(session.get('username'))
+        total_notify_closed=count_total_notify_closed_assigned_incidences(session.get('username'))
+        total_closed = count_total_closed_assigned_incidences(session.get('username'))
+
+
+        return render_template('dashboard_technician.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_assigned=total_assigned,total_closed=total_closed,
+                               total_notify_closed=total_notify_closed)
+
     else:
         incidencias = select_incidences_notify_for_closed()
-    # hasta que no tengamos algo que mostrar en la principal.. pues nada
-    #incidencias = []  # he puesto en dashboard.html if='clienteX'
+        notificaciones = get_notification(session.get('username'))
+        total_incidences = count_total_incidences()
+        total_open = count_total_open()
+        total_notify_closed =count_total_notify_closed()
+        total_closed = count_total_closed()
+        return render_template('dashboard_supervisor.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_open=total_open, total_notify_closed=total_notify_closed,
+                               total_closed=total_closed)
 
     logger.info("Consulta notificaciones dashboard")
     username = session.get('username')
@@ -334,7 +374,7 @@ def dashboard():
     logger.info('empty_notif')
     logger.info(empty_notif)
 
-    return render_template('dashboard.html', username=session.get('username'),
+    return render_template('dashboard_technician.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                            incidencias=incidencias)
 
