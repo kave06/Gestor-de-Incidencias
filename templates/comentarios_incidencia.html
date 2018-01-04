@@ -35,6 +35,7 @@
                       <h4><i class="fa fa-pencil"></i> Comentarios de la incidencia {{ incidence_id }}</h4>
                   </div>
                   <div class="card-body">
+                      <button class="btn btn-dark " onclick="goBack()">Volver</button>
                       {% if comentarios %}
                           {%  for comentario in comentarios %}
                               <div class="container">
@@ -86,132 +87,11 @@
     <!-- Custom scripts for DataTables-->
     <script src="../static/js/jquery.dataTables.min.js"></script>
     <script src="../static/js/dataTables.bootstrap4.min.js"></script>
+
     <script>
-        jQuery(document).ready(function($) {
-            $(".clickable-row").click(function() {
-                window.location = $(this).data("href");
-            });
-        });
-    </script>
-    <script>
-        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-            "date-euro-pre": function ( a ) {
-                var x;
-
-                if ( $.trim(a) !== '' ) {
-                    var frDatea = $.trim(a).split(' ');
-                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00,00,00];
-                    var frDatea2 = frDatea[0].split('/');
-                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
-                }
-                else {
-                    x = Infinity;
-                }
-
-                return x;
-            },
-
-            "date-euro-asc": function ( a, b ) {
-                return a - b;
-            },
-
-            "date-euro-desc": function ( a, b ) {
-                return b - a;
-            }
-        } );
-    </script>
-     <script>
-        $(document).ready(function() {
-          $('#incidenciasTodasDataTable').DataTable();
-        });
-        $('#incidenciasTodasDataTable').DataTable( {
-            "order": [[ 1, "desc" ]],
-            "autoWidth": true,
-            responsive: true,
-            "paging": true,
-            "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "TODOS"]],
-            {#"columnDefs": [#}
-            {#    { "type": "date-euro", targets: 1 }#}
-            {#],#}
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                "decimal": ",",
-                "thousands": "."
-            }
-        } );
-     </script>
-    <script>
-        setTimeout(function() {   //calls click event after a certain time
-            $('div.col-xs-12').toggleClass('col-md-12');
-        }, 500);
-        /*
-        $(document).load(function () {
-            $( "div.col-xs-12" ).toggleClass( "col-md-12" );
-        });
-        */
-    </script>
-    <script>
-        $(function(){
-            $( "#myModal1" ).on('shown.bs.modal', function(e){ //subscribe to show method
-                var getTituloFromRow = $(this).data('incidenciatitulo');
-                var getIdFromRow = $(this).data('incidenciaid');
-                var getUserFromRow = $(this).data('incidenciauser');
-                var getDescripcionFromRow = $(this).data('incidenciadesc');
-                var getFechaFromRow = $(this).data('incidenciafecha');
-                var getCategoriaFromRow = $(this).data('incidenciacategoria');
-                var getPrioridadFromRow = $(this).data('incidenciaprioridad');
-                var getHorasFromRow = $(this).data('incidenciahoras');
-                var getEstadoFromRow = $(this).data('incidenciaestado');
-                var getResueltoFromRow = $(this).data('incidenciaresuelto');
-                if(getResueltoFromRow)
-                    getResueltoFromRow="Si";
-                else
-                    getResueltoFromRow="No";
-                //make your ajax call populate items or what even you need
-                $(this).find('#incTitulo').html($('<h4 class=\'modal-title\'><i class=\'fa fa-address-card-o\' aria-hidden=\'true\'></i><a id="titulo"> '+getTituloFromRow+'</a></h4>'))
-                $(this).find('#idInc').html($("<li><span><b>Identificador de la incidencia:</b><a id='ident'> "+getIdFromRow+"</a></span></li>"))
-                $(this).find('#userInc').html($("<li><span><b>Creada por el usuario:</b>  "+getUserFromRow+"</span></li>"))
-                $(this).find('#descInc').html($("<li><span><b>Descripción:</b> "+getDescripcionFromRow+"</span></li>"))
-                $(this).find('#fechaInc').html($("<li><span><b>Fecha de la incidencia:</b> "+getFechaFromRow+"</span></li>"))
-                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+getEstadoFromRow+"</span></li>"))
-                $(this).find('#priorInc').html($("<li><span><b>Prioridad:</b> "+getPrioridadFromRow+"</span></li>"))
-                $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
-                $(this).find('#resueltoInc').html($("<li><span><b>Resuelta:</b> "+getResueltoFromRow+"</span></li>"))
-                $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
-                if (getEstadoFromRow!='Asignada'){
-                    $('#boton-cierre').hide();
-                }
-                else {
-                    $('#boton-cierre').show();
-                }
-            });
-            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
-                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
-                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
-                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
-                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
-                //make your ajax call populate items or what even you need
-                $('#cierreModal input[name="idcli"]').val(getIdFromRowEliminar)
-                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
-                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
-            });
-            $(".table-striped").find('tr[data-target]').on('click', function(){
-                //or do your operations here instead of on show of modal to populate values to modal.
-                $('#myModal1').data('incidenciatitulo',$(this).data('titulo'));
-                $('#myModal1').data('incidenciaid',$(this).data('id'));
-                $('#myModal1').data('incidenciauser',$(this).data('usuario'));
-                $('#myModal1').data('incidenciadesc',$(this).data('descripcion'));
-                $('#myModal1').data('incidenciafecha',$(this).data('fecha'));
-                $('#myModal1').data('incidenciaestado',$(this).data('estado'));
-                $('#myModal1').data('incidenciaprioridad',$(this).data('prioridad'));
-                $('#myModal1').data('incidenciahoras',$(this).data('horas'));
-                $('#myModal1').data('incidenciaresuelto',$(this).data('resuelto'));
-                $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
-                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
-                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
-
-            });
-        });
+        function goBack() {
+            window.history.back();
+        }
     </script>
 
 {% endblock scripts %}
