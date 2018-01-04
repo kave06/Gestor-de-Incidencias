@@ -118,28 +118,7 @@ lang='es'
                     </li>
                 {% endif %}
 
-                {% if ((role == 'tecnico') or (role == 'supervisor')) %}
-                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
-                      <a class="nav-link" href="/incidencias_cerradas">
-{#                        <i class="fa fa-fw fa-envelope-o"></i>#}
-{#                          <i class="fa fa-window-close" aria-hidden="true"></i>#}
-                          <i class="fa fa-folder-o" aria-hidden="true" aria-hidden="true"></i>
-                        <span class="nav-link-text">Todas las incidencias cerradas</span>
-                      </a>
-                    </li>
-                {% endif %}
-
-                {% if role == 'tecnico' %}
-                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Notificaciones">
-                      <a class="nav-link" href="/notificaciones_tecnico">
-{#                        <i class="fa fa-fw fa-envelope-o"></i>#}
-{#                          <i class="fa fa-window-close" aria-hidden="true"></i>#}
-                          <i class="fa fa-envelope-o" aria-hidden="true" aria-hidden="true"></i>
-                        <span class="nav-link-text">Notificaciones</span>
-                      </a>
-                    </li>
-                {% endif %}
-            {% if role == 'supervisor' %}
+                {% if role == 'supervisor' %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
                     <a class="nav-link" href="/handle_incidencia_solicitadas">
                     <i class="fa fa-folder-open-o" aria-hidden="true" aria-hidden="true"></i>
@@ -180,7 +159,18 @@ lang='es'
                     </li>
                 {% endif %}
 
-                {% if role == 'supervisor' %}
+                {% if ((role == 'tecnico') or (role == 'supervisor')) %}
+                  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Incidencias">
+                      <a class="nav-link" href="/incidencias_cerradas">
+{#                        <i class="fa fa-fw fa-envelope-o"></i>#}
+{#                          <i class="fa fa-window-close" aria-hidden="true"></i>#}
+                          <i class="fa fa-folder-o" aria-hidden="true" aria-hidden="true"></i>
+                        <span class="nav-link-text">Todas las incidencias cerradas</span>
+                      </a>
+                    </li>
+                {% endif %}
+
+                {% if ((role == 'tecnico') or (role =='supervisor')) %}
                   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Notificaciones">
                       <a class="nav-link" href="/notificaciones_tecnico">
 {#                        <i class="fa fa-fw fa-envelope-o"></i>#}
@@ -190,7 +180,6 @@ lang='es'
                       </a>
                     </li>
                 {% endif %}
-
             </ul>
 
 
