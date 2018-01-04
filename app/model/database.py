@@ -70,10 +70,11 @@ def select_open_assigned_incidences(technician) -> tuple:
             " incidence_date, status_name, priority_name, technician_hours," \
             " resolve, category_name, priority " \
             "FROM global " \
-            "WHERE end_date= '00/00/00 00:00:00' AND  incidence_id IN ( " \
+            "WHERE end_date= '0000-00-00 00:00:00' AND  incidence_id IN ( " \
             "SELECT incidence_id " \
             "FROM assigned_technicians " \
-            "WHERE technician_id='{}') ORDER BY priority DESC ".format(technician)
+            "WHERE technician_id='{}') " \
+            "ORDER BY priority DESC ".format(technician)
 
     result_set = execute_query(query)
     return result_set
@@ -85,10 +86,11 @@ def select_open_assigned_incidences_tech(technician) -> tuple:
             " incidence_date, status_name, priority_name, technician_hours," \
             " resolve, category_name, priority " \
             "FROM global " \
-            "WHERE end_date= '00/00/00 00:00:00' AND  incidence_id IN ( " \
+            "WHERE end_date= '0000-00-00 00:00:00' AND  incidence_id IN ( " \
             "SELECT incidence_id " \
             "FROM assigned_technicians " \
-            "WHERE technician_id='{}' AND status_name='Asignada') ORDER BY priority DESC "\
+            "WHERE technician_id='{}') AND status_name='Asignada'" \
+            " ORDER BY priority DESC "\
             .format(technician)
 
     result_set = execute_query(query)
@@ -199,3 +201,19 @@ def select_incidences_notify_for_closed() -> tuple:
     logger.info(result_set)
 
     return result_set
+
+
+def select_open_assigned_incidences_client(client) -> tuple:
+    result_set = []
+
+    query = "SELECT incidence_id, title, description, username," \
+            " incidence_date, status_name, priority_name, technician_hours," \
+            " resolve, category_name, priority " \
+            "FROM global " \
+            "WHERE end_date= '0000-00-00 00:00:00' AND  " \
+            "status_name='Asignada' AND username='{}'" \
+            " ORDER BY priority DESC ".format(client)
+
+    result_set = execute_query(query)
+    return result_set
+

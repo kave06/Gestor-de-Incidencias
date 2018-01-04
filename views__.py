@@ -310,13 +310,13 @@ def dashboard():
     # TODO xq se supone que cuando das al botón se hacen las consultas necesarias.
     # lista de notificaciones del usuario
     if session.get('role') == 'cliente':
-        incidencias = select_last_incidence_user(session.get('username'))
+        incidencias = select_open_assigned_incidences_client(session.get('username'))
     elif session.get('role') == 'tecnico':
-        incidencias = select_open_assigned_incidences_tech(session.get('username'))
+        incidencias = select_open_assigned_incidences_tech( session.get('username'))
     else:
-        incidencias = []
+        incidencias = select_incidences_notify_for_closed()
     # hasta que no tengamos algo que mostrar en la principal.. pues nada
-    incidencias = []  # he puesto en dashboard.html if='clienteX'
+    #incidencias = []  # he puesto en dashboard.html if='clienteX'
 
     logger.info("Consulta notificaciones dashboard")
     username = session.get('username')
