@@ -189,7 +189,8 @@ def mostrar_incidencias_sin_asignar():
     incidencias = select_unassigned_incidences()
 
     empty_notif = 0
-    notificaciones = get_notification(session.get('username'))
+    # notificaciones = get_notification(session.get('username'))
+    notificaciones = select_unassigned_incidences()
     if len(notificaciones) == 0:
         empty_notif = 1
 
@@ -348,6 +349,24 @@ def handle_horas():
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
 
+@app.route('/lista_comentarios', methods=['POST'])
+def handle_lista_comentarios():
+    # horas_inc = request.form['horas_inc']
+    # idinc = request.form['idhor']
+    # update_technician_hours(idinc, horas_inc)
+    # logger.info("Horas tratadas")
+    incidence_id = 'XXXXXXXX'
+    # incidencias = select_open_assigned_incidences(session.get('username'))
+    incidencias = select_comments_incidence(incidence_id)
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('incidencias_asignadas.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif, incidencias=incidencias)
 
 @app.route('/handle_comment', methods=['POST'])
 def handle_comment():
@@ -564,7 +583,8 @@ def handle_incidencia_solicitada():
     # }
     username = session.get('username')
     empty_notif = 0
-    notificaciones = get_notification(username)
+    # notificaciones = get_notification(username)
+    notificaciones = select_solicited_incidences()
     if len(notificaciones) == 0:
         empty_notif = 1
     return render_template('incidencias_solicitadas.html', username=username,

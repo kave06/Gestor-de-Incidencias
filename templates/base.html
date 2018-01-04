@@ -66,7 +66,7 @@ lang='es'
                     </a>
                 </li>
 
-                {% if role == 'cliente' %}
+                {% if role == 'cliente' or role == 'tecnico' %}
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Crear Incidecia">
                         <a class="nav-link" href="/crear_incidencia">
                             <i class="fa fa-address-card-o" aria-hidden="true"></i>
