@@ -37,9 +37,12 @@
                       <div class="table-responsive">
                       <body>
                       <div>Incidencias totales: {{ stats1[0][0] }} </div>
-                      <div>Incidencias cerradas: {{ count }} </div>
-                      <div>Fecha de inicio de la incidencia: {{ stats2[0][1] }}</div>
+                      <div>Incidencias Abiertas: {{ stats2[0][0] }}</div>
+                      <div>Incidencias pendientes de cierre: {{ stats3[0][0] }} </div>
+                      <div>Incidencias cerradas:{{ count }} </div>
+                      {#<div>Fecha de inicio de la incidencia: {{ stats2[0][1] }}</div>
                       <div>Fecha de cierre de la incidencia: {{ stats2[0][2] }}</div>
+                      #}
                       <div>Tiempo medio de resolucion: {{ tiempo }}</div>
                       </body>
                     </div>
