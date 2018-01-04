@@ -152,21 +152,3 @@ def notify_close(status:Status, role):
 #     status = Status('INC_2017_0005','cliente00', 5 )
 #     update_status(status, 5)
 #     notify_close(status,'cliente')
-
-
-def insert_assigned_devices(incidence, device):
-        device_id = check_device_id(device)
-        logger.info('Insertando el dispositivo con id {} a la incidencia {} '.format(device_id, incidence))
-        query = "INSERT INTO assigned_devices VALUES ('{}',{})" \
-            .format(incidence, device_id)
-        logger.info('Insertando la query: '.format(query))
-        insert_query(query)
-
-
-def check_device_id(device):
-    query = "SELECT device_id " \
-        "FROM devices " \
-        "WHERE description='{}'".format(device)
-    result_set = execute_query(query)
-    device_id = result_set[0][0]
-    return device_id

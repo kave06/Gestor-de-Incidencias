@@ -2,8 +2,8 @@ import os
 # import datetime
 from datetime import datetime
 from app.model.incidence import *
-from app.model.device import assign_devices, get_devices
-from app.model.status import insert_status, Status, update_status, notify_close, insert_assigned_devices
+from app.model.device import assign_devices, get_devices, insert_assigned_devices
+from app.model.status import insert_status, Status, update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
 from app.model.clases_varias import LoginForm, IncidenciaForm
