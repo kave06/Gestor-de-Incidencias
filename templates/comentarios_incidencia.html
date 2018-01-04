@@ -1,0 +1,97 @@
+
+{% extends "base.html" %}
+
+{% block title %}<title>Todas Mis Incidencias</title>{% endblock %}
+
+{% block css %}
+    <!-- Bootstrap core CSS-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for ('static', filename='startbootstrap-sb-admin-gh-pages/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='startbootstrap-sb-admin-gh-pages/css/sb-admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Custom styles from base-->
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+    <!-- Custom styles for Font Awesome Animations -->
+    <link rel="stylesheet" href="/static/css/font-awesome-animation.min.css" type="text/css">
+    <!-- styles para mostrar incidencias -->
+    <link rel="stylesheet" href="../static/css/incidencias.css" rel="stylesheet" type="text/css">
+     <!-- styles para mostrar comentarios -->
+    <link rel="stylesheet" href="../static/css/comentarios_incidencia.css" rel="stylesheet" type="text/css">
+    <!-- styles para DataTables -->
+    <link rel="stylesheet" href="../static/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../static/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block page_content %}
+    {% block content %}
+        <div class="content-wrapper">
+            <div class="container-fluid">
+              <!-- Example DataTables Card-->
+              <div class="card mb-3">
+                  <div class="card-header">
+                      <h4><i class="fa fa-pencil"></i> Comentarios de la incidencia {{ incidence_id }}</h4>
+                  </div>
+                  <div class="card-body">
+                      <button class="btn btn-dark " onclick="goBack()">Volver</button>
+                      {% if comentarios %}
+                          {%  for comentario in comentarios %}
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-sm-2">
+                                          <div class="thumbnail">
+                                              <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                          </div><!-- /thumbnail -->
+                                      </div><!-- /col-sm-1 -->
+                                      <div class="col-sm-5">
+                                          <div class="panel panel-default">
+                                              <div class="panel-heading">
+                                                  <span class="text-muted">El usuario </span> <strong>{{ comentario[2] }}</strong> <span class="text-muted">ha comentado: </span>
+                                              </div>
+                                              <div class="panel-body">
+                                                  &#10077; {{ comentario[4] }} &#10078;
+                                              </div><!-- /panel-body -->
+                                          </div><!-- /panel panel-default -->
+                                      </div><!-- /col-sm-5 -->
+                                  </div><!-- /row -->
+                              </div><!-- /container -->
+
+{#                              <div class="col-md-6">#}
+{#                                      <p>Comentario sobre la incidencia con id {{ comentario[1] }} escrito por el usuario {{ comentario[2] }}</p>#}
+{#                                      <p>{{ comentario[4] }}</p>#}
+{#                              </div>#}
+                          {% endfor %}
+                      {% else %}
+                          <div class="col-md-6">
+                              <h5 style="text-align: center; margin: 30px;"><i class="fa fa-exclamation-triangle"></i> Esta incidencia no tiene comentarios</h5>
+{#                             <p>Esta incidencia no tiene comentarios</p>#}
+                          </div>
+                      {% endif %}
+                  </div>
+              </div>
+            </div> <!-- /.container-fluid-->
+        </div> <!-- /.content-wrapper-->
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../static/startbootstrap-sb-admin-gh-pages/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for DataTables-->
+    <script src="../static/js/jquery.dataTables.min.js"></script>
+    <script src="../static/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+{% endblock scripts %}

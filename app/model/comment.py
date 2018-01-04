@@ -13,6 +13,7 @@ class Comment:
         self.status = status
         self.content = content
 
+
 def insert_comment(comment):
     incidence_id = comment.incidence_id
     username = comment.username

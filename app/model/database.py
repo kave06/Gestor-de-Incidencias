@@ -79,6 +79,7 @@ def select_open_assigned_incidences(technician) -> tuple:
     result_set = execute_query(query)
     return result_set
 
+
 def select_open_assigned_incidences_tech(technician) -> tuple:
     #TODO comprobar vista global y revisar esta query
 
@@ -95,6 +96,7 @@ def select_open_assigned_incidences_tech(technician) -> tuple:
 
     result_set = execute_query(query)
     return result_set
+
 
 def select_solicited_incidences() -> tuple:
     #TODO comprobar vista global y revisar esta query
@@ -113,8 +115,6 @@ def select_solicited_incidences() -> tuple:
     return result_set
 
 
-
-
 def select_unassigned_incidences() -> tuple:
     #TODO comprobar vista global y revisar esta query
 
@@ -130,14 +130,14 @@ def select_unassigned_incidences() -> tuple:
 
     return result_set
 
+
 def select_comments_incidence(incidence_id):
-    query = "SELECT  * from comments " \
-            "WHERE incidende_id='{}'".format(incidence_id)
+    query = "SELECT * from comments " \
+            "WHERE incidence_id='{}'".format(incidence_id)
 
     result_set = execute_query(query)
+    # print('query: ', query, '| result_set: ', result_set)
     return result_set
-
-
 
 
 def execute_query(query):
@@ -158,6 +158,7 @@ def execute_query(query):
 
     return result_set
 
+
 def insert_query(query):
     # logger.info('en execute')
     result_set = ''
@@ -174,6 +175,7 @@ def insert_query(query):
 
     return result_set
 
+
 def technician_list():
     query = "SELECT  username_id " \
             "FROM users " \
@@ -181,6 +183,7 @@ def technician_list():
 
     list = execute_query(query)
     return list
+
 
 def assign_tech(incidence_id, tech_id):
     query = "INSERT INTO assigned_technicians VALUES ('{}','{}')" \
