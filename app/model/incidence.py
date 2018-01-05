@@ -98,11 +98,8 @@ def select_open_incidences(usuario) -> tuple:
             "ON (t1.category=t2.category_id AND t1.priority=t3.priority_id " \
             "AND t1.incidence_id=t4.incidence_id AND t4.status_id=t5.status_id) " \
             "WHERE t1.username='{}' AND " \
-            "t4.end_date='00/00/00 00:00:00' AND t1.incidence_id IN( " \
-            "SELECT DISTINCT incidence_id FROM status " \
-            "WHERE incidence_id NOT IN ( " \
-            "SELECT DISTINCT incidence_id FROM status " \
-            "WHERE status_id=6 and username='{}'))" \
+            "t4.end_date='00-00-00 00:00:00' AND t4.status_id " \
+            "IN(1,2,4,5) " \
             "order by t1.priority desc".format(usuario, usuario)
 
     logger.info(query)
@@ -120,7 +117,7 @@ def select_open_incidences(usuario) -> tuple:
         cursor.close()
     except Exception as err:
         logger.error(err)
-
+    logger.info(result_set)
     return result_set
 
 

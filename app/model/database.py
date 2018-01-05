@@ -218,7 +218,7 @@ def client_total_open(cliente) -> tuple:
     query = "SELECT  count(t1.incidence_id) from incidences as t1 " \
              "JOIN (status as t2)" \
              "ON (t1.incidence_id=t2.incidence_id)" \
-             "WHERE t1.username='{}' AND t2.status_id BETWEEN 1 and 4" \
+             "WHERE t1.username='{}' AND t2.status_id IN (1,2,4)" \
             " AND t2.end_date='0000-00-00 00:00:00'"\
             .format(cliente)
     result_set = execute_query(query)
@@ -314,7 +314,7 @@ def count_total_open() -> tuple:
     query = "SELECT  count(t1.incidence_id) from incidences as t1 " \
              "JOIN (status as t2)" \
              "ON (t1.incidence_id=t2.incidence_id)" \
-             "WHERE t2.status_id BETWEEN 1 and 4" \
+             "WHERE t2.status_id IN (1,2,4)" \
             " AND t2.end_date='0000-00-00 00:00:00'"
     result_set = execute_query(query)
     logger.info(result_set)
