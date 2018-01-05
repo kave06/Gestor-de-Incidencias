@@ -104,7 +104,6 @@
                                           <button type="button" id='boton-comentario' class="btn btn-default" data-title="Introducir comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addComentario" ><span class="fa fa-comments-o" aria-hidden="true"></span> Introducir comentarios</button>
                                           <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button> </div>
                                         </div>
-                                    </div>
                                   </div>
                                 </div>
                                 {% endfor %}
@@ -242,7 +241,7 @@
             "autoWidth": true,
             responsive: true,
             "paging": true,
-            "lengthMenu": [[10, 20, -1], [10, 20, "TODOS"]],
+            "lengthMenu": [[10, 20, 30, 50, -1], [10, 20, 30, 50, "TODOS"]],
             {#"columnDefs": [#}
             {#    { "type": "date-euro", targets: 1 }#}
             {#],#}

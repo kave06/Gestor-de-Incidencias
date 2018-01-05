@@ -783,5 +783,6 @@ def handle_comentarios():
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidence_id=incidence_id, comentarios=comentarios)
 
+
 if __name__ == '__main__':
     manager.run()

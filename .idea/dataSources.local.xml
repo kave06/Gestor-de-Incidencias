@@ -23,6 +23,7 @@
         <proxy-host>jair.lab.inf.uva.es</proxy-host>
         <proxy-port>28031</proxy-port>
         <use-password>true</use-password>
+        <auth-type>PASSWORD</auth-type>
       </ssh-properties>
     </data-source>
     <data-source name="notification.db" uuid="732f6859-c8be-4451-a0bb-546ade9e91a0">
