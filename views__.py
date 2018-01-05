@@ -553,7 +553,7 @@ def handle_cierre_cliente():
     receiver = get_technician(id_incidence)
 
     create_notification(id_incidence, sender, receiver)
-    comentario = Comment(id_incidence,session.get('username'),7,comentario_incidencia)
+    comentario = Comment(id_incidence,session.get('username'),4,comentario_incidencia)
     insert_comment(comentario)
     incidencias = select_open_incidences(session.get('username'))
 
