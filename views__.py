@@ -310,16 +310,18 @@ def handle_data():
 @app.route('/dashboard')
 def dashboard():
     empty_notif = 0
-    # TODO estas incidencias si no ese usan habría qur quitar las consultas
-    # TODO xq se supone que cuando das al botón se hacen las consultas necesarias.
-    # lista de notificaciones del usuario
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        logger.info('No hay notificaciones, pongo empty_notif a 1')
+        empty_notif = 1
+
+
     if session.get('role') == 'cliente':
         total_incidences = client_total_incidences(session.get('username'))
         total_closed = client_total_closed(session.get('username'))
         total_open = client_total_open(session.get('username'))
         total_notify_closed = client_total_notify_closed(session.get('username'))
 
-        notificaciones = get_notification(session.get('username'))
         incidencias = select_open_assigned_incidences_client(session.get('username'))
         return render_template('dashboard_client.html', username=session.get('username'),
                                role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
@@ -329,10 +331,6 @@ def dashboard():
 
     elif session.get('role') == 'tecnico':
         incidencias = select_open_assigned_incidences_tech( session.get('username'))
-        notificaciones = get_notification(session.get('username'))
-        if len(notificaciones) == 0:
-            logger.info('No hay notificaciones, pongo empty_notif a 1')
-            empty_notif = 1
         total_incidences=client_total_open(session.get('username'))
         total_assigned= count_total_assigned_incidences(session.get('username'))
         total_notify_closed=count_total_notify_closed_assigned_incidences(session.get('username'))
@@ -345,38 +343,23 @@ def dashboard():
                                total_assigned=total_assigned,total_closed=total_closed,
                                total_notify_closed=total_notify_closed)
 
-    else:
+    elif session.get('role') == 'supervisor':
         incidencias = select_incidences_notify_for_closed()
-        notificaciones = get_notification(session.get('username'))
+
         total_incidences = count_total_incidences()
         total_open = count_total_open()
         total_notify_closed =count_total_notify_closed()
         total_closed = count_total_closed()
         return render_template('dashboard_supervisor.html', username=session.get('username'),
-                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               role=session.get('role'), notificaciones=notificaciones,
+                               empty_notif=empty_notif,
                                incidencias=incidencias, total_incidences=total_incidences,
                                total_open=total_open, total_notify_closed=total_notify_closed,
                                total_closed=total_closed)
+    else:
 
-    logger.info("Consulta notificaciones dashboard")
-    username = session.get('username')
-    notificaciones = get_notification(username)
-    logger.info(type(notificaciones))
-    logger.info(notificaciones)
-
-    logger.info('len(notificaciones)')
-    logger.info(len(notificaciones))
-
-    if len(notificaciones) == 0:
-        logger.info('No hay notificaciones, pongo empty_notif a 1')
-        empty_notif = 1
-
-    logger.info('empty_notif')
-    logger.info(empty_notif)
-
-    return render_template('dashboard_technician.html', username=session.get('username'),
-                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
-                           incidencias=incidencias)
+        logger.info("No tiene Rol, no es posible")
+        return render_template('login.html')
 
 
 @app.route('/handle_horas', methods=['POST'])
