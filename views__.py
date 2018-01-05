@@ -524,12 +524,15 @@ def handle_cierre_tecnico():
     username_stat = get_supervisor()
     logger.info(username_stat)
     idtec = request.form['idtec']
+    comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idtec, username_stat, 4)
     username = session.get('username')
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    comentario = Comment(idtec,session.get('username'),8,comentario_incidencia)
+    insert_comment(comentario)
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(username)
