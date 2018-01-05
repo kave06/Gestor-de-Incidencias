@@ -70,6 +70,10 @@ def handle_login():
             # TODO esta incidencia no se usa
             # incidencias = select_incidences_user(session.get('username'))
 
+            logger.info('Iniciando la sesión')
+            logger.info('usuario: {}, rol: {}.'.format(session['username'], session['role']))
+            print('¡Sesión iniciada por {}...'.format(session['username']))
+
             return redirect(url_for('dashboard'))
 
             # return render_template('base.html', username=session.get('username'),
@@ -78,7 +82,8 @@ def handle_login():
             error = 'Usuario o contraseña no válidos'
             return render_template('login.html', error=error)
     # logger.info('NO 1')
-    return render_template('login.html')
+    error = 'El usuario introducido no existe'
+    return render_template('login.html', error=error)
 
 
 @app.route('/crear_incidencia', methods=['GET', 'POST'])
