@@ -131,7 +131,7 @@
                                                         <input type="hidden" name="idcli" value="">
                         <div class="row form-group input-container"> <!--form-->
                             <span>Introduzca comentarios al cierre</span>
-                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="1" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  required></textarea>
+                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="0" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  ></textarea>
                             <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
                             <div id="charNum"> <span>Máximo 255 caracteres.</span> </div>
                         </div>
@@ -286,7 +286,25 @@
         });
         */
     </script>
-
+        <script>
+        $('#txtArea').keyup(function () {
+            var max = 255;
+            var len = $(this).val().length;
+            if (len > max+1) {
+                var char = len - max;
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobran ' + char + ' caracteres.');
+            } else if (len == max+1) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobra 1 caracter.');
+            } else if (len == max) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres.');
+            } else if (len == max-1) {
+                $('#charNum').text('Le queda 1 caracter.');
+            } else {
+                var char = max - len;
+                $('#charNum').text('Le quedan ' + char + ' caracteres.');
+            }
+        });
+    </script>
     <script>
         $(function(){
             $( "#myModal1" ).on('shown.bs.modal', function(e){ //subscribe to show method
