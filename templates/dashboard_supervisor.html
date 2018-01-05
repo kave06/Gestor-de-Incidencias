@@ -126,7 +126,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-info modal-body" id="idInc"></div>
-                        <form class="form-incidencia" action="{{ url_for('handle_cierre_supervisor') }}" method="post" >
+                        <form class="form-incidencia" action="{{ url_for('handle_dashboard_supervisor') }}" method="post" >
 
                             <div class="row form-group input-container"> <!--form-->
                             <span>Introduzca comentarios al cierre</span>
@@ -333,7 +333,7 @@
                 var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
                 //make your ajax call populate items or what even you need
-                $('#cierreModal input[name="idtec"]').val(getIdFromRowEliminar)
+                $('#cierreModal input[name="incidence_id"]').val(getIdFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });

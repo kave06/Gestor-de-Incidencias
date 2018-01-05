@@ -791,6 +791,41 @@ def handle_cierre_supervisor():
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
 
+@app.route('/handle_dashboard_supervisor', methods=['POST'])
+def handle_dashboard_supervisor():
+    incidence_id = request.form['incidence_id']
+    comentario_incidencia = request.form['comentario_incidencia']
+    resolucion= 'resolve' in request.form
+    if resolucion:
+        resolucion=0
+    else:
+        resolucion=1
+    status = Status(incidence_id, get_technician(incidence_id), 5) #user=tecnico
+    update_status(status, 6, session.get('username'))
+    comentario = Comment(incidence_id,session.get('username'),6,comentario_incidencia)
+    insert_comment(comentario)
+    update_resolve(incidence_id,resolucion)
+
+
+
+    incidencias = select_incidences_notify_for_closed()
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    total_incidences = count_total_incidences()
+    total_open = count_total_open()
+    total_notify_closed = count_total_notify_closed()
+    total_closed = count_total_closed()
+
+    return render_template('dashboard_supervisor.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones,
+                           empty_notif=empty_notif,
+                           incidencias=incidencias, total_incidences=total_incidences,
+                           total_open=total_open, total_notify_closed=total_notify_closed,
+                           total_closed=total_closed)
+
 
 @app.route('/handle_comentarios',  methods=['GET','POST'])
 def handle_comentarios():
