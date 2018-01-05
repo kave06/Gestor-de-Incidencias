@@ -89,5 +89,25 @@ CREATE TABLE IF NOT EXISTS status(
   FOREIGN KEY (status_id) REFERENCES type_of_status(status_id)
 );
 
-
+CREATE OR REPLACE VIEW global AS
+  SELECT
+    `t1`.`incidence_id`     AS `incidence_id`,
+    `t1`.`title`            AS `title`,
+    `t1`.`description`      AS `description`,
+    `t1`.`username`         AS `username`,
+    `t1`.`incidence_date`   AS `incidence_date`,
+    `t5`.`status_name`      AS `status_name`,
+    `t3`.`priority_name`    AS `priority_name`,
+    `t1`.`technician_hours` AS `technician_hours`,
+    `t1`.`resolve`          AS `resolve`,
+    `t2`.`category_name`    AS `category_name`,
+    `t1`.`priority`         AS `priority`,
+    `t4`.`end_date`         AS `end_date`
+  FROM (`incidences` `t1`
+    JOIN (`categories` `t2`
+      JOIN `priorities` `t3`
+      JOIN `status` `t4`
+      JOIN `type_of_status` `t5`) ON ((
+      (`t1`.`category` = `t2`.`category_id`) AND (`t1`.`priority` = `t3`.`priority_id`) AND
+      (`t1`.`incidence_id` = `t4`.`incidence_id`) AND (`t4`.`status_id` = `t5`.`status_id`))));
 
