@@ -41,10 +41,13 @@
                                     <th>Título</th>
                                     <th>Fecha de incidencia</th>
                                     <th>Estado</th>
+                                    <th style="display: none;">Identificador</th>
+                                    <th>Pulse para ver sus comentarios:</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {% for incidencia in incidencias %}
+                                    {% set incidence_id = incidencia[0] %}
                                 <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
                                     data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"
                                     data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"
@@ -54,6 +57,14 @@
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     <td data-th="Estado">{{ incidencia[5] }}</td>
+                                    <td style="display: none;" data-th="Identificador">{{ incidencia[0] }}</td>
+                                    <td data-th="Ver sus comentarios">
+{#                                        <button type="button" id='boton-comentarios' class="btn btn-info" data-title="Mostrar comentarios" action="{{ url_for('handle_comentarios') }}" > Mostrar comentarios</button>#}
+                                        <form method="post" action="{{ url_for('handle_comentarios') }}" id="loginform" class="form-horizontal" enctype="multipart/form-data" >
+                                            <button class="btn" style="width: 100%;padding: 0;" type="submit" />
+                                            <input style="width: 100%;" name="incidence_id" type="text" id="input-username" class="btn btn-info form-control" value="{{ incidence_id }}" >
+                                        </form>
+                                    </td>
                                 </tr>
                                 <!-- Modal incidencia -->
                                 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -85,6 +96,7 @@
                                           </div>
                                       </div>
                                       <div class="modal-footer">
+                                          <button type="button" id='boton-comentario' class="btn btn-default" data-title="Introducir comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addComentario" ><span class="fa fa-comments-o" aria-hidden="true"></span> Introducir comentarios</button>
                                         <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                                       </div>
@@ -110,18 +122,59 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-info modal-body" id="idInc"></div>
-                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
-                    </div>
-                    <div class="modal-footer ">
                         <form class="form-incidencia" action="{{ url_for('handle_cierre_cliente') }}" method="post" > <!--form-->
                             <input type="hidden" name="id_incidence" value="">
-                            <div class="submit-row"> <!--form-->
+                        <div class="row form-group input-container"> <!--form-->
+                            <span>Introduzca comentarios al cierre</span>
+                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="1" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  required></textarea>
+                            <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
+                            <div id="charNum"> <span>Máximo 255 caracteres.</span> </div>
+                        </div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                                <div class="submit-row"> <!--form-->
                         {# <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button> #}
                                 <input class="btn btn-block btn-block-incidencia submit-form" id="submit-cierre-cliente" name="submit-cierre-cliente" value=" Sí " type="submit">
                             </div>
                         </form>
+                    </div>
+                    <div class="modal-footer ">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
                     </div>
+                </div>  <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div>
+
+                <!-- Modal añadir comentario -->
+        <div class="modal fade" id="addComentario" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-comments-o" aria-hidden="true"></i> Añadir comentario en...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-incidencia" action="{{ url_for('handle_comment_abiertas') }}" method="post" > <!--form-->
+                        <div class="alert alert-info modal-body" id="idInc"></div>
+                        <div class="row form-group input-container"> <!--form-->
+                            <span></span>
+                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="1" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  required></textarea>
+                            <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
+                            <div id="charNum"> <span>Máximo 255 caracteres.</span> </div>
+                        </div>
+                            <input type="hidden" name="idcom" value="">
+                            <input type="hidden" name="estadocom" value="">
+                            <div class="submit-row"> <!--form-->
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" id="submit-incidencia" name="submit-incidencia" type="submit"> CREAR </button> -->
+                        <!-- <button type="button" class="btn btn-block btn-block-incidencia submit-form" >CREAR</button> -->
+                        <!-- <input class="btn btn-block-incidencia" id="submit-incidencia" name="submit-incidencia" value="Submit" type="submit"> -->
+                        <input class="btn btn-block btn-block-incidencia submit-form" id="submit-comentario" name="submit-comentario" value=" Añadir " type="submit">
+                    </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer ">
+                        {#<button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Añadir</button>#}
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> Cancelar</button>
+                     </div>
                 </div>  <!-- /.modal-content -->
             </div> <!-- /.modal-dialog -->
         </div>
@@ -239,6 +292,12 @@
                 else {
                     $('#boton-cierre').show();
                 }
+                if (getEstadoFromRow!='Solicitada'){
+                    $('#boton-comentario').hide();
+                }
+                else {
+                    $('#boton-comentario').show();
+                }
             });
             $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
@@ -247,6 +306,18 @@
                 var getIdFromRowEliminar = $(this).data('incidenciaidElim');
                 //make your ajax call populate items or what even you need
                 $('#cierreModal input[name="id_incidence"]').val(getIdFromRowEliminar)
+                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
+                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
+            });
+            $( "#addComentario" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
+                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
+                var getTituloFromRowEliminar = $(this).data('incidenciatituloCom');
+                var getIdFromRowEliminar = $(this).data('incidenciaidCom');
+                var getEstadoFromRowEliminar = $(this).data('incidenciaestadoCom');
+                //make your ajax call populate items or what even you need
+                $('#addComentario input[name="idcom"]').val(getIdFromRowEliminar)
+                $('#addComentario input[name="estadocom"]').val(getEstadoFromRowEliminar)
                 $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
                 $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
             });
@@ -264,6 +335,9 @@
                 $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
                 $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
                 $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
+                $('#addComentario').data('incidenciatituloCom',$(this).data('titulo'));
+                $('#addComentario').data('incidenciaidCom',$(this).data('id'));
+                $('#addComentario').data('incidenciaestadoCom',$(this).data('estado'));
 
             });
         });
