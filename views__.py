@@ -396,7 +396,7 @@ def handle_horas():
     idinc = request.form['idhor']
     update_technician_hours(idinc, horas_inc)
     logger.info("Horas tratadas")
-    incidencias = select_open_assigned_incidences_tech(session.get('username'))
+    incidencias = select_open_assigned_incidences(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
@@ -542,11 +542,14 @@ def handle_cierre_tecnico():
     username_stat = get_supervisor()
     logger.info(username_stat)
     idtec = request.form['idtec']
+    comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idtec, username_stat, 4)
     username = session.get('username')
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
+    comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
+    insert_comment(comentario)
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
@@ -668,9 +671,6 @@ def handle_inventario():
     devices_ids = request.form['id_dispositivo']
     incidence_id = request.form['incidence_id']
     assign_devices(incidence_id, devices_ids)
-    #for device_id in devices_ids:
-    #    logger.info('Listando devices: {}'.format(device_id))
-    #    insert_assigned_devices(incidence_id, device_id)
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
     username = session.get('username')
