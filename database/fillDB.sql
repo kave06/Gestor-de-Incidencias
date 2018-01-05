@@ -31,16 +31,17 @@ insert into categories values(2,'Software básico');
 insert into categories values(3,'Problemas con aplicaciones');
 insert into categories values(4,'Software de aplicaciones');
 
+
 INSERT INTO users
-VALUES('cliente00', 'kave', 'kave06@yahoo.es', 'passpgpi', 1);
-INSERT INTO users 
-VALUES('cliente01', 'rodrigo', 'rodrigo00@yahoo.es', 'passpgpi', 1);
+VALUES('cliente00', 'kave', 'kave06@yahoo.es', 'cliente0pgpi', 1);
 INSERT INTO users
-VALUES('tecnico00', 'jose', 'tecnico00@yahoo.es', 'passpgpi', 2);
+VALUES('cliente01', 'rodrigo', 'rodrigo00@yahoo.es', 'cliente1pgpi', 1);
 INSERT INTO users
-VALUES('tecnico01', 'pepe', 'pepe01@yahoo.es', 'passpgpi', 2);
-INSERT INTO users 
-VALUES('supervisor00', 'alberto', 'supervisor00@yahoo.es', 'passpgpi', 3);
+VALUES('tecnico00', 'jose', 'tecnico00@yahoo.es', 'tecnico0pgpi', 2);
+INSERT INTO users
+VALUES('tecnico01', 'pepe', 'pepe01@yahoo.es', 'tecnico1pgpi', 2);
+INSERT INTO users
+VALUES('supervisor00', 'alberto', 'supervisor00@yahoo.es', 'supervisor0pgpi', 3);
 
 
 
