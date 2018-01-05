@@ -396,7 +396,7 @@ def handle_horas():
     idinc = request.form['idhor']
     update_technician_hours(idinc, horas_inc)
     logger.info("Horas tratadas")
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
