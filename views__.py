@@ -561,6 +561,38 @@ def handle_cierre_tecnico():
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
 
+@app.route('/handle_dashboard_tecnico', methods=['POST'])
+def handle_dashboard_tecnico():
+    logger.info("Cierre tecnico tratado")
+    username_stat = get_supervisor()
+    logger.info(username_stat)
+    idtec = request.form['idtec']
+    comentario_incidencia = request.form['comentario_incidencia']
+    status = Status(idtec, username_stat, 4)
+    username = session.get('username')
+    update_status(status, 5, username)
+    role = session.get('role')
+    notify_close(status, role)
+    comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
+    insert_comment(comentario)
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
+    total_incidences=client_total_open(session.get('username'))
+    total_assigned= count_total_assigned_incidences(session.get('username'))
+    total_notify_closed=count_total_notify_closed_assigned_incidences(session.get('username'))
+    total_closed = count_total_closed_assigned_incidences(session.get('username'))
+
+
+    return render_template('dashboard_technician.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_assigned=total_assigned,total_closed=total_closed,
+                               total_notify_closed=total_notify_closed)
+
 
 @app.route('/handle_cierre_cliente', methods=['POST'])
 def handle_cierre_cliente():
