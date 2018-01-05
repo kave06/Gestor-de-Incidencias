@@ -445,6 +445,7 @@ def handle_comment():
     elif estadocom == 'Cerrada':
         estadocom = 6
 
+
     comentario = Comment(idinc, usuario, estadocom, comentario_incidencia)
 
     insert_comment(comentario)
@@ -548,8 +549,11 @@ def handle_cierre_tecnico():
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
-    comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
+        insert_comment(comentario)
+    else:
+        logger.info("Sin comentario")
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
@@ -573,8 +577,9 @@ def handle_dashboard_tecnico():
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
-    comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
+        insert_comment(comentario)
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
@@ -603,8 +608,9 @@ def handle_cierre_cliente():
     receiver = get_technician(id_incidence)
 
     create_notification(id_incidence, sender, receiver)
-    comentario = Comment(id_incidence,session.get('username'),4,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(id_incidence,session.get('username'),4,comentario_incidencia)
+        insert_comment(comentario)
     incidencias = select_open_incidences(session.get('username'))
 
     empty_notif = 0
@@ -626,8 +632,9 @@ def handle_cierre_cliente_todas():
     comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idcli, username_stat, 4)
     username = session.get('username')
-    comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
+        insert_comment(comentario)
     # update_status(status,5,username)
     # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
     role = session.get('role')
@@ -654,8 +661,9 @@ def handle_dashboard_cliente():
     comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idcli, username_stat, 4)
     username = session.get('username')
-    comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
+        insert_comment(comentario)
     # update_status(status,5,username)
     # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
     role = session.get('role')
@@ -843,8 +851,9 @@ def handle_cierre_supervisor():
         resolucion=1
     status = Status(incidence_id, get_technician(incidence_id), 5) #user=tecnico
     update_status(status, 6, session.get('username'))
-    comentario = Comment(incidence_id,session.get('username'),6,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(incidence_id,session.get('username'),6,comentario_incidencia)
+        insert_comment(comentario)
     update_resolve(incidence_id,resolucion)
 
 
@@ -870,8 +879,9 @@ def handle_dashboard_supervisor():
         resolucion=1
     status = Status(incidence_id, get_technician(incidence_id), 5) #user=tecnico
     update_status(status, 6, session.get('username'))
-    comentario = Comment(incidence_id,session.get('username'),6,comentario_incidencia)
-    insert_comment(comentario)
+    if comentario_incidencia != '':
+        comentario = Comment(incidence_id,session.get('username'),6,comentario_incidencia)
+        insert_comment(comentario)
     update_resolve(incidence_id,resolucion)
 
 
