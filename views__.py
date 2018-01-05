@@ -626,7 +626,7 @@ def handle_cierre_cliente_todas():
     comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idcli, username_stat, 4)
     username = session.get('username')
-    comentario = Comment(idcli,session.get('username'),7,comentario_incidencia)
+    comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
     insert_comment(comentario)
     # update_status(status,5,username)
     # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
@@ -643,6 +643,42 @@ def handle_cierre_cliente_todas():
     return render_template('incidencias.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                            incidencias=incidencias)
+
+
+@app.route('/handle_dashboard_cliente', methods=['POST'])
+def handle_dashboard_cliente():
+    logger.info("Cierre cliente tratado")
+    username_stat = get_supervisor()
+    logger.info(username_stat)
+    idcli = request.form['idcli']
+    comentario_incidencia = request.form['comentario_incidencia']
+    status = Status(idcli, username_stat, 4)
+    username = session.get('username')
+    comentario = Comment(idcli,session.get('username'),4,comentario_incidencia)
+    insert_comment(comentario)
+    # update_status(status,5,username)
+    # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
+    role = session.get('role')
+    notify_close(status, role)
+
+
+    empty_notif = 0
+    notificaciones = get_notification(username)
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    # devices=get_devices()
+    total_incidences = client_total_incidences(session.get('username'))
+    total_closed = client_total_closed(session.get('username'))
+    total_open = client_total_open(session.get('username'))
+    total_notify_closed = client_total_notify_closed(session.get('username'))
+
+    incidencias = select_open_assigned_incidences_client(session.get('username'))
+    return render_template('dashboard_client.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                           incidencias=incidencias, total_incidences=total_incidences,
+                           total_open=total_open, total_notify_closed=total_notify_closed,
+                           total_closed=total_closed)
 
 
 @app.route('/notificaciones_tecnico', methods=['GET'])
