@@ -41,10 +41,13 @@
                                     <th>Título</th>
                                     <th>Fecha de incidencia</th>
                                     <th>Estado</th>
+                                    <th style="display: none;">Identificador</th>
+                                    <th>Pulse para ver sus comentarios:</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {% for incidencia in incidencias %}
+                                    {% set incidence_id = incidencia[0] %}
                                 <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
                                     data-id="{{ incidencia[0] }}" data-descripcion="{{ incidencia[2] }}"
                                     data-usuario="{{ incidencia[3] }}"  data-fecha="{{ incidencia[4] }}"
@@ -54,6 +57,14 @@
                                     <td data-th="Título">{{ incidencia[1] }}</td>
                                     <td data-th="Fecha de incidencia">{{ incidencia[4] }}</td>
                                     <td data-th="Estado">{{ incidencia[5] }}</td>
+                                    <td style="display: none;" data-th="Identificador">{{ incidencia[0] }}</td>
+                                        <td data-th="Ver sus comentarios">
+    {#                                        <button type="button" id='boton-comentarios' class="btn btn-info" data-title="Mostrar comentarios" action="{{ url_for('handle_comentarios') }}" > Mostrar comentarios</button>#}
+                                            <form method="post" action="{{ url_for('handle_comentarios') }}" id="loginform" class="form-horizontal" enctype="multipart/form-data" >
+                                                <button class="btn" style="width: 100%;padding: 0;" type="submit" />
+                                                <input style="width: 100%;" name="incidence_id" type="text" id="input-username" class="btn btn-info form-control" value="{{ incidence_id }}" >
+                                            </form>
+                                        </td>
                                 </tr>
                                 <!-- Modal incidencia -->
                                 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -252,7 +263,7 @@
             "autoWidth": true,
             responsive: true,
             "paging": true,
-            "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "TODOS"]],
+            "lengthMenu": [[10, 20, 30, 50, -1], [10, 20, 30, 50, "TODOS"]],
             {#"columnDefs": [#}
             {#    { "type": "date-euro", targets: 1 }#}
             {#],#}
