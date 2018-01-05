@@ -79,26 +79,6 @@ def update_status(status, new_type_of_status, username):
         logger.error(err)
 
 
-def get_type_of_status(status):
-    result_set = ''
-    query = "SELECT status_name FROM type_of_status" \
-            "WHERE status_id ={}".format(status)
-
-    logger.info(query)
-
-    cnx = connect_db()
-
-    try:
-        cursor = cnx.cursor()
-        cursor.execute(query)
-        result_set = cursor.fetchmany(size=1)
-        cursor.close()
-    except Exception as err:
-        logger.error(err)
-
-    logger.info('result_set: {}'.format(result_set))
-    return result_set
-
 def notify_close(status:Status, role):
 
     query = "SELECT username " \

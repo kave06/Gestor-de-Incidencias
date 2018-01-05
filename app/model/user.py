@@ -55,15 +55,6 @@ def mapping_object(username_x: str) -> User:
         return None
 
 
-def print_user(user_x: User):
-    print('username: {}\n'
-          'name: {}\n'
-          'email: {}\n'
-          'password: {}\n'
-          'role: {}\n'.format(user_x.username_id, user_x.name,
-                              user_x.email, user_x.password, user_x.role_id))
-
-
 def get_supervisor():
     query = "SELECT username_id " \
             "FROM users  " \

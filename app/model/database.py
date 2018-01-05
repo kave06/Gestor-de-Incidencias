@@ -63,23 +63,6 @@ def get_technician(id_incidence):
     return technician
 
 
-def select_open_assigned_incidences(technician) -> tuple:
-    result_set = []
-
-    query = "SELECT incidence_id, title, description, username," \
-            " incidence_date, status_name, priority_name, technician_hours," \
-            " resolve, category_name, priority " \
-            "FROM global " \
-            "WHERE end_date= '0000-00-00 00:00:00' AND  incidence_id IN ( " \
-            "SELECT incidence_id " \
-            "FROM assigned_technicians " \
-            "WHERE technician_id='{}') " \
-            "ORDER BY priority DESC ".format(technician)
-
-    result_set = execute_query(query)
-    return result_set
-
-
 def select_open_assigned_incidences_tech(technician) -> tuple:
     #TODO comprobar vista global y revisar esta query
 
@@ -358,3 +341,12 @@ def count_total_closed() -> tuple:
     logger.info(result_set)
 
     return result_set
+
+
+def request_devices():
+    query = "SELECT * " \
+            "FROM devices "
+    result_set = execute_query(query)
+    return result_set
+
+

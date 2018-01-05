@@ -2,12 +2,11 @@ import os
 # import datetime
 from datetime import datetime
 from app.model.incidence import *
-from app.model.device import assign_devices, get_devices, insert_assigned_devices
+from app.model.device import insert_assigned_devices
 from app.model.status import insert_status, Status, update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
-from app.model.clases_varias import LoginForm, IncidenciaForm
-from app.model.user import mapping_object, print_user, get_supervisor
+from app.model.user import mapping_object, get_supervisor
 from app.model.comment import Comment, insert_comment
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -307,9 +306,33 @@ def handle_data():
     notificaciones = get_notification(session.get('username'))
     if len(notificaciones) == 0:
         empty_notif = 1
+    if session.get('role') == 'cliente':
+        total_incidences = client_total_incidences(session.get('username'))
+        total_closed = client_total_closed(session.get('username'))
+        total_open = client_total_open(session.get('username'))
+        total_notify_closed = client_total_notify_closed(session.get('username'))
 
-    return render_template('dashboard_technician.html', username=session.get('username'),
-                           notificaciones=notificaciones, empty_notif=empty_notif, role=session.get('role'))
+        incidencias = select_open_assigned_incidences_client(session.get('username'))
+        return render_template('dashboard_client.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_open=total_open, total_notify_closed=total_notify_closed,
+                               total_closed=total_closed)
+
+    elif session.get('role') == 'tecnico':
+        incidencias = select_open_assigned_incidences_tech(session.get('username'))
+        total_incidences = client_total_open(session.get('username'))
+        total_assigned = count_total_assigned_incidences(session.get('username'))
+        total_notify_closed = count_total_notify_closed_assigned_incidences(session.get('username'))
+        total_closed = count_total_closed_assigned_incidences(session.get('username'))
+
+        return render_template('dashboard_technician.html', username=session.get('username'),
+                               role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                               incidencias=incidencias, total_incidences=total_incidences,
+                               total_assigned=total_assigned, total_closed=total_closed,
+                               total_notify_closed=total_notify_closed)
+    else:
+        return render_template('login.html')
 
 
 @app.route('/dashboard')
@@ -373,7 +396,7 @@ def handle_horas():
     idinc = request.form['idhor']
     update_technician_hours(idinc, horas_inc)
     logger.info("Horas tratadas")
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
@@ -386,12 +409,7 @@ def handle_horas():
 
 @app.route('/lista_comentarios', methods=['POST'])
 def handle_lista_comentarios():
-    # horas_inc = request.form['horas_inc']
-    # idinc = request.form['idhor']
-    # update_technician_hours(idinc, horas_inc)
-    # logger.info("Horas tratadas")
     incidence_id = 'XXXXXXXX'
-    # incidencias = select_open_assigned_incidences(session.get('username'))
     incidencias = select_comments_incidence(incidence_id)
 
     empty_notif = 0
@@ -430,7 +448,7 @@ def handle_comment():
     comentario = Comment(idinc, usuario, estadocom, comentario_incidencia)
 
     insert_comment(comentario)
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(session.get('username'))
@@ -529,7 +547,7 @@ def handle_cierre_tecnico():
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
-    incidencias = select_open_assigned_incidences(session.get('username'))
+    incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
     empty_notif = 0
     notificaciones = get_notification(username)
@@ -686,8 +704,6 @@ def handle_assign_tech():
 
 @app.route('/handle_incidencia_solicitadas', methods=['GET'])
 def handle_incidencia_solicitada():
-    incidencias = request_incidence()
-    logger.info(incidencias)
     username = session.get('username')
     role = session.get('role')
 
