@@ -759,15 +759,19 @@ def handle_inventario():
                            empty_notif=empty_notif, incidencias=incidencias, tech_list=tech_list)
 
 
-@app.route('/handle_assing_tech', methods=['POST'])
+@app.route('/handle_assign_tech', methods=['POST'])
 def handle_assign_tech():
     tech = request.form['tech_assign']
     logger.info(tech)
     incidence_id = request.form['incidence_id']
+    comentario_incidencia = request.form['comentario_incidencia']
     logger.info(incidence_id)
     status = Status(incidence_id, session.get('username'), 2)
     update_status(status, 4, session.get('username'))
     assign_tech(incidence_id, tech)
+    if comentario_incidencia != '':
+        comentario = Comment(incidence_id,session.get('username'),4,comentario_incidencia)
+        insert_comment(comentario)
 
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
