@@ -248,7 +248,8 @@ def client_total_notify_closed(cliente) -> tuple:
     query = "SELECT count(t1.incidence_id) from incidences as t1 " \
              "JOIN (status as t2)" \
              "ON (t1.incidence_id=t2.incidence_id)" \
-             "WHERE t1.username='{}' AND t2.status_id=5".format(cliente)
+             "WHERE t1.username='{}' AND t2.status_id=5 " \
+            "and t2.end_date='0000-00-00 00:00:00'".format(cliente)
     result_set = execute_query(query)
     logger.info(result_set)
 
@@ -296,7 +297,7 @@ def count_total_notify_closed_assigned_incidences(technician) -> tuple:
             "WHERE incidence_id IN (" \
             "SELECT incidence_id from assigned_technicians " \
             "WHERE technician_id='{}') " \
-            " AND status_id=5".format(technician)
+            " AND status_id=5 and end_date='0000-00-00 00:00:00'".format(technician)
 
     result_set = execute_query(query)
     logger.info(result_set)

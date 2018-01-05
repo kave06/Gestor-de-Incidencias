@@ -23,13 +23,13 @@
 {% block page_content %}
 
     {% block content %}
-        {% if role == 'cliente' or role == 'tecnico' or role == 'supervisor' %}
+        {% if role == 'cliente' %}
         <div class="content-wrapper">
             <div class="container-fluid">
               <!-- Example DataTables Card-->
               <div class="card mb-3">
                   <div class="card-header">
-                      <h4><i class="fa fa-table"></i> Incidencias que puedes cerrar</h4>
+                      <h4><i class="fa fa-table"></i> Incidencias que puedes solicitar el cierre</h4>
                   </div>
               {% if incidencias %}
                   <div class="card-body">
@@ -41,14 +41,7 @@
                                     <th>Fecha de incidencia</th>
                                     <th>Estado</th>
                                 </tr>
-                              </thead>{#
-                              <tfoot>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Fecha de incidencia</th>
-                                    <th>Estado</th>
-                                </tr>
-                              </tfoot>#}
+                              </thead>
                               <tbody>
                                 {% for incidencia in incidencias %}
                                 <tr data-toggle="modal" data-titulo="{{ incidencia[1] }}"
@@ -86,12 +79,12 @@
                                                       <div id="priorInc" class="modal-body"></div>
                                                       <div id="horasInc" class="modal-body"></div>
                                                       <div id="estadoInc" class="modal-body"></div>
-                                                      <div id="resueltoInc" class="modal-body"></div>
                                                   </ul>
                                               </div>
                                           </div>
                                       </div>
                                       <div class="modal-footer">
+{#                                          <button type="button" class="btn btn-default" data-title="Mostrar comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#showComments" ><span class="fa fa-clock-o" aria-hidden="true"></span>Mostrar comentarios</button>#}
                                         <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
                                       </div>
@@ -108,47 +101,31 @@
               {%endif %}
               </div>
             </div> <!-- /.container-fluid-->
-            <!-- Tarjeta de incidencia (heredado de Modal) -->
-{#            <div class="container-fluid">#}
-{#                <div class="col-md-12 parallax-pal">#}
-{#                    <h3 class="title-font xlarge pal">#}
-{#                        <span class="light">Mi última</span>#}
-{#                        <span class="xbold"> incidencia</span>#}
-{#                    </h3>#}
-{#                </div><!-- End .col-md-12 -->#}
-{#                <div id="myModal1" class="modal-dialog modal-lg" role="document">#}
-{#                    <div class="modal-content">#}
-{#                      <div class="modal-header">#}
-{#                          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-address-card-o" aria-hidden="true"></i> {{ incidencia[0][1] }} </h4>#}
-{#                      </div>#}
-{#                      <div id="incidencia-detalles" class="modal-body">#}
-{#                          <div class="row">#}
-{#                              <div class="col-md-6">#}
-{#                                  <ul>#}
-{#                                      <div id="idInc" class="modal-body"><span><b>Identificador de la incidencia:</b> {{ incidencia[0][0] }} </span></div>#}
-{#                                      <div id="userInc" class="modal-body"><span><b>Creada por el usuario:</b> {{ incidencia[0][3] }} </span></div>#}
-{#                                      <div id="descInc" class="modal-body"><span><b>Descripción:</b> {{ incidencia[0][2] }} </span></div>#}
-{#                                  </ul>#}
-{#                              </div>#}
-{#                              <div class="col-md-6">#}
-{#                                  <ul>#}
-{#                                      <div id="fechaInc" class="modal-body"><span><b>Fecha:</b> {{ incidencia[0][4] }} </span></div>#}
-{#                                      <div id="catInc" class="modal-body"><span><b>Categoría:</b> {{ incidencia[0][9] }} </span></div>#}
-{#                                      <div id="priorInc" class="modal-body"><span><b>Prioridad:</b> {{ incidencia[0][6] }} </span></div>#}
-{#                                      <div id="horasInc" class="modal-body"><span><b>Horas dedicadas por el técnico a su resolución:</b> {{ incidencia[0][7] }} </span></div>#}
-{#                                      <div id="estadoInc" class="modal-body"><span><b>Estado:</b> {{ incidencia[0][5] }} </span></div>#}
-{#                                  </ul>#}
-{#                              </div>#}
-{#                          </div>#}
-{#                      </div>#}
-{#                      <div class="modal-footer">#}
-{#                        <button type="button" id="modalButtonCierre" class="btn btn-danger" data-toggle="modal" data-titulo="{{ incidencia[0][1] }}" data-id="{{ incidencia[0][0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>#}
-        {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                  </div> <!-- /.modal-dialog -->#}
-{##}
-{#            </div> <!-- /.container-fluid -->#}
+        <!-- Modal confirmar cierre -->
+        <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info modal-body" id="idInc"></div>
+                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
+                    </div>
+                    <div class="modal-footer ">
+                        <form class="form-incidencia" action="{{ url_for('handle_cierre_tecnico') }}" method="post" > <!--form-->
+                            <input type="hidden" name="idtec" value="">
+                            <div class="submit-row"> <!--form-->
+                        {# <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button> #}
+                                <input class="btn btn-block btn-block-incidencia submit-form" id="submit-cierre-tecnico" name="submit-cierre-tecnico" value=" Sí " type="submit">
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
+                    </div>
+                </div>  <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div>
 
         <!-- Parallax -->
         <section id="saparator1" class="parallax" style="background-image: url('/static/img/dashboard-tools.jpg')" data-stellar-background-ratio="0.6" data-stellar-vertical-offset="20">
@@ -224,25 +201,6 @@
         </section> <!--  Parallax End -->
         </div> <!-- /.content-wrapper -->
 {% endif %}
-        <!-- Modal confirmar cierre -->
-        <div class="modal fade" id="cierreModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading"><i class="fa fa-window-close-o" aria-hidden="true"></i> Solicitando el cierre de ...</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-info modal-body" id="idInc"></div>
-                        <div class="alert alert-danger"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> ¿Está usted seguro de que desea solicitar el cierre de esta incidencia?</div>
-                    </div>
-                    <div class="modal-footer ">
-                        <button type="button" class="btn btn-success" ><span class="fa fa-check-circle" aria-hidden="true"></span> Sí</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times-circle" aria-hidden="true"></span> No</button>
-                    </div>
-                </div>  <!-- /.modal-content -->
-            </div> <!-- /.modal-dialog -->
-        </div>
 
     {% endblock %}
 {% endblock %}
@@ -272,4 +230,99 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+          $('#incidenciasTodasDataTable').DataTable();
+        });
+        $('#incidenciasTodasDataTable').DataTable( {
+            "order": [[ 1, "desc" ]],
+            "autoWidth": true,
+            responsive: true,
+            "paging": true,
+            "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "TODOS"]],
+            {#"columnDefs": [#}
+            {#    { "type": "date-euro", targets: 1 }#}
+            {#],#}
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "decimal": ",",
+                "thousands": "."
+            }
+        } );
+    </script>
+    <script>
+        setTimeout(function() {   //calls click event after a certain time
+            $('div.col-xs-12').toggleClass('col-md-12');
+        }, 500);
+        /*
+        $(document).load(function () {
+            $( "div.col-xs-12" ).toggleClass( "col-md-12" );
+        });
+        */
+    </script>
+
+    <script>
+        $(function(){
+            $( "#myModal1" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                var getTituloFromRow = $(this).data('incidenciatitulo');
+                var getIdFromRow = $(this).data('incidenciaid');
+                var getUserFromRow = $(this).data('incidenciauser');
+                var getDescripcionFromRow = $(this).data('incidenciadesc');
+                var getFechaFromRow = $(this).data('incidenciafecha');
+                var getCategoriaFromRow = $(this).data('incidenciacategoria');
+                var getPrioridadFromRow = $(this).data('incidenciaprioridad');
+                var getHorasFromRow = $(this).data('incidenciahoras');
+                var getEstadoFromRow = $(this).data('incidenciaestado');
+                var getResueltoFromRow = $(this).data('incidenciaresuelto');
+                if(getResueltoFromRow)
+                    getResueltoFromRow="Si";
+                else
+                    getResueltoFromRow="No";
+                //make your ajax call populate items or what even you need
+                $(this).find('#incTitulo').html($('<h4 class=\'modal-title\'><i class=\'fa fa-address-card-o\' aria-hidden=\'true\'></i><a id="titulo"> '+getTituloFromRow+'</a></h4>'))
+                $(this).find('#idInc').html($("<li><span><b>Identificador de la incidencia:</b><a id='ident'> "+getIdFromRow+"</a></span></li>"))
+                $(this).find('#userInc').html($("<li><span><b>Creada por el usuario:</b>  "+getUserFromRow+"</span></li>"))
+                $(this).find('#descInc').html($("<li><span><b>Descripción:</b> "+getDescripcionFromRow+"</span></li>"))
+                $(this).find('#fechaInc').html($("<li><span><b>Fecha de la incidencia:</b> "+getFechaFromRow+"</span></li>"))
+                $(this).find('#estadoInc').html($("<li><span><b>Estado:</b> "+getEstadoFromRow+"</span></li>"))
+                $(this).find('#priorInc').html($("<li><span><b>Prioridad:</b> "+getPrioridadFromRow+"</span></li>"))
+                $(this).find('#horasInc').html($("<li><span><b>Horas dedicadas por el técnico a su resolución:</b> "+getHorasFromRow+"</span></li>"))
+                $(this).find('#resueltoInc').html($("<li><span><b>Resuelta:</b> "+getResueltoFromRow+"</span></li>"))
+                $(this).find('#catInc').html($("<li><span><b>Categoria:</b> "+getCategoriaFromRow+"</span></li>"))
+                if (getEstadoFromRow=='Notificada_resolucion'){
+                    $('#boton-cierre').hide();
+                }
+                else {
+                    $('#boton-cierre').show();
+                }
+            });
+            $( "#cierreModal" ).on('shown.bs.modal', function(e){ //subscribe to show method
+                {#var titulo2 = $("#myModal1")[0].find('#titulo').text();#}
+                {#var ident2 = $("#myModal1")[0].find('#ident').text();#}
+                var getTituloFromRowEliminar = $(this).data('incidenciatituloElim');
+                var getIdFromRowEliminar = $(this).data('incidenciaidElim');
+                //make your ajax call populate items or what even you need
+                $('#cierreModal input[name="idtec"]').val(getIdFromRowEliminar)
+                $(this).find('#incTitulo').html($("<p>"+getTituloFromRowEliminar+"</p>"))
+                $(this).find('#idInc').html($("<p>Incidencia con identificador '<b>"+getIdFromRowEliminar+"</b>' y de título '<b>"+getTituloFromRowEliminar+"</b>'</p>"))
+            });
+            $(".table-striped").find('tr[data-target]').on('click', function(){
+                //or do your operations here instead of on show of modal to populate values to modal.
+                $('#myModal1').data('incidenciatitulo',$(this).data('titulo'));
+                $('#myModal1').data('incidenciaid',$(this).data('id'));
+                $('#myModal1').data('incidenciauser',$(this).data('usuario'));
+                $('#myModal1').data('incidenciadesc',$(this).data('descripcion'));
+                $('#myModal1').data('incidenciafecha',$(this).data('fecha'));
+                $('#myModal1').data('incidenciaestado',$(this).data('estado'));
+                $('#myModal1').data('incidenciaprioridad',$(this).data('prioridad'));
+                $('#myModal1').data('incidenciahoras',$(this).data('horas'));
+                $('#myModal1').data('incidenciaresuelto',$(this).data('resuelto'));
+                $('#myModal1').data('incidenciacategoria',$(this).data('categoria'));
+                $('#cierreModal').data('incidenciatituloElim',$(this).data('titulo'));
+                $('#cierreModal').data('incidenciaidElim',$(this).data('id'));
+
+            });
+        });
+    </script>
+
 {% endblock scripts %}

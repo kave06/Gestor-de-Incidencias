@@ -323,7 +323,7 @@ def dashboard():
         total_notify_closed = client_total_notify_closed(session.get('username'))
 
         incidencias = select_open_assigned_incidences_client(session.get('username'))
-        return render_template('dashboard_client2.html', username=session.get('username'),
+        return render_template('dashboard_client.html', username=session.get('username'),
                                role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                                incidencias=incidencias, total_incidences=total_incidences,
                                total_open=total_open,total_notify_closed=total_notify_closed,
