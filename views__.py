@@ -453,6 +453,82 @@ def handle_comment():
                            role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
                            incidencias=incidencias)
 
+@app.route('/handle_comment_abiertas', methods=['POST'])
+def handle_comment_abiertas():
+    logger.info('Estoy en handle comment')
+    comentario_incidencia = request.form['comentario_incidencia']
+    logger.info(comentario_incidencia)
+    idinc = request.form['idcom']
+    logger.info(idinc)
+    estadocom = request.form['estadocom']
+    logger.info(estadocom)
+    usuario = session.get('username')
+
+    if estadocom == 'Solicitada':
+        estadocom = 1
+    elif estadocom == 'Aceptada':
+        estadocom = 2
+    elif estadocom == 'Rechazada':
+        estadocom = 3
+    elif estadocom == 'Asignada':
+        estadocom = 4
+    elif estadocom == 'Notificada_resolucion':
+        estadocom = 5
+    elif estadocom == 'Cerrada':
+        estadocom = 6
+
+    comentario = Comment(idinc, usuario, estadocom, comentario_incidencia)
+
+    insert_comment(comentario)
+    incidencias = select_open_incidences(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('incidencias_abiertas.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                           incidencias=incidencias)
+
+@app.route('/handle_comment_todas', methods=['POST'])
+def handle_comment_todas():
+    logger.info('Estoy en handle comment')
+    comentario_incidencia = request.form['comentario_incidencia']
+    logger.info(comentario_incidencia)
+    idinc = request.form['idcom']
+    logger.info(idinc)
+    estadocom = request.form['estadocom']
+    logger.info(estadocom)
+    usuario = session.get('username')
+
+    if estadocom == 'Solicitada':
+        estadocom = 1
+    elif estadocom == 'Aceptada':
+        estadocom = 2
+    elif estadocom == 'Rechazada':
+        estadocom = 3
+    elif estadocom == 'Asignada':
+        estadocom = 4
+    elif estadocom == 'Notificada_resolucion':
+        estadocom = 5
+    elif estadocom == 'Cerrada':
+        estadocom = 6
+
+    comentario = Comment(idinc, usuario, estadocom, comentario_incidencia)
+
+    insert_comment(comentario)
+    incidencias = select_incidences_user(session.get('username'))
+
+    empty_notif = 0
+    notificaciones = get_notification(session.get('username'))
+    if len(notificaciones) == 0:
+        empty_notif = 1
+
+    return render_template('incidencias.html', username=session.get('username'),
+                           role=session.get('role'), notificaciones=notificaciones, empty_notif=empty_notif,
+                           incidencias=incidencias)
+
 
 @app.route('/handle_cierre_tecnico', methods=['POST'])
 def handle_cierre_tecnico():
@@ -481,11 +557,13 @@ def handle_cierre_tecnico():
 def handle_cierre_cliente():
     logger.info("Cierre cliente tratado")
     id_incidence = request.form['id_incidence']
+    comentario_incidencia = request.form['comentario_incidencia']
     sender = session.get('username')
     receiver = get_technician(id_incidence)
 
     create_notification(id_incidence, sender, receiver)
-
+    comentario = Comment(id_incidence,session.get('username'),7,comentario_incidencia)
+    insert_comment(comentario)
     incidencias = select_open_incidences(session.get('username'))
 
     empty_notif = 0
@@ -504,8 +582,11 @@ def handle_cierre_cliente_todas():
     username_stat = get_supervisor()
     logger.info(username_stat)
     idcli = request.form['idcli']
+    comentario_incidencia = request.form['comentario_incidencia']
     status = Status(idcli, username_stat, 4)
     username = session.get('username')
+    comentario = Comment(idcli,session.get('username'),7,comentario_incidencia)
+    insert_comment(comentario)
     # update_status(status,5,username)
     # cuestion del cambio a estado 5, lo hace cliente? ELIMINADO UPDATE CLIENTE
     role = session.get('role')

@@ -86,7 +86,7 @@
                                       </div>
                                       <div class="modal-footer">
 {#                                          <button type="button" class="btn btn-default" data-title="Mostrar comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#showComments" ><span class="fa fa-clock-o" aria-hidden="true"></span>Mostrar comentarios</button>#}
-                                          <button type="button" class="btn btn-default" data-title="Añadir horas dedicadas" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addHoras" ><span class="fa fa-clock-o" aria-hidden="true"></span> Añadir horas dedicadas</button>
+                                          <button type="button" id='boton-comentario' class="btn btn-default" data-title="Añadir horas dedicadas" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addHoras" ><span class="fa fa-clock-o" aria-hidden="true"></span> Añadir horas dedicadas</button>
                                           <button type="button" class="btn btn-default" data-title="Introducir comentarios" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#addComentario" ><span class="fa fa-comments-o" aria-hidden="true"></span> Introducir comentarios</button>
                                         <button type="button" id='boton-cierre' class="btn btn-danger" data-title="Solicitar cierre" data-toggle="modal" data-titulo="{{ incidencia[1] }}" data-id="{{ incidencia[0] }}"  data-target="#cierreModal" ><span class="fa fa-times-circle" aria-hidden="true"></span> Solicitar cierre</button>
                         {#                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>#}
@@ -142,7 +142,7 @@
                         <div class="alert alert-info modal-body" id="idInc"></div>
                         <div class="row form-group input-container"> <!--form-->
                             <span></span>
-                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="15" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  required></textarea>
+                        ​   <textarea class="form-control" name="comentario_incidencia" id="txtArea" maxlength="255" minlength="1" onkeyup="countChar(this)" rows="10" cols="70" placeholder="Escribir un comentario a la incidencia"  required></textarea>
                             <i class="fa fa-align-left icon-characters" aria-hidden="true"></i>
                             <div id="charNum"> <span>Máximo 255 caracteres.</span> </div>
                         </div>
