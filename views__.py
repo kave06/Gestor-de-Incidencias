@@ -674,7 +674,7 @@ def handle_rechazar():
     return render_template('incidencias_solicitadas.html', username=session.get('username'),
                            role=session.get('role'), notificaciones=notificaciones,
                            empty_notif=empty_notif, incidencias=incidencias)
-    
+
 
 @app.route('/handle_cierre_supervisor', methods=['POST'])
 def handle_cierre_supervisor():
