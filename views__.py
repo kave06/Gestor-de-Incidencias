@@ -668,6 +668,9 @@ def handle_inventario():
     devices_ids = request.form['id_dispositivo']
     incidence_id = request.form['incidence_id']
     assign_devices(incidence_id, devices_ids)
+    #for device_id in devices_ids:
+    #    logger.info('Listando devices: {}'.format(device_id))
+    #    insert_assigned_devices(incidence_id, device_id)
     incidencias = select_unassigned_incidences()
     tech_list = technician_list()
     username = session.get('username')
