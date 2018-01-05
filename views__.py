@@ -530,7 +530,7 @@ def handle_cierre_tecnico():
     update_status(status, 5, username)
     role = session.get('role')
     notify_close(status, role)
-    comentario = Comment(idtec,session.get('username'),8,comentario_incidencia)
+    comentario = Comment(idtec,session.get('username'),5,comentario_incidencia)
     insert_comment(comentario)
     incidencias = select_open_assigned_incidences_tech(session.get('username'))
 
