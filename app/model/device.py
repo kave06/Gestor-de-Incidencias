@@ -13,6 +13,27 @@ class Device:
         self.description = description
 
 
+def assign_devices(incidence_id,devices_ids):
+
+    query = ""
+    for device_id in devices_ids:
+        if device_id != ",":
+            query = query +"INSERT INTO assigned_devices VALUES( " \
+            "'{}',{})".format(incidence_id,device_id)+";"
+
+    logger.info(query)
+
+    cnx = connect_db()
+
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(query)
+        cnx.commit()
+        cursor.close()
+    except Exception as err:
+        logger.error(err)
+
+
 def insert_assigned_devices(incidence, device):
         device_id = check_device_id(device)
         logger.info('Insertando el dispositivo con id {} a la incidencia {} '.format(device_id, incidence))

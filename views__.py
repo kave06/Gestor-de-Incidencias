@@ -2,7 +2,7 @@ import os
 # import datetime
 from datetime import datetime
 from app.model.incidence import *
-from app.model.device import insert_assigned_devices
+from app.model.device import insert_assigned_devices,assign_devices
 from app.model.status import insert_status, Status, update_status, notify_close
 from flask import render_template, session, url_for, request, redirect
 from flask.app import Flask
