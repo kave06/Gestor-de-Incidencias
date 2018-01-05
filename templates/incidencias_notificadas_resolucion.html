@@ -232,6 +232,25 @@
         */
     </script>
     <script>
+        $('#txtArea').keyup(function () {
+            var max = 255;
+            var len = $(this).val().length;
+            if (len > max+1) {
+                var char = len - max;
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobran ' + char + ' caracteres.');
+            } else if (len == max+1) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres, le sobra 1 caracter.');
+            } else if (len == max) {
+                $('#charNum').text('Ha superado el límite de 500 caracteres.');
+            } else if (len == max-1) {
+                $('#charNum').text('Le queda 1 caracter.');
+            } else {
+                var char = max - len;
+                $('#charNum').text('Le quedan ' + char + ' caracteres.');
+            }
+        });
+    </script>
+    <script>
         $(function(){
             $( "#myModal1" ).on('shown.bs.modal', function(e){ //subscribe to show method
                 var getTituloFromRow = $(this).data('incidenciatitulo');
