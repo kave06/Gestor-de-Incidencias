@@ -41,7 +41,7 @@
     background-color: #e0e0e0;
 }
 .image404 {
-    background-image: url("/Gestor-de-Incidencias/img/templates/404FHD.jpg");
+    background-image: url("/Gestor-de-Incidencias/static/img/404FHD.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
